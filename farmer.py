@@ -1,6 +1,9 @@
 class Farmer:
     """
-    DOCSTRING
+    A class that represents the player's farmer character
+
+    Attributes:
+        wallet: an int representing how much currency a player has
     """
 
     def __init__(self):
@@ -29,15 +32,33 @@ class Farmer:
         farmer
         """
 
-    def wallet(self):
+    def add_funds(self, amount):
         """
-        Keeps track of how much money the farmer has as an int
+        Add amount funds to the wallet attribute
+        """
+
+    def spend_funds(self, amount):
+        """
+        Subtract amount funds from the wallet attribute
+        Return True if that transaction is successful, return False if the
+        farmer does not have enough money and do not subtract funds
+        """
+
+    def get_position(self):
+        """
+        Return the row and column of the square the farmer is currently
+        occupying
+        """
+
+    def get_direction(self):
+        """
+        Return the direction that the farmer is facing
         """
 
 
 class ViewFarmer:
     """
-    DOCSTRING
+    Class that displays the farmer sprite
     """
 
     def __init__(self, sprite_path):
@@ -46,9 +67,14 @@ class ViewFarmer:
         """
 
 
+# should do a parent class item/equipment class and have these inherit from
+# that because they are pretty similar
 class WateringCan:
     """
-    DOCSTRING
+    Class that represents the watering can item
+
+    Attributes:
+        inventory_slot: an int that represents the inventory location
     """
 
     def __init__(self):
@@ -64,10 +90,18 @@ class WateringCan:
         Returns a boolean stating whether the watering can is equipped or not
         """
 
+    def update_inventory_slot(self):
+        """
+        Update the inventory_slot attribute if the item is moved
+        """
+
 
 class Hoe:
     """
-    DOCSTRING
+    Class that represents the watering can item
+
+    Attributes:
+        inventory_slot: an int that represents the inventory location
     """
 
     def __init__(self):
@@ -83,10 +117,22 @@ class Hoe:
         Returns a boolean stating whether the hoe is equipped or not
         """
 
+    def update_inventory_slot(self):
+        """
+        Update the inventory_slot attribute if the item is moved
+        """
+
 
 class Ground:
     """
-    DOCSTRING
+    A class that represents the map of the game
+
+    Attributes:
+        free_land: A string representing a free space of land
+        tilled_land: A string representing a tilled space of land
+        crop_land: A string representing a space of land that has a crop on it
+        watered_land: A string representing a space of land that is watered
+        land: a nested list that represents all the spaces of land on the map
     """
 
     _free_land = ""
@@ -111,7 +157,9 @@ class Ground:
         ]  # etc.
 
     def get_square(self, row, col):
-        """DOCSTRING"""
+        """
+        Returns a square in the land attribute
+        """
         return self.land[row][col]
 
     def is_watered(self, square):
