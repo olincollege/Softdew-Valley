@@ -3,8 +3,8 @@ import os
 
 
 class Farmer:
-    FARMER_WIDTH = 35
-    FARMER_HEIGHT = 70
+    FARMER_WIDTH = 50
+    FARMER_HEIGHT = 120
     VEL = 5
     WIDTH, HEIGHT = 900, 500
 

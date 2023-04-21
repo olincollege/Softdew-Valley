@@ -1,13 +1,15 @@
 import pygame
 from FarmerClass import Farmer
 from ViewClass import View
+from GroundClass import Ground
 
 FPS = 60
 
 
 def main():
     farmer = Farmer
-    display_farmer = View(farmer)
+    ground = Ground()
+    display_farmer = View(farmer, ground)
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -19,6 +21,7 @@ def main():
         keys_pressed = pygame.key.get_pressed()
         farmer.move(farmer, keys_pressed)
         print(farmer.position)
+        # ground.til_square(farmer.position[0], farmer.position[1])
         display_farmer.draw_window()
     pygame.quit()
 

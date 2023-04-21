@@ -1,4 +1,3 @@
-
 class Ground:
     """
     A class that represents the map of the game
@@ -15,22 +14,15 @@ class Ground:
     _tilled_land = "T"
     _crop_land = "C"
     _watered_land = "W"
+    num_rows = 18  # depends on width and square size, make dynamic later
+    num_cols = 10  # depends on width and square size, make dynamic later
+    land = []
 
     def __init__(self):
         self.land = [
-            [
-                self._free_land,
-                self._free_land,
-                self._free_land,
-                self._free_land,
-            ],
-            [
-                self._free_land,
-                self._free_land,
-                self._free_land,
-                self._free_land,
-            ],
-        ]  # etc.
+            [self._free_land for i in range(self.num_cols)]
+            for j in range(self.num_rows)
+        ]
 
     def get_square(self, row, col):
         """
@@ -42,14 +34,13 @@ class Ground:
         """
         Returns a bool that says whether a square is watered
         """
-        if self._watered_land in square:
-            return True
-        return False
+        return square == self._watered_land
 
     def is_tilled(self, square):
         """
         Returns a bool that says whether a square is tilled
         """
+        return square == self._tilled_land
 
     def has_crop(self, square):
         """
@@ -60,14 +51,27 @@ class Ground:
         """
         Update land to have a watered square at the row/col
         """
-        self.land[row][col] += self._watered_land
+        self.land[row][col] = self._watered_land
 
     def til_square(self, row, col):
         """
         Update land to have a tilled square at the row/col
         """
+        self.land[row][col] = self._tilled_land
 
     def plant_crop(self, row, col):
         """
         Update land to have a crop at the row/col
         """
+
+    # @property
+    # def land(self):
+    #     return self.land
+
+    # @property
+    # def num_rows(self):
+    #     return self.num_rows
+
+    # @property
+    # def num_cols(self):
+    #     return self.num_cols
