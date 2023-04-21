@@ -9,8 +9,10 @@ class Farmer:
     WIDTH, HEIGHT = 900, 500
 
     farmer_width, farmer_height = 40, 60
-    farmer_rect = pygame.Rect(40, 40, farmer_width, farmer_height)
-    direction = "up"
+    farmer_rect = pygame.Rect(100, 100, farmer_width, farmer_height)
+    direction = "down"  # random direction to start
+    # position is the (x, y) or (row, col) position of the farmer on the map
+    position = (100 / 50, 100 / 50)
 
     def __init__():
         pass
@@ -36,10 +38,15 @@ class Farmer:
         ):  # DOWN
             self.farmer_rect.y += self.VEL
             self.direction = "down"
+        self.position = (self.farmer_rect.x // 50, self.farmer_rect.y // 50)
 
     @property
     def direction(self):
         return self.direction
+
+    @property
+    def position(self):
+        return self.position
 
     def harvest_crops(self):
         """
@@ -68,10 +75,4 @@ class Farmer:
         Subtract amount funds from the wallet attribute
         Return True if that transaction is successful, return False if the
         farmer does not have enough money and do not subtract funds
-        """
-
-    def get_position(self):
-        """
-        Return the row and column of the square the farmer is currently
-        occupying
         """
