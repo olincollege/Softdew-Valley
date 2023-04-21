@@ -69,7 +69,29 @@ class ViewFarmer:
 
 # should do a parent class item/equipment class and have these inherit from
 # that because they are pretty similar
-class WateringCan:
+class Equipment:
+    """
+    Class that represents an item that can be equipped from the inventory
+
+    Attributes:
+        inventory_slot: an int that represents the inventory location
+    """
+
+    def __init__(self):
+        pass
+
+    def is_equipped(self):
+        """
+        Returns a boolean stating whether the item is equipped or not
+        """
+
+    def update_inventory_slot(self):
+        """
+        Update the inventory_slot attribute if the item is moved
+        """
+
+
+class WateringCan(Equipment):
     """
     Class that represents the watering can item
 
@@ -82,21 +104,11 @@ class WateringCan:
 
     def water(self):
         """
-        Water space in front (display)
-        """
-
-    def is_equipped(self):
-        """
-        Returns a boolean stating whether the watering can is equipped or not
-        """
-
-    def update_inventory_slot(self):
-        """
-        Update the inventory_slot attribute if the item is moved
+        Water space in the direction the farmer is facing
         """
 
 
-class Hoe:
+class Hoe(Equipment):
     """
     Class that represents the watering can item
 
@@ -109,17 +121,24 @@ class Hoe:
 
     def till(self):
         """
-        Till the space in front (display)
+        Till the space in the direction the farmer is facing
         """
 
-    def is_equipped(self):
-        """
-        Returns a boolean stating whether the hoe is equipped or not
-        """
 
-    def update_inventory_slot(self):
+class Seeds(Equipment):
+    """
+    Class that represents the seeds item
+
+    Attributes:
+        inventory_slot: an int that represents the inventory location
+    """
+
+    def __init__(self):
+        pass
+
+    def plant(self):
         """
-        Update the inventory_slot attribute if the item is moved
+        Plant the seed in the space in the direction the farmer is facing
         """
 
 
