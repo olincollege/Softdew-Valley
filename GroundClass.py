@@ -63,15 +63,3 @@ class Ground:
         """
         Update land to have a crop at the row/col
         """
-
-    # @property
-    # def land(self):
-    #     return self.land
-
-    # @property
-    # def num_rows(self):
-    #     return self.num_rows
-
-    # @property
-    # def num_cols(self):
-    #     return self.num_cols

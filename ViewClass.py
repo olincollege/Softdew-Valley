@@ -1,13 +1,15 @@
 import pygame
 import os
-from FarmerClass import Farmer
-from GroundClass import Ground
 
 
 class View:
     FARMER_WIDTH = 50
     FARMER_HEIGHT = 120
     GROUND_SIZE = 50
+    WIDTH, HEIGHT = 900, 500
+    WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+
+    WHITE = (255, 255, 255)
 
     FRONT_FARMER = pygame.transform.scale(
         pygame.image.load(os.path.join("Assets", "Facing_Front.jpg")),
@@ -40,12 +42,6 @@ class View:
         pygame.image.load(os.path.join("Assets", "watered_ground.jpg")),
         (GROUND_SIZE, GROUND_SIZE),
     )
-
-    WIDTH, HEIGHT = 900, 500
-
-    WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-
-    WHITE = (255, 255, 255)
 
     farmer_image = FRONT_FARMER
     type_ground = FREE_GROUND

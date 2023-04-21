@@ -21,7 +21,7 @@ def main():
         keys_pressed = pygame.key.get_pressed()
         farmer.move(farmer, keys_pressed)
         print(farmer.position)
-        # ground.til_square(farmer.position[0], farmer.position[1])
+        ground.til_square(farmer.position[0], farmer.position[1])
         display_farmer.draw_window()
     pygame.quit()
 
