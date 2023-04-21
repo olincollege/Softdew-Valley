@@ -17,10 +17,16 @@ class Day:
         """
         Create an initial day to be day 1 when you start the game
         """
-        pass
+        self._day_number = 1
 
     def add_day(self):
         """
         When the player goes to sleep add a day to day_number
         """
         pass
+
+    def fetch_day(self):
+        """
+        Returns a copy of the private day_number attribute
+        """
+        return self._day_number
