@@ -7,6 +7,8 @@ class GameState:
     def __init__(self, Farmer, Ground):
         self.farmer = Farmer
         self.ground = Ground
+        self._is_water = False
+        self._is_till = False
 
     def get_action_position(self):
         pos = self.farmer.position
@@ -33,3 +35,11 @@ class GameState:
             self.ground.get_square(action_pos[0], action_pos[1])
         ):
             self.ground.water_square(action_pos[0], action_pos[1])
+            self._is_water = True
+
+    def stop_watering(self):
+        self._is_water = False
+
+    @property
+    def is_water(self):
+        return self._is_water

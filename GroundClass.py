@@ -1,3 +1,9 @@
+from ViewClass import View
+
+WIDTH, HEIGHT = View.WIDTH, View.HEIGHT
+SQUARE_SIZE = View.GROUND_SIZE
+
+
 class Ground:
     """
     A class that represents the map of the game
@@ -14,8 +20,10 @@ class Ground:
     _tilled_land = "T"
     _crop_land = "C"
     _watered_land = "W"
-    num_rows = 18  # depends on width and square size, make dynamic later
-    num_cols = 10  # depends on width and square size, make dynamic later
+    # num_rows = 18  # depends on width and square size, make dynamic later
+    # num_cols = 10  # depends on width and square size, make dynamic later
+    num_rows = WIDTH // SQUARE_SIZE
+    num_cols = HEIGHT // SQUARE_SIZE
     land = []
 
     def __init__(self):

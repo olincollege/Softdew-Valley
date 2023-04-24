@@ -11,7 +11,7 @@ def main():
     farmer = Farmer
     ground = Ground()
     gamestate = GameState(farmer, ground)
-    display_farmer = View(farmer, ground)
+    display_farmer = View(farmer, ground, gamestate)
     clock = pygame.time.Clock()
     run = True
     while run:

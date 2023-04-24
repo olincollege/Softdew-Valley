@@ -4,30 +4,50 @@ import os
 
 class View:
     FARMER_WIDTH = 50
-    FARMER_HEIGHT = 120
+    FARMER_HEIGHT = 100
     GROUND_SIZE = 50
     WIDTH, HEIGHT = 900, 500
     WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 
     WHITE = (255, 255, 255)
 
+    # FARMER SPRITES
     FRONT_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Facing_Front.jpg")),
+        pygame.image.load(os.path.join("Assets", "Facing_Front.png")),
         (FARMER_WIDTH, FARMER_HEIGHT),
     )
     BACK_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Facing_Back.jpg")),
+        pygame.image.load(os.path.join("Assets", "Facing_Back.png")),
         (FARMER_WIDTH, FARMER_HEIGHT),
     )
     RIGHT_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Facing_Right.jpg")),
+        pygame.image.load(os.path.join("Assets", "Facing_Right.png")),
         (FARMER_WIDTH, FARMER_HEIGHT),
     )
     LEFT_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Facing_Left.jpg")),
+        pygame.image.load(os.path.join("Assets", "Facing_Left.png")),
         (FARMER_WIDTH, FARMER_HEIGHT),
     )
 
+    # FARMER WATERING SPRITES
+    WATER_FRONT_FARMER = pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets", "Front_Water.png")),
+        (FARMER_WIDTH, FARMER_HEIGHT),
+    )
+    WATER_BACK_FARMER = pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets", "Back_Water.png")),
+        (FARMER_WIDTH, FARMER_HEIGHT),
+    )
+    WATER_RIGHT_FARMER = pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets", "Right_Water.png")),
+        (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
+    )
+    WATER_LEFT_FARMER = pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets", "Left_Water.png")),
+        (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
+    )
+
+    # GROUND SPRITES
     FREE_GROUND = pygame.transform.scale(
         pygame.image.load(os.path.join("Assets", "free_ground.jpg")),
         (GROUND_SIZE, GROUND_SIZE),
@@ -46,16 +66,34 @@ class View:
     farmer_image = FRONT_FARMER
     type_ground = FREE_GROUND
 
-    def __init__(self, Farmer, Ground):
+    def __init__(self, Farmer, Ground, Gamestate):
         self.farmer = Farmer
         self.ground = Ground
+        self.gamestate = Gamestate
 
     def farmer_direction(self):
         """
         Get the direction the farmer is facing and change the image displayed
         to match that direction
         """
-        if self.farmer.direction == "down":
+        if self.gamestate.is_water and self.farmer.direction == "down":
+            self.farmer_image = self.WATER_FRONT_FARMER
+            # pygame.time.delay(2000)
+            # self.gamestate.stop_watering()
+        elif self.gamestate.is_water and self.farmer.direction == "up":
+            self.farmer_image = self.WATER_BACK_FARMER
+            # pygame.time.delay(2000)
+            # self.gamestate.stop_watering()
+        elif self.gamestate.is_water and self.farmer.direction == "right":
+            self.farmer_image = self.WATER_RIGHT_FARMER
+            # pygame.time.delay(2000)
+            # self.gamestate.stop_watering()
+        elif self.gamestate.is_water and self.farmer.direction == "left":
+            self.farmer_image = self.WATER_LEFT_FARMER
+            # pygame.time.delay(2000)
+            # self.gamestate.stop_watering()
+
+        elif self.farmer.direction == "down":
             self.farmer_image = self.FRONT_FARMER
         elif self.farmer.direction == "up":
             self.farmer_image = self.BACK_FARMER
@@ -92,3 +130,6 @@ class View:
         )
 
         pygame.display.update()
+        if self.gamestate.is_water:
+            pygame.time.delay(1000)
+            self.gamestate.stop_watering()
