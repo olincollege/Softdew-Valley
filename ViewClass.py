@@ -36,7 +36,7 @@ class View:
     )
     WATER_BACK_FARMER = pygame.transform.scale(
         pygame.image.load(os.path.join("Assets", "Back_Water.png")),
-        (FARMER_WIDTH, FARMER_HEIGHT),
+        (FARMER_WIDTH, FARMER_HEIGHT * 1.25),
     )
     WATER_RIGHT_FARMER = pygame.transform.scale(
         pygame.image.load(os.path.join("Assets", "Right_Water.png")),
@@ -50,11 +50,11 @@ class View:
     # FARMER TILLING SPRITES
     TILL_FRONT_FARMER = pygame.transform.scale(
         pygame.image.load(os.path.join("Assets", "Front_Till.png")),
-        (FARMER_WIDTH, FARMER_HEIGHT),
+        (FARMER_WIDTH, FARMER_HEIGHT * 1.25),
     )
     TILL_BACK_FARMER = pygame.transform.scale(
         pygame.image.load(os.path.join("Assets", "Back_Till.png")),
-        (FARMER_WIDTH, FARMER_HEIGHT),
+        (FARMER_WIDTH, FARMER_HEIGHT * 1.25),
     )
     TILL_RIGHT_FARMER = pygame.transform.scale(
         pygame.image.load(os.path.join("Assets", "Right_Till.png")),
@@ -154,6 +154,17 @@ class View:
                     self.farmer.farmer_rect.y,
                 ),
             )
+        elif (
+            self.farmer_image == self.TILL_BACK_FARMER
+            or self.farmer_image == self.WATER_FRONT_FARMER
+        ):
+            self.WIN.blit(
+                self.farmer_image,
+                (
+                    self.farmer.farmer_rect.x,
+                    self.farmer.farmer_rect.y - self.GROUND_SIZE // 2,
+                ),
+            )
         else:
             self.WIN.blit(
                 self.farmer_image,
@@ -162,6 +173,6 @@ class View:
 
         pygame.display.update()
         if self.gamestate.is_water or self.gamestate.is_till:
-            pygame.time.delay(1000)
+            pygame.time.delay(250)
             self.gamestate.stop_watering()
             self.gamestate.stop_tilling()
