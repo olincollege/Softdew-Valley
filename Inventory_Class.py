@@ -1,7 +1,6 @@
 """
 Inventory_Class
 """
-import farmer
 
 
 class Inventory:
@@ -16,16 +15,15 @@ class Inventory:
 
     empty_slot = " "
 
-    def __init__(self):
+    def __init__(self, watering_can, hoe, seeds):
         """
         Initializes _inventory attribute so that it starts as a list of empty
         strings to represent the initial state of the inventory being empty
         """
-
-        _inventory = [self.empty_slot for i in range(8)]  # list of 8 items
-        _inventory[0] = farmer.WateringCan()
-        _inventory[1] = farmer.Hoe()
-        _inventory[2] = farmer.Seeds()
+        self._inventory = [self.empty_slot for i in range(8)]
+        self._inventory[0] = watering_can
+        self._inventory[1] = hoe
+        self._inventory[2] = seeds
 
     def equip_item(self, slot):
         """
@@ -42,15 +40,5 @@ class Inventory:
             item in
             item: ?class? representing the item to put in the specified
             inventory spot
-        """
-        pass
-
-    def __repr__(self):
-        """
-        Determines how the inventory game should be displayed given the current
-        state of the player's inventory.
-
-        Returns: A string representing the current state of the player's
-        inventory
         """
         pass

@@ -4,20 +4,22 @@ class Equipment:
 
     Attributes:
         inventory_slot: an int that represents the inventory location
+        equipped: a boolean that shows whether the item is equipped or not
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, slot):
+        self._equipped = False
+        self._inventory_slot = slot
 
-    def is_equipped(self):
-        """
-        Returns a boolean stating whether the item is equipped or not
-        """
-
-    def update_inventory_slot(self):
+    def update_inventory_slot(self, new_slot):
         """
         Update the inventory_slot attribute if the item is moved
         """
+        self._inventory_slot = new_slot
+
+    @property
+    def equipped(self):
+        return self._equipped
 
 
 class WateringCan(Equipment):
@@ -28,13 +30,8 @@ class WateringCan(Equipment):
         inventory_slot: an int that represents the inventory location
     """
 
-    def __init__(self):
-        pass
-
-    def water(self):
-        """
-        Water space in the direction the farmer is facing
-        """
+    def __init__(self, slot):
+        super(Equipment, self).__init__(slot)
 
 
 class Hoe(Equipment):
@@ -45,13 +42,8 @@ class Hoe(Equipment):
         inventory_slot: an int that represents the inventory location
     """
 
-    def __init__(self):
-        pass
-
-    def till(self):
-        """
-        Till the space in the direction the farmer is facing
-        """
+    def __init__(self, slot):
+        super(Equipment, self).__init__(slot)
 
 
 class Seeds(Equipment):
@@ -62,10 +54,5 @@ class Seeds(Equipment):
         inventory_slot: an int that represents the inventory location
     """
 
-    def __init__(self):
-        pass
-
-    def plant(self):
-        """
-        Plant the seed in the space in the direction the farmer is facing
-        """
+    def __init__(self, slot):
+        super(Equipment, self).__init__(slot)

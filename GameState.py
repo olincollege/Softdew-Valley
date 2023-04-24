@@ -1,4 +1,3 @@
-import pygame
 from GroundClass import Ground
 from FarmerClass import Farmer
 
