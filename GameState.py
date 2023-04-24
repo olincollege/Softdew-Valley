@@ -28,6 +28,7 @@ class GameState:
     def till_ground(self):
         action_pos = self.get_action_position()
         self.ground.til_square(action_pos[0], action_pos[1])
+        self._is_till = True
 
     def water_ground(self):
         action_pos = self.get_action_position()
@@ -40,6 +41,13 @@ class GameState:
     def stop_watering(self):
         self._is_water = False
 
+    def stop_tilling(self):
+        self._is_till = False
+
     @property
     def is_water(self):
         return self._is_water
+
+    @property
+    def is_till(self):
+        return self._is_till

@@ -47,6 +47,24 @@ class View:
         (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
     )
 
+    # FARMER TILLING SPRITES
+    TILL_FRONT_FARMER = pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets", "Front_Till.png")),
+        (FARMER_WIDTH, FARMER_HEIGHT),
+    )
+    TILL_BACK_FARMER = pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets", "Back_Till.png")),
+        (FARMER_WIDTH, FARMER_HEIGHT),
+    )
+    TILL_RIGHT_FARMER = pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets", "Right_Till.png")),
+        (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
+    )
+    TILL_LEFT_FARMER = pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets", "Left_Till.png")),
+        (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
+    )
+
     # GROUND SPRITES
     FREE_GROUND = pygame.transform.scale(
         pygame.image.load(os.path.join("Assets", "free_ground.jpg")),
@@ -78,20 +96,21 @@ class View:
         """
         if self.gamestate.is_water and self.farmer.direction == "down":
             self.farmer_image = self.WATER_FRONT_FARMER
-            # pygame.time.delay(2000)
-            # self.gamestate.stop_watering()
         elif self.gamestate.is_water and self.farmer.direction == "up":
             self.farmer_image = self.WATER_BACK_FARMER
-            # pygame.time.delay(2000)
-            # self.gamestate.stop_watering()
         elif self.gamestate.is_water and self.farmer.direction == "right":
             self.farmer_image = self.WATER_RIGHT_FARMER
-            # pygame.time.delay(2000)
-            # self.gamestate.stop_watering()
         elif self.gamestate.is_water and self.farmer.direction == "left":
             self.farmer_image = self.WATER_LEFT_FARMER
-            # pygame.time.delay(2000)
-            # self.gamestate.stop_watering()
+
+        elif self.gamestate.is_till and self.farmer.direction == "down":
+            self.farmer_image = self.TILL_FRONT_FARMER
+        elif self.gamestate.is_till and self.farmer.direction == "up":
+            self.farmer_image = self.TILL_BACK_FARMER
+        elif self.gamestate.is_till and self.farmer.direction == "right":
+            self.farmer_image = self.TILL_RIGHT_FARMER
+        elif self.gamestate.is_till and self.farmer.direction == "left":
+            self.farmer_image = self.TILL_LEFT_FARMER
 
         elif self.farmer.direction == "down":
             self.farmer_image = self.FRONT_FARMER
@@ -124,12 +143,25 @@ class View:
 
         # draw farmer
         self.farmer_direction()
-        self.WIN.blit(
-            self.farmer_image,
-            (self.farmer.farmer_rect.x, self.farmer.farmer_rect.y),
-        )
+        if (
+            self.farmer_image == self.WATER_LEFT_FARMER
+            or self.farmer_image == self.TILL_LEFT_FARMER
+        ):
+            self.WIN.blit(
+                self.farmer_image,
+                (
+                    self.farmer.farmer_rect.x - self.GROUND_SIZE,
+                    self.farmer.farmer_rect.y,
+                ),
+            )
+        else:
+            self.WIN.blit(
+                self.farmer_image,
+                (self.farmer.farmer_rect.x, self.farmer.farmer_rect.y),
+            )
 
         pygame.display.update()
-        if self.gamestate.is_water:
+        if self.gamestate.is_water or self.gamestate.is_till:
             pygame.time.delay(1000)
             self.gamestate.stop_watering()
+            self.gamestate.stop_tilling()
