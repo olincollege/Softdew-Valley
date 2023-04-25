@@ -163,10 +163,11 @@ class View:
 
     def plant_appearance(self, row, col):
         if self.ground.has_crop(self.ground.get_square(row, col)):
-            if True:  # self.plants.get_species() == "PARSNIP":
-                self.plant_image = self.PARSNIP_IMAGES["PARSNIP_STAGE_1"]
-                #     f"parnsip{self.plants.get_growth_days()}.png"
-                # ]
+            if self.plants.get_species == "PARSNIP":
+                # print(self.plants.growth_days)
+                self.plant_image = self.PARSNIP_IMAGES[
+                    f"PARSNIP_STAGE_{self.plants.growth_days}"
+                ]
 
     def draw_inventory_items(self):
         for idx, item in enumerate(self.inventory.inventory):

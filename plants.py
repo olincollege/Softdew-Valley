@@ -26,11 +26,14 @@ class Plants:
             Ground.land[self.row][self.col].replace("W","") # Square is no longer watered
 
     @property
-    def get_growth_days(self):
+    def growth_days(self):
         """
         Returns the number of days a plant has been growing
         """
         return self._growth_days
+
+    def print_growth_days(self):
+        print(self._growth_days)
 
     @property
     def get_species(self):

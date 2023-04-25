@@ -33,7 +33,6 @@ class GameState:
     def plant_seed(self):
         action_pos = self.get_action_position()
         self.ground.plant_crop(action_pos[0], action_pos[1])
-        self._has_crop = True
 
     def water_ground(self):
         action_pos = self.get_action_position()
