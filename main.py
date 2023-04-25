@@ -35,15 +35,16 @@ def main():
             # if event.type == pygame.KEYDOWN:
             #     if event.key == pygame.K_q:
             #         gamestate.water_ground()
+            # FOR NOW: if the x key is hit, plant a seed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_x:
+                    gamestate.plant_seed()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     equipped_item = inventory.get_equipped_item()
                     if equipped_item is WateringCan:
                         gamestate.water_ground()
-            # FOR NOW: if the x key is hit, plant a seed
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_x:
-                    gamestate.plant_seed()
+
                     if equipped_item is Hoe:
                         gamestate.till_ground()
             if event.type == pygame.MOUSEBUTTONDOWN:
