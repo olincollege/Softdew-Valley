@@ -1,7 +1,6 @@
-from farmer.py import is_watered
+from FarmerClass import Farmer
+from GroundClass import Ground
 import pygame
-
-PARNSIP_IMAGES = {"seed": "parsnipseed.png", "sprout": "parsnipsprout.png", "ready": "parsnipready.png"}
 
 class Plants:
     """
@@ -9,54 +8,64 @@ class Plants:
     given crop from a seed.
     """
 
-    def __init__(self, _growth_stage):
-        self._growth_stage = 0
-        self._species = None
+    def __init__(self, row, col):
+        self._growth_days = 1
+        self._species = "PARSNIP"
+        self.row = row
+        self.col = col
 
-    def grow(self, row, col):
+    def grow(self):
         """
-        If the plant at row, col is watered when sleep is triggered, grow
+        If the plant at row, col is watered when sleep is triggered, grow.
+        This is only intended to be called by the Day class when sleep is 
+        triggered, and will unwater a square where a plant has grown
         """
+        if Farmer.is_watered(self.row, self.col):
+            if self._growth_days < self.harvestable(self._species):
+                self._growth_days += 1 # Increase growth stage
+            Ground.land[self.row][self.col].replace("W","") # Square is no longer watered
 
-        if player_sleeping and is_watered(row, col):
-            self._growth_stage += 1
-
-        pass
-
-    def get_growth_stage(self):
+    @property
+    def get_growth_days(self):
         """
-        Determines the growth stage of any given plant
+        Returns the number of days a plant has been growing
         """
-        pass
+        return self._growth_days
 
-    def get_plant_type(self, row, col):
+    @property
+    def get_species(self):
         """
-        Determines what plant type is in a square
-
-        returns
-            species: a string representing a type of plant
+        Returns the species of a crop
         """
-        pass
-        return species
+        return self._species
+    # def get_plant_type(self, row, col):
+    #     """
+    #     Determines what plant type is in a square
+
+    #     returns
+    #         species: a string representing a type of plant
+    #     """
+    #     pass
+    #     return species
 
 
-    def display_plant(self, CROP_IMAGES):
+    def display_plant(self, CROP_IMAGES, row, col):
         """
         Displays the appropriate image depending on growth stage
         and crop type
         """
-        if self._growth_stage == 1:
-            pygame.display(CROP_IMAGES["seed"])
-        if self._growth_stage == 4:
-            pygame.display(CROP_IMAGES["sprout"])
-        if self._growth_stage == 6:
-            pygame.display(CROP_IMAGES["ready"])
+        pygame.blit(CROP_IMAGES[f"growthstage{self._growth_days}"], (row, col))
 
     def harvestable(self):
         """
         Introduces status "Harvestable" once the plant is ready
+
+        Returns the int number of growth days necessary for a certain plant to
+        be ready
         """
-        pass
+        if self._species == "PARSNIP":
+            return 5
+        return None
             
         
         

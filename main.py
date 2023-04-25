@@ -3,6 +3,7 @@ from FarmerClass import Farmer
 from ViewClass import View
 from GroundClass import Ground
 from GameState import GameState
+from plants import Plants
 
 FPS = 60
 
@@ -11,7 +12,8 @@ def main():
     farmer = Farmer
     ground = Ground()
     gamestate = GameState(farmer, ground)
-    display_farmer = View(farmer, ground, gamestate)
+    plants = Plants
+    display_farmer = View(farmer, ground, gamestate, plants)
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -27,6 +29,10 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     gamestate.water_ground()
+            # FOR NOW: if the x key is hit, plant a seed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_x:
+                    gamestate.plant_seed()
 
         keys_pressed = pygame.key.get_pressed()
         farmer.move(farmer, keys_pressed)
