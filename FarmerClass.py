@@ -64,18 +64,6 @@ class Farmer:
         Harvest fully grown crops and store them in the inventory
         """
 
-    def till_ground(self):
-        """
-        If the hoe is equipped, use it to till the ground in front of the
-        farmer
-        """
-
-    def water_crops(self):
-        """
-        If the watering can is equipped, use it to water crops in front of the
-        farmer
-        """
-
     def add_funds(self, amount):
         """
         Add amount funds to the wallet attribute

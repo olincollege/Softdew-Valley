@@ -124,6 +124,7 @@ class View:
         """
         Get the direction the farmer is facing and change the image displayed
         to match that direction
+        Also match the farmer action
         """
         if self.gamestate.is_water and self.farmer.direction == "down":
             self.farmer_image = self.WATER_FRONT_FARMER
@@ -153,7 +154,10 @@ class View:
             self.farmer_image = self.RIGHT_FARMER
 
     def ground_type(self, row, col):
-        # IGNORING PLANTS FOR NOW
+        """
+        Get the type of square from the Ground class adn display the matching
+        square image
+        """
         if self.ground.is_watered(self.ground.get_square(row, col)):
             self.type_ground = self.WATERED_GROUND
         elif self.ground.is_tilled(self.ground.get_square(row, col)):
@@ -170,6 +174,9 @@ class View:
                 ]
 
     def draw_inventory_items(self):
+        """
+        Draw items into the inventory
+        """
         for idx, item in enumerate(self.inventory.inventory):
             if not isinstance(item, str):  # item type is not a string:
                 self.WIN.blit(
