@@ -8,8 +8,11 @@ class View:
     GROUND_SIZE = 50
     WIDTH, HEIGHT = 900, 500
     WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+    INVENTORY_ITEM_SIZE = 40
 
     WHITE = (255, 255, 255)
+    INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
+    INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
 
     # FARMER SPRITES
     FRONT_FARMER = pygame.transform.scale(
@@ -81,13 +84,20 @@ class View:
         (GROUND_SIZE, GROUND_SIZE),
     )
 
+    # INVENTORY/ITEM SPRITES
+    INVENTORY_SQUARE = pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets", "Inventory_Square.jpg")),
+        (GROUND_SIZE, GROUND_SIZE),
+    )
+
     farmer_image = FRONT_FARMER
     type_ground = FREE_GROUND
 
-    def __init__(self, Farmer, Ground, Gamestate):
+    def __init__(self, Farmer, Ground, Gamestate, Inventory):
         self.farmer = Farmer
         self.ground = Ground
         self.gamestate = Gamestate
+        self.inventory = Inventory
 
     def farmer_direction(self):
         """
@@ -130,6 +140,19 @@ class View:
         else:
             self.type_ground = self.FREE_GROUND
 
+    def draw_inventory_items(self):
+        for idx, item in enumerate(self.inventory.inventory):
+            if not isinstance(item, str):  # item type is not a string:
+                self.WIN.blit(
+                    item.pg_image,
+                    (
+                        self.INVENTORY_START_WIDTH
+                        + (idx * self.GROUND_SIZE)
+                        + 5,
+                        self.INVENTORY_START_HEIGHT + 5,
+                    ),
+                )
+
     def draw_window(self):
         self.WIN.fill(self.WHITE)
 
@@ -139,7 +162,10 @@ class View:
         for j in range(cols):
             for i in range(rows):
                 self.ground_type(i, j)
-                self.WIN.blit(self.type_ground, ((i) * 50, (j) * 50))
+                self.WIN.blit(
+                    self.type_ground,
+                    ((i) * self.GROUND_SIZE, (j) * self.GROUND_SIZE),
+                )
 
         # draw farmer
         self.farmer_direction()
@@ -171,6 +197,16 @@ class View:
                 (self.farmer.farmer_rect.x, self.farmer.farmer_rect.y),
             )
 
+        # draw inventory
+        for i in range(len(self.inventory.inventory)):
+            self.WIN.blit(
+                self.INVENTORY_SQUARE,
+                (
+                    self.INVENTORY_START_WIDTH + (i * self.GROUND_SIZE),
+                    self.INVENTORY_START_HEIGHT,
+                ),
+            )
+        self.draw_inventory_items()
         pygame.display.update()
         if self.gamestate.is_water or self.gamestate.is_till:
             pygame.time.delay(250)

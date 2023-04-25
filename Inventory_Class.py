@@ -19,6 +19,7 @@ class Inventory:
         """
         Initializes _inventory attribute so that it starts as a list of empty
         strings to represent the initial state of the inventory being empty
+        Adds items that the player starts with
         """
         self._inventory = [self.empty_slot for i in range(8)]
         self._inventory[0] = watering_can
@@ -29,7 +30,6 @@ class Inventory:
         """
         Equip the item in the specified inventory slot
         """
-        pass
 
     def add_item(self, slot, item):
         """
@@ -41,4 +41,14 @@ class Inventory:
             item: ?class? representing the item to put in the specified
             inventory spot
         """
-        pass
+
+    def __repr__(self):
+        """for debugging purposes"""
+        return f"{self._inventory}"
+
+    def control_inventory(self):
+        """click the thing and do the thing"""
+
+    @property
+    def inventory(self):
+        return self._inventory

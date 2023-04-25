@@ -3,6 +3,8 @@ from FarmerClass import Farmer
 from ViewClass import View
 from GroundClass import Ground
 from GameState import GameState
+from EquipmentClass import Equipment, WateringCan, Hoe, Seeds
+from Inventory_Class import Inventory
 
 FPS = 60
 
@@ -11,7 +13,11 @@ def main():
     farmer = Farmer
     ground = Ground()
     gamestate = GameState(farmer, ground)
-    display_farmer = View(farmer, ground, gamestate)
+    watering_can = WateringCan(0)
+    hoe = Hoe(1)
+    seeds = Seeds(2)
+    inventory = Inventory(watering_can, hoe, seeds)
+    display_farmer = View(farmer, ground, gamestate, inventory)
     clock = pygame.time.Clock()
     run = True
     while run:
