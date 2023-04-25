@@ -26,14 +26,32 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
             # FOR NOW: if the space key is hit, till the space in front
+            # if event.type == pygame.KEYDOWN:
+            #     if event.key == pygame.K_SPACE:
+            #         gamestate.till_ground()
+            # # FOR NOW: if the q key is hit, water the space in front
+            # if event.type == pygame.KEYDOWN:
+            #     if event.key == pygame.K_q:
+            #         gamestate.water_ground()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    gamestate.till_ground()
-            # FOR NOW: if the q key is hit, water the space in front
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    gamestate.water_ground()
-
+                    equipped_item = inventory.get_equipped_item()
+                    if equipped_item is WateringCan:
+                        gamestate.water_ground()
+                    if equipped_item is Hoe:
+                        gamestate.till_ground()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if (
+                    mouse_pos[0] > View.INVENTORY_START_WIDTH
+                    and mouse_pos[0] < View.INVENTORY_START_WIDTH + 7 * 50
+                ):
+                    if (
+                        mouse_pos[1] > View.INVENTORY_START_HEIGHT
+                        and mouse_pos[1]
+                        < View.INVENTORY_START_HEIGHT + View.GROUND_SIZE
+                    ):
+                        inventory.control_inventory(mouse_pos)
         keys_pressed = pygame.key.get_pressed()
         farmer.move(farmer, keys_pressed)
         display_farmer.draw_window()

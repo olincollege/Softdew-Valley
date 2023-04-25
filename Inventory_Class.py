@@ -1,6 +1,7 @@
 """
 Inventory_Class
 """
+from ViewClass import View
 
 
 class Inventory:
@@ -30,6 +31,16 @@ class Inventory:
         """
         Equip the item in the specified inventory slot
         """
+        item = self._inventory[slot]
+        if not isinstance(item, str):
+            item.equip()
+
+    def get_equipped_item(self):
+        """Return the equipped item of inventory"""
+        for item in self.inventory:
+            if not isinstance(item, str):
+                if item.equipped:
+                    return item
 
     def add_item(self, slot, item):
         """
@@ -46,8 +57,18 @@ class Inventory:
         """for debugging purposes"""
         return f"{self._inventory}"
 
-    def control_inventory(self):
+    def control_inventory(self, mouse_pos):
         """click the thing and do the thing"""
+        mouse_posx = mouse_pos[0]
+        slot = None
+        for i in range(8):
+            if mouse_posx > View.INVENTORY_START_WIDTH + (
+                i * View.GROUND_SIZE
+            ) and mouse_posx < View.INVENTORY_START_WIDTH + (
+                (i + 1) * View.GROUND_SIZE
+            ):
+                slot = i
+        self.equip_item(slot)
 
     @property
     def inventory(self):

@@ -31,6 +31,12 @@ class Equipment:
             (INVENTORY_ITEM_SIZE, INVENTORY_ITEM_SIZE),
         )
 
+    def equip(self):
+        self._equipped = True
+
+    def unequip(self):
+        self._equipped = False
+
     @property
     def equipped(self):
         return self._equipped
