@@ -42,6 +42,13 @@ class Inventory:
                 if item.equipped:
                     return item
 
+    def get_equipped_item_slot(self):
+        """Return the slot of the equipped item"""
+        for idx, item in enumerate(self.inventory):
+            if not isinstance(item, str):
+                if item.equipped:
+                    return idx
+
     def add_item(self, slot, item):
         """
         Function used to add an item to the player's inventory.

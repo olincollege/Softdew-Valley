@@ -11,6 +11,8 @@ class View:
     INVENTORY_ITEM_SIZE = 40
 
     WHITE = (255, 255, 255)
+    RED = (255, 0, 0)
+
     INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
     INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
 
@@ -189,6 +191,19 @@ class View:
                     ),
                 )
 
+    def draw_equipped_square(self):
+        """
+        Draw a rectangle around the equipped inventory slot
+        """
+        equipped_slot = self.inventory.get_equipped_item_slot()
+        if equipped_slot is not None:
+            y_pos = self.INVENTORY_START_HEIGHT
+            x_pos = (
+                self.INVENTORY_START_WIDTH + equipped_slot * self.GROUND_SIZE
+            )
+            rect = pygame.Rect(x_pos, y_pos, self.GROUND_SIZE, self.GROUND_SIZE)
+            pygame.draw.rect(self.WIN, self.RED, rect, 2, border_radius=1)
+
     def draw_window(self):
         self.WIN.fill(self.WHITE)
 
@@ -246,6 +261,7 @@ class View:
                 ),
             )
         self.draw_inventory_items()
+        self.draw_equipped_square()
         pygame.display.update()
         if self.gamestate.is_water or self.gamestate.is_till:
             pygame.time.delay(250)

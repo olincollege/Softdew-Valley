@@ -48,6 +48,8 @@ class GameState:
     def stop_tilling(self):
         self._is_till = False
 
+    # These are for display purposes, it tells the view class to pause while
+    # the action is occuring
     @property
     def is_water(self):
         return self._is_water

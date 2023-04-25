@@ -14,28 +14,50 @@ class Equipment:
         equipped: a boolean that shows whether the item is equipped or not
     """
 
-    def __init__(self, slot):
+    def __init__(self, slot, gamestate):
         self._equipped = False
         self._inventory_slot = slot
         self._pg_image = None
+        self._gamestate = gamestate
 
     def update_inventory_slot(self, new_slot):
         """
         Update the inventory_slot attribute if the item is moved
+
+        Args:
+            new_slot: An int representing the slot the item is being moved to
         """
         self._inventory_slot = new_slot
 
     def update_image(self, link):
+        """
+        Generate the image for an item
+
+        Args:
+            link: A string representing the location of the item image
+        """
         self._pg_image = pygame.transform.scale(
             pygame.image.load(link),
             (INVENTORY_ITEM_SIZE, INVENTORY_ITEM_SIZE),
         )
 
     def equip(self):
+        """
+        Equip an item
+        """
         self._equipped = True
 
     def unequip(self):
+        """
+        Unequip an item
+        """
         self._equipped = False
+
+    def action(self):
+        """
+        Perform the action of an item
+        """
+        pass
 
     @property
     def equipped(self):
@@ -58,11 +80,18 @@ class WateringCan(Equipment):
         inventory_slot: an int that represents the inventory location
     """
 
-    def __init__(self, slot):
+    def __init__(self, slot, gamestate):
         super(Equipment, self).__init__()
         self._equipped = False
         self.update_inventory_slot(slot)
         self.update_image(os.path.join("Assets", "Watering_Can.png"))
+        self._gamestate = gamestate
+
+    def action(self):
+        """
+        Water the ground
+        """
+        self._gamestate.water_ground()
 
 
 class Hoe(Equipment):
@@ -73,11 +102,18 @@ class Hoe(Equipment):
         inventory_slot: an int that represents the inventory location
     """
 
-    def __init__(self, slot):
+    def __init__(self, slot, gamestate):
         super(Equipment, self).__init__()
         self._equipped = False
         self.update_inventory_slot(slot)
         self.update_image(os.path.join("Assets", "Axe.png"))
+        self._gamestate = gamestate
+
+    def action(self):
+        """
+        Till the ground
+        """
+        self._gamestate.till_ground()
 
 
 class Seeds(Equipment):
@@ -88,8 +124,9 @@ class Seeds(Equipment):
         inventory_slot: an int that represents the inventory location
     """
 
-    def __init__(self, slot):
+    def __init__(self, slot, gamestate):
         super(Equipment, self).__init__()
         self._equipped = False
         self.update_inventory_slot(slot)
         self.update_image(os.path.join("Assets", "Parsnip_Seeds.png"))
+        self._gamestate = gamestate

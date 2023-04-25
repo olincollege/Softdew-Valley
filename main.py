@@ -15,9 +15,9 @@ def main():
     ground = Ground()
     gamestate = GameState(farmer, ground)
     plants = Plants
-    watering_can = WateringCan(0)
-    hoe = Hoe(1)
-    seeds = Seeds(2)
+    watering_can = WateringCan(0, gamestate)
+    hoe = Hoe(1, gamestate)
+    seeds = Seeds(2, gamestate)
     inventory = Inventory(watering_can, hoe, seeds)
     display_farmer = View(farmer, ground, gamestate, plants, inventory)
     clock = pygame.time.Clock()
@@ -33,13 +33,9 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     equipped_item = inventory.get_equipped_item()
-                    # make this some inheritance so that we can do item action
-                    # to perform the wanted action
-                    if equipped_item is WateringCan:
-                        gamestate.water_ground()
-
-                    if equipped_item is Hoe:
-                        gamestate.till_ground()
+                    if equipped_item is not None:
+                        # the action function is different for each item
+                        equipped_item.action()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if (
