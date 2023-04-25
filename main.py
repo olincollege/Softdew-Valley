@@ -5,6 +5,7 @@ from GroundClass import Ground
 from GameState import GameState
 from EquipmentClass import Equipment, WateringCan, Hoe, Seeds
 from Inventory_Class import Inventory
+from plants import Plants
 
 FPS = 60
 
@@ -13,11 +14,12 @@ def main():
     farmer = Farmer
     ground = Ground()
     gamestate = GameState(farmer, ground)
+    plants = Plants
     watering_can = WateringCan(0)
     hoe = Hoe(1)
     seeds = Seeds(2)
     inventory = Inventory(watering_can, hoe, seeds)
-    display_farmer = View(farmer, ground, gamestate, inventory)
+    display_farmer = View(farmer, ground, gamestate, plants, inventory)
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -33,6 +35,18 @@ def main():
             # if event.type == pygame.KEYDOWN:
             #     if event.key == pygame.K_q:
             #         gamestate.water_ground()
+            # FOR NOW: if the x key is hit, plant a seed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_x:
+                    gamestate.plant_seed()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    equipped_item = inventory.get_equipped_item()
+                    if equipped_item is WateringCan:
+                        gamestate.water_ground()
+
+                    if equipped_item is Hoe:
+                        gamestate.till_ground()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if (

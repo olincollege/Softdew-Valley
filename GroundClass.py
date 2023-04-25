@@ -47,11 +47,14 @@ class Ground:
         Returns a bool that says whether a square is tilled
         """
         return square == self._tilled_land
+        # shouldn't this be self._tilled_land in square since a square could
+        # potentially be "WT" or something similar?
 
     def has_crop(self, square):
         """
         Returns a bool that says whether a square has a crop on it
         """
+        return self._crop_land in square
 
     def water_square(self, row, col):
         """
@@ -69,3 +72,4 @@ class Ground:
         """
         Update land to have a crop at the row/col
         """
+        self.land[row][col] = self._crop_land

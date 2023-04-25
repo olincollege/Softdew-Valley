@@ -14,6 +14,25 @@ class View:
     INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
     INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
 
+    # PARSNIP SPRITES
+    PARSNIP_IMAGES = {
+        "PARSNIP_STAGE_1": pygame.image.load(
+            os.path.join("Assets", "parsnip1.png")
+        ),
+        "PARSNIP_STAGE_2": pygame.image.load(
+            os.path.join("Assets", "parsnip2.png")
+        ),
+        "PARSNIP_STAGE_3": pygame.image.load(
+            os.path.join("Assets", "parsnip3.png")
+        ),
+        "PARSNIP_STAGE_4": pygame.image.load(
+            os.path.join("Assets", "parsnip4.png")
+        ),
+        "PARSNIP_STAGE_5": pygame.image.load(
+            os.path.join("Assets", "parsnip5.png")
+        ),
+    }
+
     # FARMER SPRITES
     FRONT_FARMER = pygame.transform.scale(
         pygame.image.load(os.path.join("Assets", "Facing_Front.png")),
@@ -92,11 +111,13 @@ class View:
 
     farmer_image = FRONT_FARMER
     type_ground = FREE_GROUND
+    plant_image = None
 
-    def __init__(self, Farmer, Ground, Gamestate, Inventory):
+    def __init__(self, Farmer, Ground, Gamestate, Plants, Inventory):
         self.farmer = Farmer
         self.ground = Ground
         self.gamestate = Gamestate
+        self.plants = Plants
         self.inventory = Inventory
 
     def farmer_direction(self):
@@ -140,6 +161,13 @@ class View:
         else:
             self.type_ground = self.FREE_GROUND
 
+    def plant_appearance(self, row, col):
+        if self.ground.has_crop(self.ground.get_square(row, col)):
+            if True:  # self.plants.get_species() == "PARSNIP":
+                self.plant_image = self.PARSNIP_IMAGES["PARSNIP_STAGE_1"]
+                #     f"parnsip{self.plants.get_growth_days()}.png"
+                # ]
+
     def draw_inventory_items(self):
         for idx, item in enumerate(self.inventory.inventory):
             if not isinstance(item, str):  # item type is not a string:
@@ -156,16 +184,19 @@ class View:
     def draw_window(self):
         self.WIN.fill(self.WHITE)
 
-        # draw ground
+        # draw ground and plants
         rows = self.ground.num_rows
         cols = self.ground.num_cols
         for j in range(cols):
             for i in range(rows):
                 self.ground_type(i, j)
+                self.plant_appearance(i, j)
                 self.WIN.blit(
                     self.type_ground,
                     ((i) * self.GROUND_SIZE, (j) * self.GROUND_SIZE),
                 )
+                if self.plant_image != None:
+                    self.WIN.blit(self.plant_image, ((i) * 50, (j) * 50))
 
         # draw farmer
         self.farmer_direction()
