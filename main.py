@@ -27,21 +27,14 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-            # FOR NOW: if the space key is hit, till the space in front
-            # if event.type == pygame.KEYDOWN:
-            #     if event.key == pygame.K_SPACE:
-            #         gamestate.till_ground()
-            # # FOR NOW: if the q key is hit, water the space in front
-            # if event.type == pygame.KEYDOWN:
-            #     if event.key == pygame.K_q:
-            #         gamestate.water_ground()
-            # FOR NOW: if the x key is hit, plant a seed
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_x:
                     gamestate.plant_seed()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     equipped_item = inventory.get_equipped_item()
+                    # make this some inheritance so that we can do item action
+                    # to perform the wanted action
                     if equipped_item is WateringCan:
                         gamestate.water_ground()
 
