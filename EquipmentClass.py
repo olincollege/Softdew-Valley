@@ -60,6 +60,7 @@ class WateringCan(Equipment):
 
     def __init__(self, slot):
         super(Equipment, self).__init__()
+        self._equipped = False
         self.update_inventory_slot(slot)
         self.update_image(os.path.join("Assets", "Watering_Can.png"))
 
@@ -74,6 +75,7 @@ class Hoe(Equipment):
 
     def __init__(self, slot):
         super(Equipment, self).__init__()
+        self._equipped = False
         self.update_inventory_slot(slot)
         self.update_image(os.path.join("Assets", "Axe.png"))
 
@@ -88,5 +90,6 @@ class Seeds(Equipment):
 
     def __init__(self, slot):
         super(Equipment, self).__init__()
+        self._equipped = False
         self.update_inventory_slot(slot)
         self.update_image(os.path.join("Assets", "Parsnip_Seeds.png"))

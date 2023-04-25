@@ -33,13 +33,6 @@ def main():
             # if event.type == pygame.KEYDOWN:
             #     if event.key == pygame.K_q:
             #         gamestate.water_ground()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    equipped_item = inventory.get_equipped_item()
-                    if equipped_item is WateringCan:
-                        gamestate.water_ground()
-                    if equipped_item is Hoe:
-                        gamestate.till_ground()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if (
@@ -52,6 +45,14 @@ def main():
                         < View.INVENTORY_START_HEIGHT + View.GROUND_SIZE
                     ):
                         inventory.control_inventory(mouse_pos)
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    equipped_item = inventory.get_equipped_item()
+                    print(equipped_item)
+                    if isinstance(equipped_item, WateringCan):
+                        gamestate.water_ground()
+                    if isinstance(equipped_item, Hoe):
+                        gamestate.till_ground()
         keys_pressed = pygame.key.get_pressed()
         farmer.move(farmer, keys_pressed)
         display_farmer.draw_window()

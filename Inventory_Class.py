@@ -59,6 +59,8 @@ class Inventory:
 
     def control_inventory(self, mouse_pos):
         """click the thing and do the thing"""
+        self.get_equipped_item()
+
         mouse_posx = mouse_pos[0]
         slot = None
         for i in range(8):
