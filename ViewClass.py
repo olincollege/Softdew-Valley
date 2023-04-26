@@ -81,6 +81,12 @@ class View:
         (GROUND_SIZE, GROUND_SIZE),
     )
 
+    # HOUSE SPRITE
+    HOUSE_GROUND = pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets", "house_ground.PNG")),
+        (GROUND_SIZE, GROUND_SIZE),
+    )
+
     farmer_image = FRONT_FARMER
     type_ground = FREE_GROUND
 
@@ -140,6 +146,12 @@ class View:
             for i in range(rows):
                 self.ground_type(i, j)
                 self.WIN.blit(self.type_ground, ((i) * 50, (j) * 50))
+        # draw house
+        num_house_rows = 5
+        num_house_cols = 4
+        for k in range(num_house_rows):  # change so not hard coded number
+            for j in range(num_house_cols):
+                self.WIN.blit(self.HOUSE_GROUND, (self.WIDTH - 50 * k, 50 * j))
 
         # draw farmer
         self.farmer_direction()

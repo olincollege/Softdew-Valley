@@ -23,7 +23,7 @@ class Day:
         """
         When the player goes to sleep add a day to day_number
         """
-        pass
+        self._day_number += 1
 
     def fetch_day(self):
         """

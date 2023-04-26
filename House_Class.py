@@ -1,7 +1,7 @@
 """
 House Class
 """
-
+import Day_Class
 
 class House:
     """
@@ -18,11 +18,12 @@ class House:
         Creates house attribute which contains house squares.
         """
 
-        pass
+        self._house = ["H","H","H"] #don't think this is right 
 
     def enter_house(self):
         """
         When the player steps on one of the house squares they "enter" the
         house and that triggers the player to sleep and start a new day.
         """
-        pass
+        if #current_square = self._house  ??not sure 
+            self._day_number = self._day_number + 1
