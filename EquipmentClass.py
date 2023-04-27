@@ -81,11 +81,8 @@ class WateringCan(Equipment):
     """
 
     def __init__(self, slot, gamestate):
-        super(Equipment, self).__init__()
-        self._equipped = False
-        self.update_inventory_slot(slot)
+        super().__init__(slot, gamestate)
         self.update_image(os.path.join("Assets/equipment", "watering_can.png"))
-        self._gamestate = gamestate
 
     def action(self):
         """
@@ -103,11 +100,8 @@ class Hoe(Equipment):
     """
 
     def __init__(self, slot, gamestate):
-        super(Equipment, self).__init__()
-        self._equipped = False
-        self.update_inventory_slot(slot)
+        super().__init__(slot, gamestate)
         self.update_image(os.path.join("Assets/equipment", "hoe.png"))
-        self._gamestate = gamestate
 
     def action(self):
         """
@@ -125,25 +119,22 @@ class Seed(Equipment):
     """
 
     def __init__(self, slot, gamestate, seed_type):
-        super(Equipment, self).__init__()
-        self._equipped = False
+        super().__init__(slot, gamestate)
         self.seed_type = seed_type
-        self.update_inventory_slot(slot)
         self.update_image(
             os.path.join("Assets/seeds", f"{seed_type}_seeds.png")
         )
-        self._gamestate = gamestate
 
     def action(self):
         """
         Plant a seed
         """
         self._gamestate.harvest_crop()
-        self._gamestate.plant_seed()
+        self._gamestate.plant_seed(self.seed_type)
 
 
 class ParsnipSeeds(Seed):
-    """Class respresenting parsnip seeds"""
+    """Class representing parsnip seeds"""
 
     def __init__(self, slot, gamestate):
         super().__init__(slot, gamestate, "parsnip")

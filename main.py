@@ -1,5 +1,6 @@
 import pygame
-import music
+
+# import music
 from FarmerClass import Farmer
 from ViewClass import View
 from GroundClass import Ground
@@ -18,7 +19,7 @@ FPS = 60
 
 
 def main():
-    farmer = Farmer
+    farmer = Farmer  # should probably make this an instance?
     ground = Ground()
     gamestate = GameState(farmer, ground)
     watering_can = WateringCan(0, gamestate)
@@ -30,15 +31,15 @@ def main():
     clock = pygame.time.Clock()
     game_running = True
     pygame.init()
-    music.play_music()
+    # music.play_music()
     pygame.display.set_caption("Super Swag Stardew")
     while game_running:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_running = False
-            if event.type == music.MUSIC_END:
-                music.play_music()
+            # if event.type == music.MUSIC_END:
+            #     music.play_music()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     equipped_item = inventory.get_equipped_item()
@@ -71,16 +72,6 @@ def main():
                             if isinstance(ground.land[i][j], Plants):
                                 ground.land[i][j].grow()
                     ground.unwater_squares()
-                if event.key == pygame.K_SPACE:
-                    equipped_item = inventory.get_equipped_item()
-                    print(equipped_item)
-                    if isinstance(equipped_item, WateringCan):
-                        gamestate.water_ground()
-                    if isinstance(equipped_item, Hoe):
-                        gamestate.till_ground()
-                    if isinstance(equipped_item, Seed):
-                        print(equipped_item.seed_type)
-                        gamestate.plant_seed(equipped_item.seed_type)
 
         keys_pressed = pygame.key.get_pressed()
         farmer.move(farmer, keys_pressed)

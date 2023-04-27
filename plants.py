@@ -11,7 +11,7 @@ class Plants:
     given crop from a seed.
     """
 
-    def __init__(self, row, col, water, species="parsnip"):
+    def __init__(self, row, col, water, species):
         self._growth_stage = 0
         self._growth_days = 0
         self._species = species

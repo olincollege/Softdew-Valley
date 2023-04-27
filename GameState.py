@@ -30,7 +30,7 @@ class GameState:
         self.ground.till_square(action_pos[0], action_pos[1])
         self._is_till = True
 
-    def plant_seed(self, species="parsnip"):
+    def plant_seed(self, species):
         action_pos = self.get_action_position()
         square = self.ground.get_square(action_pos[0], action_pos[1])
         if (
