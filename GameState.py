@@ -33,7 +33,11 @@ class GameState:
     def plant_seed(self, species="parsnip"):
         action_pos = self.get_action_position()
         square = self.ground.get_square(action_pos[0], action_pos[1])
-        if self.ground.is_watered(square) or self.ground.is_tilled(square):
+        if (
+            self.ground.is_watered(square)
+            or self.ground.is_tilled(square)
+            and not isinstance(square, Plants)
+        ):
             ground_watered = self.ground.is_watered(square)
             plant = Plants(
                 action_pos[0], action_pos[1], ground_watered, species
