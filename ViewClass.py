@@ -115,11 +115,10 @@ class View:
     type_ground = FREE_GROUND
     plant_image = None
 
-    def __init__(self, Farmer, Ground, Gamestate, Plants, Inventory):
+    def __init__(self, Farmer, Ground, Gamestate, Inventory):
         self.farmer = Farmer
         self.ground = Ground
         self.gamestate = Gamestate
-        self.plants = Plants
         self.inventory = Inventory
 
     def farmer_direction(self):
@@ -167,12 +166,12 @@ class View:
         else:
             self.type_ground = self.FREE_GROUND
 
-    def plant_appearance(self, row, col):
-        if self.ground.has_crop(self.ground.get_square(row, col)):
-            if self.plants.species == "PARSNIP":
-                self.plant_image = self.PARSNIP_IMAGES[
-                    f"PARSNIP_STAGE_{self.plants.growth_days}"
-                ]
+    # def plant_appearance(self, row, col):
+    #     if self.ground.has_crop(self.ground.get_square(row, col)):
+    #         if self.plants.species == "PARSNIP":
+    #             self.plant_image = self.PARSNIP_IMAGES[
+    #                 f"PARSNIP_STAGE_{self.plants.growth_days}"
+    #             ]
 
     def draw_inventory_items(self):
         """
@@ -212,12 +211,18 @@ class View:
         for j in range(cols):
             for i in range(rows):
                 self.ground_type(i, j)
-                self.plant_appearance(i, j)
+                # self.plant_appearance(i, j)
                 self.WIN.blit(
                     self.type_ground,
                     ((i) * self.GROUND_SIZE, (j) * self.GROUND_SIZE),
                 )
                 if self.ground.has_crop(self.ground.get_square(i, j)):
+                    plant = self.ground.get_square(i, j)
+                    if self.ground.has_crop(self.ground.get_square(i, j)):
+                        if plant.species == "PARSNIP":
+                            self.plant_image = self.PARSNIP_IMAGES[
+                                f"PARSNIP_STAGE_{plant.growth_days}"
+                            ]
                     self.WIN.blit(
                         self.plant_image,
                         ((i) * self.GROUND_SIZE, (j) * self.GROUND_SIZE),

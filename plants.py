@@ -1,4 +1,3 @@
-from GroundClass import Ground
 import pygame
 
 class Plants:
@@ -7,20 +6,24 @@ class Plants:
     given crop from a seed.
     """
 
-    def __init__(self):
+    def __init__(self, row, col, water):
         self._growth_days = 0
         self._species = "PARSNIP"
-        self.ground = Ground
+        self.row = row
+        self.col = col
+        self.water = water
+    
+    def plant_water(self):
+        self.water = True
 
-    def grow(self, row, col):
+    def grow(self):
         """
         If the plant is watered when sleep is triggered, grow.
         This is only intended to be called by the Day class when sleep is 
         triggered.
         """
-        if "C" in self.ground.get_square(row, col) and "W" in self.ground.get_square(row, col):
-            if self._growth_days < self.harvestable(self._species):
-                self._growth_days += 1 # Increase growth stage
+        if self._growth_days < self.harvestable() and self.water:
+            self._growth_days += 1 # Increase growth stage
 
     @property
     def growth_days(self):

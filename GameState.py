@@ -1,5 +1,6 @@
 from GroundClass import Ground
 from FarmerClass import Farmer
+from plants import Plants
 
 
 class GameState:
@@ -33,15 +34,19 @@ class GameState:
         action_pos = self.get_action_position()
         square = self.ground.get_square(action_pos[0], action_pos[1])
         if self.ground.is_watered(square) or self.ground.is_tilled(square):
-            self.ground.plant_crop(action_pos[0], action_pos[1])
+            ground_watered = self.ground.is_watered(square)
+            plant = Plants(action_pos[0], action_pos[1], ground_watered)
+            self.ground.plant_crop(action_pos[0], action_pos[1], plant)
 
     def water_ground(self):
         action_pos = self.get_action_position()
-        if self.ground.is_tilled(
-            self.ground.get_square(action_pos[0], action_pos[1])
-        ):
+        square = self.ground.get_square(action_pos[0], action_pos[1])
+        if self.ground.is_tilled(square):
             self.ground.water_square(action_pos[0], action_pos[1])
             self._is_water = True
+
+        if isinstance(square, Plants):
+            square.plant_water()
 
     def stop_watering(self):
         self._is_water = False

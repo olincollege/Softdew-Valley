@@ -14,12 +14,11 @@ def main():
     farmer = Farmer
     ground = Ground()
     gamestate = GameState(farmer, ground)
-    plants = Plants()
     watering_can = WateringCan(0, gamestate)
     hoe = Hoe(1, gamestate)
     seeds = Seeds(2, gamestate)
     inventory = Inventory(watering_can, hoe, seeds)
-    display_farmer = View(farmer, ground, gamestate, plants, inventory)
+    display_farmer = View(farmer, ground, gamestate, inventory)
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -49,8 +48,13 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     print("you hit p")
+                    rows = ground.num_rows
+                    cols = ground.num_cols
+                    for j in range(cols):
+                        for i in range(rows):
+                            if isinstance(ground.land[i][j], Plants):
+                                ground.land[i][j].grow()
                     ground.unwater_squares()
-                    # plants.grow()
                 if event.key == pygame.K_SPACE:
                     equipped_item = inventory.get_equipped_item()
                     print(equipped_item)
