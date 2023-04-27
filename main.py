@@ -3,7 +3,13 @@ from FarmerClass import Farmer
 from ViewClass import View
 from GroundClass import Ground
 from GameState import GameState
-from EquipmentClass import Equipment, WateringCan, Hoe, Seeds
+from EquipmentClass import (
+    WateringCan,
+    Hoe,
+    Seed,
+    ParsnipSeeds,
+    CauliflowerSeeds,
+)
 from Inventory_Class import Inventory
 from plants import Plants
 
@@ -16,16 +22,18 @@ def main():
     gamestate = GameState(farmer, ground)
     watering_can = WateringCan(0, gamestate)
     hoe = Hoe(1, gamestate)
-    seeds = Seeds(2, gamestate)
-    inventory = Inventory(watering_can, hoe, seeds)
+    parsnipseeds = ParsnipSeeds(2, gamestate)
+    cauliflowerseeds = CauliflowerSeeds(3, gamestate)
+    inventory = Inventory(watering_can, hoe, parsnipseeds, cauliflowerseeds)
     display_farmer = View(farmer, ground, gamestate, inventory)
     clock = pygame.time.Clock()
-    run = True
-    while run:
+    game_running = True
+    pygame.display.set_caption("Super Swag Stardew")
+    while game_running:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
+                game_running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     equipped_item = inventory.get_equipped_item()
@@ -65,8 +73,9 @@ def main():
                         gamestate.water_ground()
                     if isinstance(equipped_item, Hoe):
                         gamestate.till_ground()
-                    if isinstance(equipped_item, Seeds):
-                        gamestate.plant_seed()
+                    if isinstance(equipped_item, Seed):
+                        print(equipped_item.seed_type)
+                        gamestate.plant_seed(equipped_item.seed_type)
 
         keys_pressed = pygame.key.get_pressed()
         farmer.move(farmer, keys_pressed)
