@@ -156,8 +156,7 @@ class View:
             else False
         )
 
-        image = direction_map[(self.farmer.direction, tile_value)]
-        self.farmer_image = image
+        self.farmer_image = direction_map[(self.farmer.direction, tile_value)]
 
         # if self.gamestate.is_water and self.farmer.direction == "down":
         #     self.farmer_image = self.WATER_FRONT_FARMER
