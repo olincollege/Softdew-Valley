@@ -18,6 +18,7 @@ class View:
 
     # PARSNIP SPRITES
     PARSNIP_IMAGES = {
+        # Put parsnips in folder and index folder instead of this dictionary, repeat for all plants
         "PARSNIP_STAGE_0": pygame.image.load(
             os.path.join("Assets", "parsnip0.png")
         ),
@@ -220,8 +221,13 @@ class View:
                     plant = self.ground.get_square(i, j)
                     if self.ground.has_crop(self.ground.get_square(i, j)):
                         if plant.species == "PARSNIP":
+                            # unhardcode this
+                            if plant.growth_days < 5:
+                                parsnip_index = plant.growth_days
+                            else:
+                                parsnip_index = 4
                             self.plant_image = self.PARSNIP_IMAGES[
-                                f"PARSNIP_STAGE_{plant.growth_days}"
+                                f"PARSNIP_STAGE_{parsnip_index}"
                             ]
                     self.WIN.blit(
                         self.plant_image,

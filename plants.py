@@ -22,7 +22,7 @@ class Plants:
         This is only intended to be called by the Day class when sleep is 
         triggered.
         """
-        if self._growth_days < self.harvestable() and self.water:
+        if self.water:
             self._growth_days += 1 # Increase growth stage
 
     @property
