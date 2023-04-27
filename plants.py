@@ -54,15 +54,6 @@ class Plants:
         Returns the species of a crop
         """
         return self._species
-    # def get_plant_type(self, row, col):
-    #     """
-    #     Determines what plant type is in a square
-
-    #     returns
-    #         species: a string representing a type of plant
-    #     """
-    #     pass
-    #     return species
             
         
         
