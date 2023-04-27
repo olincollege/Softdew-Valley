@@ -16,23 +16,29 @@ class View:
     INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
     INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
 
-    # # FARMER SPRITES
-    # FRONT_FARMER = pygame.transform.scale(
-    #     pygame.image.load(os.path.join("Assets", "Facing_Front.png")),
-    #     (FARMER_WIDTH, FARMER_HEIGHT),
-    # )
-    # BACK_FARMER = pygame.transform.scale(
-    #     pygame.image.load(os.path.join("Assets", "Facing_Back.png")),
-    #     (FARMER_WIDTH, FARMER_HEIGHT),
-    # )
-    # RIGHT_FARMER = pygame.transform.scale(
-    #     pygame.image.load(os.path.join("Assets", "Facing_Right.png")),
-    #     (FARMER_WIDTH, FARMER_HEIGHT),
-    # )
-    # LEFT_FARMER = pygame.transform.scale(
-    #     pygame.image.load(os.path.join("Assets", "Facing_Left.png")),
-    #     (FARMER_WIDTH, FARMER_HEIGHT),
-    # )
+    # FARMER SPRITES
+    FRONT_FARMER = pygame.transform.scale(
+        pygame.image.load(
+            os.path.join("Assets/idle_farmer", "facing_down.png")
+        ),
+        (FARMER_WIDTH, FARMER_HEIGHT),
+    )
+    BACK_FARMER = pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets/idle_farmer", "facing_up.png")),
+        (FARMER_WIDTH, FARMER_HEIGHT),
+    )
+    RIGHT_FARMER = pygame.transform.scale(
+        pygame.image.load(
+            os.path.join("Assets/idle_farmer", "facing_right.png")
+        ),
+        (FARMER_WIDTH, FARMER_HEIGHT),
+    )
+    LEFT_FARMER = pygame.transform.scale(
+        pygame.image.load(
+            os.path.join("Assets/idle_farmer", "facing_left.png")
+        ),
+        (FARMER_WIDTH, FARMER_HEIGHT),
+    )
 
     # FARMER WATERING SPRITES
     WATER_FRONT_FARMER = pygame.transform.scale(
@@ -126,25 +132,16 @@ class View:
         """
         if self.farmer.direction not in ["up", "down", "left", "right"]:
             self.farmer.direction = "down"
-        IDLE_FARMER = pygame.transform.scale(
-            pygame.image.load(
-                os.path.join(
-                    "Assets/idle_farmer",
-                    f"facing_{self.farmer.direction}.png",
-                )
-            ),
-            (self.FARMER_WIDTH, self.FARMER_HEIGHT),
-        )
 
         direction_map = {
             ("down", "water"): self.WATER_FRONT_FARMER,
             ("up", "water"): self.WATER_BACK_FARMER,
             ("right", "water"): self.WATER_RIGHT_FARMER,
             ("left", "water"): self.WATER_LEFT_FARMER,
-            ("down", False): IDLE_FARMER,
-            ("up", False): IDLE_FARMER,
-            ("right", False): IDLE_FARMER,
-            ("left", False): IDLE_FARMER,
+            ("down", False): self.FRONT_FARMER,
+            ("up", False): self.BACK_FARMER,
+            ("right", False): self.RIGHT_FARMER,
+            ("left", False): self.LEFT_FARMER,
             ("down", "till"): self.TILL_FRONT_FARMER,
             ("up", "till"): self.TILL_BACK_FARMER,
             ("right", "till"): self.TILL_RIGHT_FARMER,
