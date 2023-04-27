@@ -32,6 +32,9 @@ def main():
                     if equipped_item is not None:
                         # the action function is different for each item
                         equipped_item.action()
+                for i in range(1, 9):
+                    if event.key == getattr(pygame, f"K_{i}"):
+                        inventory.control_inventory(num=i - 1)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if (

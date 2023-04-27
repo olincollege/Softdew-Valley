@@ -1,5 +1,11 @@
 import pygame
 
+# Cauliflower growth cycle
+cauliflower = [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5]
+parsnip = [0, 1, 2, 3, 4]
+
+
+
 class Plants:
     """
     This parent class is responsible for keeping track of the state of any
@@ -7,8 +13,9 @@ class Plants:
     """
 
     def __init__(self, row, col, water):
+        self._growth_stage = 0
         self._growth_days = 0
-        self._species = "PARSNIP"
+        self._species = "parsnip"
         self.row = row
         self.col = col
         self.water = water
@@ -23,17 +30,24 @@ class Plants:
         triggered.
         """
         if self.water:
-            self._growth_days += 1 # Increase growth stage
+            if self._species == "parsnip":
+                self._growth_stage += 1 # Increase growth stage
+            if self._species == "cauliflower":
+                self._growth_days += 1
+                try: self._growth_stage = cauliflower[self._growth_days]
+                except IndexError:
+                    self._growth_stage = cauliflower[-1]
+
 
     @property
-    def growth_days(self):
+    def growth_stage(self):
         """
-        Returns the number of days a plant has been growing
+        Returns the plant's growth stage
         """
-        return self._growth_days
+        return self._growth_stage
 
-    def print_growth_days(self):
-        print(self._growth_days)
+    # def print_growth_stage(self):
+    #     print(self._growth_stage)
 
     @property
     def species(self):
@@ -50,17 +64,6 @@ class Plants:
     #     """
     #     pass
     #     return species
-
-    def harvestable(self):
-        """
-        Introduces status "Harvestable" once the plant is ready
-
-        Returns the int number of growth days necessary for a certain plant to
-        be ready
-        """
-        if self._species == "PARSNIP":
-            return 5
-        return None
             
         
         

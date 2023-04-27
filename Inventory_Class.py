@@ -64,21 +64,22 @@ class Inventory:
         """for debugging purposes"""
         return f"{self._inventory}"
 
-    def control_inventory(self, mouse_pos):
+    def control_inventory(self, mouse_pos=None, num=None):
         """click the thing and do the thing"""
         current_item = self.get_equipped_item()
         if current_item is not None:
             current_item.unequip()
+        slot = num
+        if mouse_pos is not None:
+            mouse_posx = mouse_pos[0]
+            for i in range(8):
+                if mouse_posx > View.INVENTORY_START_WIDTH + (
+                    i * View.GROUND_SIZE
+                ) and mouse_posx < View.INVENTORY_START_WIDTH + (
+                    (i + 1) * View.GROUND_SIZE
+                ):
+                    slot = i
 
-        mouse_posx = mouse_pos[0]
-        slot = None
-        for i in range(8):
-            if mouse_posx > View.INVENTORY_START_WIDTH + (
-                i * View.GROUND_SIZE
-            ) and mouse_posx < View.INVENTORY_START_WIDTH + (
-                (i + 1) * View.GROUND_SIZE
-            ):
-                slot = i
         self.equip_item(slot)
 
     @property

@@ -16,26 +16,6 @@ class View:
     INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
     INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
 
-    # PARSNIP SPRITES
-    PARSNIP_IMAGES = {
-        # Put parsnips in folder and index folder instead of this dictionary, repeat for all plants
-        "PARSNIP_STAGE_0": pygame.image.load(
-            os.path.join("Assets", "parsnip0.png")
-        ),
-        "PARSNIP_STAGE_1": pygame.image.load(
-            os.path.join("Assets", "parsnip1.png")
-        ),
-        "PARSNIP_STAGE_2": pygame.image.load(
-            os.path.join("Assets", "parsnip2.png")
-        ),
-        "PARSNIP_STAGE_3": pygame.image.load(
-            os.path.join("Assets", "parsnip3.png")
-        ),
-        "PARSNIP_STAGE_4": pygame.image.load(
-            os.path.join("Assets", "parsnip4.png")
-        ),
-    }
-
     # FARMER SPRITES
     FRONT_FARMER = pygame.transform.scale(
         pygame.image.load(os.path.join("Assets", "Facing_Front.png")),
@@ -171,7 +151,7 @@ class View:
     #     if self.ground.has_crop(self.ground.get_square(row, col)):
     #         if self.plants.species == "PARSNIP":
     #             self.plant_image = self.PARSNIP_IMAGES[
-    #                 f"PARSNIP_STAGE_{self.plants.growth_days}"
+    #                 f"PARSNIP_STAGE_{self.plants.growth_stage}"
     #             ]
 
     def draw_inventory_items(self):
@@ -220,15 +200,13 @@ class View:
                 if self.ground.has_crop(self.ground.get_square(i, j)):
                     plant = self.ground.get_square(i, j)
                     if self.ground.has_crop(self.ground.get_square(i, j)):
-                        if plant.species == "PARSNIP":
-                            # unhardcode this
-                            if plant.growth_days < 5:
-                                parsnip_index = plant.growth_days
-                            else:
-                                parsnip_index = 4
-                            self.plant_image = self.PARSNIP_IMAGES[
-                                f"PARSNIP_STAGE_{parsnip_index}"
-                            ]
+                        plant_index = plant.growth_stage
+                        self.plant_image = pygame.image.load(
+                            os.path.join(
+                                f"Assets/{plant.species}",
+                                f"{plant.species}{plant_index}.png",
+                            )
+                        )
                     self.WIN.blit(
                         self.plant_image,
                         ((i) * self.GROUND_SIZE, (j) * self.GROUND_SIZE),
