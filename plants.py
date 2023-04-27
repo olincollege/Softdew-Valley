@@ -1,4 +1,3 @@
-from FarmerClass import Farmer
 from GroundClass import Ground
 import pygame
 
@@ -8,22 +7,20 @@ class Plants:
     given crop from a seed.
     """
 
-    def __init__(self, row, col):
-        self._growth_days = 1
+    def __init__(self):
+        self._growth_days = 0
         self._species = "PARSNIP"
-        self.row = row
-        self.col = col
+        self.ground = Ground
 
-    def grow(self):
+    def grow(self, row, col):
         """
-        If the plant at row, col is watered when sleep is triggered, grow.
+        If the plant is watered when sleep is triggered, grow.
         This is only intended to be called by the Day class when sleep is 
-        triggered, and will unwater a square where a plant has grown
+        triggered.
         """
-        if Farmer.is_watered(self.row, self.col):
+        if "C" in self.ground.get_square(row, col) and "W" in self.ground.get_square(row, col):
             if self._growth_days < self.harvestable(self._species):
                 self._growth_days += 1 # Increase growth stage
-            Ground.land[self.row][self.col].replace("W","") # Square is no longer watered
 
     @property
     def growth_days(self):
@@ -36,7 +33,7 @@ class Plants:
         print(self._growth_days)
 
     @property
-    def get_species(self):
+    def species(self):
         """
         Returns the species of a crop
         """
@@ -50,14 +47,6 @@ class Plants:
     #     """
     #     pass
     #     return species
-
-
-    def display_plant(self, CROP_IMAGES, row, col):
-        """
-        Displays the appropriate image depending on growth stage
-        and crop type
-        """
-        pygame.blit(CROP_IMAGES[f"growthstage{self._growth_days}"], (row, col))
 
     def harvestable(self):
         """

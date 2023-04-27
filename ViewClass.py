@@ -18,6 +18,9 @@ class View:
 
     # PARSNIP SPRITES
     PARSNIP_IMAGES = {
+        "PARSNIP_STAGE_0": pygame.image.load(
+            os.path.join("Assets", "parsnip0.png")
+        ),
         "PARSNIP_STAGE_1": pygame.image.load(
             os.path.join("Assets", "parsnip1.png")
         ),
@@ -29,9 +32,6 @@ class View:
         ),
         "PARSNIP_STAGE_4": pygame.image.load(
             os.path.join("Assets", "parsnip4.png")
-        ),
-        "PARSNIP_STAGE_5": pygame.image.load(
-            os.path.join("Assets", "parsnip5.png")
         ),
     }
 
@@ -169,8 +169,7 @@ class View:
 
     def plant_appearance(self, row, col):
         if self.ground.has_crop(self.ground.get_square(row, col)):
-            if self.plants.get_species == "PARSNIP":
-                # print(self.plants.growth_days)
+            if self.plants.species == "PARSNIP":
                 self.plant_image = self.PARSNIP_IMAGES[
                     f"PARSNIP_STAGE_{self.plants.growth_days}"
                 ]
@@ -218,8 +217,11 @@ class View:
                     self.type_ground,
                     ((i) * self.GROUND_SIZE, (j) * self.GROUND_SIZE),
                 )
-                if self.plant_image != None:
-                    self.WIN.blit(self.plant_image, ((i) * 50, (j) * 50))
+                if self.ground.has_crop(self.ground.get_square(i, j)):
+                    self.WIN.blit(
+                        self.plant_image,
+                        ((i) * self.GROUND_SIZE, (j) * self.GROUND_SIZE),
+                    )
 
         # draw farmer
         self.farmer_direction()

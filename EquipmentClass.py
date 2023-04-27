@@ -106,7 +106,7 @@ class Hoe(Equipment):
         super(Equipment, self).__init__()
         self._equipped = False
         self.update_inventory_slot(slot)
-        self.update_image(os.path.join("Assets", "Axe.png"))
+        self.update_image(os.path.join("Assets", "Hoe.png"))
         self._gamestate = gamestate
 
     def action(self):
@@ -130,3 +130,9 @@ class Seeds(Equipment):
         self.update_inventory_slot(slot)
         self.update_image(os.path.join("Assets", "Parsnip_Seeds.png"))
         self._gamestate = gamestate
+
+    def action(self):
+        """
+        Plant a seed
+        """
+        self._gamestate.plant_seed()

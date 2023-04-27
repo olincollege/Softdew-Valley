@@ -8,7 +8,6 @@ class GameState:
         self.ground = Ground
         self._is_water = False
         self._is_till = False
-        self._is_crop = False
 
     def get_action_position(self):
         pos = self.farmer.position
@@ -32,7 +31,9 @@ class GameState:
 
     def plant_seed(self):
         action_pos = self.get_action_position()
-        self.ground.plant_crop(action_pos[0], action_pos[1])
+        square = self.ground.get_square(action_pos[0], action_pos[1])
+        if self.ground.is_watered(square) or self.ground.is_tilled(square):
+            self.ground.plant_crop(action_pos[0], action_pos[1])
 
     def water_ground(self):
         action_pos = self.get_action_position()
@@ -57,7 +58,3 @@ class GameState:
     @property
     def is_till(self):
         return self._is_till
-
-    @property
-    def has_crop(self):
-        return self._has_crop

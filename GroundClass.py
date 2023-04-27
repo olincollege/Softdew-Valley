@@ -20,6 +20,7 @@ class Ground:
     _tilled_land = "T"
     _crop_land = "C"
     _watered_land = "W"
+
     num_rows = WIDTH // SQUARE_SIZE
     num_cols = HEIGHT // SQUARE_SIZE
     land = []
@@ -40,15 +41,13 @@ class Ground:
         """
         Returns a bool that says whether a square is watered
         """
-        return square == self._watered_land
+        return self._watered_land in square
 
     def is_tilled(self, square):
         """
         Returns a bool that says whether a square is tilled
         """
-        return square == self._tilled_land
-        # shouldn't this be self._tilled_land in square since a square could
-        # potentially be "WT" or something similar?
+        return self._tilled_land in square
 
     def has_crop(self, square):
         """
@@ -60,7 +59,17 @@ class Ground:
         """
         Update land to have a watered square at the row/col
         """
-        self.land[row][col] = self._watered_land
+        if not self.is_watered(self.land[row][col]):
+            self.land[row][col] += self._watered_land
+
+    def unwater_squares(self):
+        """
+        Update watered crop land to revert the square back to tilled
+        """
+        for i in range(self.num_cols):
+            for j in range(self.num_rows):
+                if "C" in self.land[j][i]:
+                    self.land[j][i] = self.land[j][i].replace("W", "T")
 
     def til_square(self, row, col):
         """
@@ -72,4 +81,5 @@ class Ground:
         """
         Update land to have a crop at the row/col
         """
-        self.land[row][col] = self._crop_land
+        if not self.has_crop(self.land[row][col]):
+            self.land[row][col] += self._crop_land
