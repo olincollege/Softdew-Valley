@@ -44,6 +44,19 @@ class GameState:
             )
             self.ground.plant_crop(action_pos[0], action_pos[1], plant)
 
+    def harvest_crop(self):
+        print("it's really in the ground")
+        action_pos = self.get_action_position()
+        square = self.ground.get_square(action_pos[0], action_pos[1])
+        if isinstance(square, Plants):
+            print("i am successfully seeing a plant in a square")
+            print(square.harvestable)  # for some reason won't
+            print(square.growth_stage)
+            if square.harvestable:
+                print("it's a harvestable plant")
+                self.ground.harvest(square)
+            # add the crop to inventory here
+
     def water_ground(self):
         action_pos = self.get_action_position()
         square = self.ground.get_square(action_pos[0], action_pos[1])

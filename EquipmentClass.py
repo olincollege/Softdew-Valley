@@ -138,6 +138,7 @@ class Seed(Equipment):
         """
         Plant a seed
         """
+        self._gamestate.harvest_crop()
         self._gamestate.plant_seed()
 
 

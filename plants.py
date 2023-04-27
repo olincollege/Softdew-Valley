@@ -18,12 +18,14 @@ class Plants:
         self.row = row
         self.col = col
         self.water = water
+        self._harvestable = False
     
     def plant_water(self):
         """
         Sets the water attribute of a specific plant instance to true
         """
         self.water = True
+
 
     def grow(self):
         """
@@ -36,8 +38,15 @@ class Plants:
             try: self._growth_stage = plant_dictionary[self._species][self._growth_days]
             except IndexError:
                 self._growth_stage = plant_dictionary[self._species][-1]
+                self._harvestable = True
 
-
+    @property
+    def harvestable(self):
+        """
+        Returns whether a plant can be harvested
+        """
+        return self._harvestable
+    
     @property
     def growth_stage(self):
         """
