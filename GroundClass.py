@@ -90,3 +90,7 @@ class Ground:
         Update land to have a crop at the row/col
         """
         self.land[row][col] = plant
+
+    def harvest(self, square):
+        # square.species
+        square = "W" if square.water else "T"
