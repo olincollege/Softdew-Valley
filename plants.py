@@ -1,8 +1,7 @@
 import pygame
 
-# Cauliflower growth cycle
-cauliflower = [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5]
-parsnip = [0, 1, 2, 3, 4]
+# Crop growth cycle dictionary
+plant_dictionary = {"cauliflower": [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5], "parsnip" : [0, 1, 2, 3, 4]}
 
 
 
@@ -12,15 +11,18 @@ class Plants:
     given crop from a seed.
     """
 
-    def __init__(self, row, col, water):
+    def __init__(self, row, col, water, species="parsnip"):
         self._growth_stage = 0
         self._growth_days = 0
-        self._species = "parsnip"
+        self._species = species
         self.row = row
         self.col = col
         self.water = water
     
     def plant_water(self):
+        """
+        Sets the water attribute of a specific plant instance to true
+        """
         self.water = True
 
     def grow(self):
@@ -30,13 +32,10 @@ class Plants:
         triggered.
         """
         if self.water:
-            if self._species == "parsnip":
-                self._growth_stage += 1 # Increase growth stage
-            if self._species == "cauliflower":
-                self._growth_days += 1
-                try: self._growth_stage = cauliflower[self._growth_days]
-                except IndexError:
-                    self._growth_stage = cauliflower[-1]
+            self._growth_days += 1
+            try: self._growth_stage = plant_dictionary[self._species][self._growth_days]
+            except IndexError:
+                self._growth_stage = plant_dictionary[self._species][-1]
 
 
     @property

@@ -27,15 +27,17 @@ class GameState:
 
     def till_ground(self):
         action_pos = self.get_action_position()
-        self.ground.til_square(action_pos[0], action_pos[1])
+        self.ground.till_square(action_pos[0], action_pos[1])
         self._is_till = True
 
-    def plant_seed(self):
+    def plant_seed(self, species="parsnip"):
         action_pos = self.get_action_position()
         square = self.ground.get_square(action_pos[0], action_pos[1])
         if self.ground.is_watered(square) or self.ground.is_tilled(square):
             ground_watered = self.ground.is_watered(square)
-            plant = Plants(action_pos[0], action_pos[1], ground_watered)
+            plant = Plants(
+                action_pos[0], action_pos[1], ground_watered, species
+            )
             self.ground.plant_crop(action_pos[0], action_pos[1], plant)
 
     def water_ground(self):

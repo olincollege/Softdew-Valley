@@ -82,7 +82,7 @@ class Ground:
                 if isinstance(self.land[i][j], Plants):
                     self.land[i][j].water = False
 
-    def til_square(self, row, col):
+    def till_square(self, row, col):
         """
         Update land to have a tilled square at the row/col
         """

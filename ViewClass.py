@@ -16,23 +16,23 @@ class View:
     INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
     INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
 
-    # FARMER SPRITES
-    FRONT_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Facing_Front.png")),
-        (FARMER_WIDTH, FARMER_HEIGHT),
-    )
-    BACK_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Facing_Back.png")),
-        (FARMER_WIDTH, FARMER_HEIGHT),
-    )
-    RIGHT_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Facing_Right.png")),
-        (FARMER_WIDTH, FARMER_HEIGHT),
-    )
-    LEFT_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Facing_Left.png")),
-        (FARMER_WIDTH, FARMER_HEIGHT),
-    )
+    # # FARMER SPRITES
+    # FRONT_FARMER = pygame.transform.scale(
+    #     pygame.image.load(os.path.join("Assets", "Facing_Front.png")),
+    #     (FARMER_WIDTH, FARMER_HEIGHT),
+    # )
+    # BACK_FARMER = pygame.transform.scale(
+    #     pygame.image.load(os.path.join("Assets", "Facing_Back.png")),
+    #     (FARMER_WIDTH, FARMER_HEIGHT),
+    # )
+    # RIGHT_FARMER = pygame.transform.scale(
+    #     pygame.image.load(os.path.join("Assets", "Facing_Right.png")),
+    #     (FARMER_WIDTH, FARMER_HEIGHT),
+    # )
+    # LEFT_FARMER = pygame.transform.scale(
+    #     pygame.image.load(os.path.join("Assets", "Facing_Left.png")),
+    #     (FARMER_WIDTH, FARMER_HEIGHT),
+    # )
 
     # FARMER WATERING SPRITES
     WATER_FRONT_FARMER = pygame.transform.scale(
@@ -92,7 +92,7 @@ class View:
         (GROUND_SIZE, GROUND_SIZE),
     )
 
-    farmer_image = FRONT_FARMER
+    # farmer_image = FRONT_FARMER
     type_ground = FREE_GROUND
     plant_image = None
 
@@ -108,32 +108,67 @@ class View:
         to match that direction
         Also match the farmer action
         """
-        if self.gamestate.is_water and self.farmer.direction == "down":
-            self.farmer_image = self.WATER_FRONT_FARMER
-        elif self.gamestate.is_water and self.farmer.direction == "up":
-            self.farmer_image = self.WATER_BACK_FARMER
-        elif self.gamestate.is_water and self.farmer.direction == "right":
-            self.farmer_image = self.WATER_RIGHT_FARMER
-        elif self.gamestate.is_water and self.farmer.direction == "left":
-            self.farmer_image = self.WATER_LEFT_FARMER
+        if self.farmer.direction not in ["up", "down", "left", "right"]:
+            self.farmer.direction = "down"
+        IDLE_FARMER = pygame.transform.scale(
+            pygame.image.load(
+                os.path.join("Assets", f"facing_{self.farmer.direction}.png")
+            ),
+            (self.FARMER_WIDTH, self.FARMER_HEIGHT),
+        )
 
-        elif self.gamestate.is_till and self.farmer.direction == "down":
-            self.farmer_image = self.TILL_FRONT_FARMER
-        elif self.gamestate.is_till and self.farmer.direction == "up":
-            self.farmer_image = self.TILL_BACK_FARMER
-        elif self.gamestate.is_till and self.farmer.direction == "right":
-            self.farmer_image = self.TILL_RIGHT_FARMER
-        elif self.gamestate.is_till and self.farmer.direction == "left":
-            self.farmer_image = self.TILL_LEFT_FARMER
+        direction_map = {
+            ("down", "water"): self.WATER_FRONT_FARMER,
+            ("up", "water"): self.WATER_BACK_FARMER,
+            ("right", "water"): self.WATER_RIGHT_FARMER,
+            ("left", "water"): self.WATER_LEFT_FARMER,
+            ("down", False): IDLE_FARMER,
+            ("up", False): IDLE_FARMER,
+            ("right", False): IDLE_FARMER,
+            ("left", False): IDLE_FARMER,
+            ("down", "till"): self.TILL_FRONT_FARMER,
+            ("up", "till"): self.TILL_BACK_FARMER,
+            ("right", "till"): self.TILL_RIGHT_FARMER,
+            ("left", "till"): self.TILL_LEFT_FARMER,
+        }
 
-        elif self.farmer.direction == "down":
-            self.farmer_image = self.FRONT_FARMER
-        elif self.farmer.direction == "up":
-            self.farmer_image = self.BACK_FARMER
-        elif self.farmer.direction == "left":
-            self.farmer_image = self.LEFT_FARMER
-        elif self.farmer.direction == "right":
-            self.farmer_image = self.RIGHT_FARMER
+        tile_value = (
+            "water"
+            if self.gamestate.is_water
+            else "till"
+            if self.gamestate.is_till
+            else False
+        )
+
+        image = direction_map[(self.farmer.direction, tile_value)]
+        self.farmer_image = image
+
+        # if self.gamestate.is_water and self.farmer.direction == "down":
+        #     self.farmer_image = self.WATER_FRONT_FARMER
+        # elif self.gamestate.is_water and self.farmer.direction == "up":
+        #     self.farmer_image = self.WATER_BACK_FARMER
+        # elif self.gamestate.is_water and self.farmer.direction == "right":
+        #     self.farmer_image = self.WATER_RIGHT_FARMER
+        # elif self.gamestate.is_water and self.farmer.direction == "left":
+        #     self.farmer_image = self.WATER_LEFT_FARMER
+
+        # elif self.gamestate.is_till and self.farmer.direction == "down":
+        #     self.farmer_image = self.TILL_FRONT_FARMER
+        # elif self.gamestate.is_till and self.farmer.direction == "up":
+        #     self.farmer_image = self.TILL_BACK_FARMER
+        # elif self.gamestate.is_till and self.farmer.direction == "right":
+        #     self.farmer_image = self.TILL_RIGHT_FARMER
+        # elif self.gamestate.is_till and self.farmer.direction == "left":
+        #     self.farmer_image = self.TILL_LEFT_FARMER
+
+        # elif self.farmer.direction == "down":
+        #     self.farmer_image = self.FRONT_FARMER
+        # elif self.farmer.direction == "up":
+        #     self.farmer_image = self.BACK_FARMER
+        # elif self.farmer.direction == "left":
+        #     self.farmer_image = self.LEFT_FARMER
+        # elif self.farmer.direction == "right":
+        #     self.farmer_image = self.RIGHT_FARMER
 
     def ground_type(self, row, col):
         """
@@ -146,13 +181,6 @@ class View:
             self.type_ground = self.TILLED_GROUND
         else:
             self.type_ground = self.FREE_GROUND
-
-    # def plant_appearance(self, row, col):
-    #     if self.ground.has_crop(self.ground.get_square(row, col)):
-    #         if self.plants.species == "PARSNIP":
-    #             self.plant_image = self.PARSNIP_IMAGES[
-    #                 f"PARSNIP_STAGE_{self.plants.growth_stage}"
-    #             ]
 
     def draw_inventory_items(self):
         """
