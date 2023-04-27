@@ -14,12 +14,11 @@ def main():
     farmer = Farmer
     ground = Ground()
     gamestate = GameState(farmer, ground)
-    plants = Plants
     watering_can = WateringCan(0, gamestate)
     hoe = Hoe(1, gamestate)
     seeds = Seeds(2, gamestate)
     inventory = Inventory(watering_can, hoe, seeds)
-    display_farmer = View(farmer, ground, gamestate, plants, inventory)
+    display_farmer = View(farmer, ground, gamestate, inventory)
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -28,14 +27,14 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_x:
-                    gamestate.plant_seed()
-            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     equipped_item = inventory.get_equipped_item()
                     if equipped_item is not None:
                         # the action function is different for each item
                         equipped_item.action()
+                for i in range(1, 9):
+                    if event.key == getattr(pygame, f"K_{i}"):
+                        inventory.control_inventory(num=i - 1)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if (
@@ -48,7 +47,17 @@ def main():
                         < View.INVENTORY_START_HEIGHT + View.GROUND_SIZE
                     ):
                         inventory.control_inventory(mouse_pos)
+
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    print("you hit p")
+                    rows = ground.num_rows
+                    cols = ground.num_cols
+                    for j in range(cols):
+                        for i in range(rows):
+                            if isinstance(ground.land[i][j], Plants):
+                                ground.land[i][j].grow()
+                    ground.unwater_squares()
                 if event.key == pygame.K_SPACE:
                     equipped_item = inventory.get_equipped_item()
                     print(equipped_item)
@@ -56,6 +65,9 @@ def main():
                         gamestate.water_ground()
                     if isinstance(equipped_item, Hoe):
                         gamestate.till_ground()
+                    if isinstance(equipped_item, Seeds):
+                        gamestate.plant_seed()
+
         keys_pressed = pygame.key.get_pressed()
         farmer.move(farmer, keys_pressed)
         display_farmer.draw_window()

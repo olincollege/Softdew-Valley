@@ -1,6 +1,10 @@
-from FarmerClass import Farmer
-from GroundClass import Ground
 import pygame
+
+# Cauliflower growth cycle
+cauliflower = [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5]
+parsnip = [0, 1, 2, 3, 4]
+
+
 
 class Plants:
     """
@@ -8,35 +12,45 @@ class Plants:
     given crop from a seed.
     """
 
-    def __init__(self, row, col):
-        self._growth_days = 1
-        self._species = "PARSNIP"
+    def __init__(self, row, col, water):
+        self._growth_stage = 0
+        self._growth_days = 0
+        self._species = "parsnip"
         self.row = row
         self.col = col
+        self.water = water
+    
+    def plant_water(self):
+        self.water = True
 
     def grow(self):
         """
-        If the plant at row, col is watered when sleep is triggered, grow.
+        If the plant is watered when sleep is triggered, grow.
         This is only intended to be called by the Day class when sleep is 
-        triggered, and will unwater a square where a plant has grown
+        triggered.
         """
-        if Farmer.is_watered(self.row, self.col):
-            if self._growth_days < self.harvestable(self._species):
-                self._growth_days += 1 # Increase growth stage
-            Ground.land[self.row][self.col].replace("W","") # Square is no longer watered
+        if self.water:
+            if self._species == "parsnip":
+                self._growth_stage += 1 # Increase growth stage
+            if self._species == "cauliflower":
+                self._growth_days += 1
+                try: self._growth_stage = cauliflower[self._growth_days]
+                except IndexError:
+                    self._growth_stage = cauliflower[-1]
+
 
     @property
-    def growth_days(self):
+    def growth_stage(self):
         """
-        Returns the number of days a plant has been growing
+        Returns the plant's growth stage
         """
-        return self._growth_days
+        return self._growth_stage
 
-    def print_growth_days(self):
-        print(self._growth_days)
+    # def print_growth_stage(self):
+    #     print(self._growth_stage)
 
     @property
-    def get_species(self):
+    def species(self):
         """
         Returns the species of a crop
         """
@@ -50,25 +64,6 @@ class Plants:
     #     """
     #     pass
     #     return species
-
-
-    def display_plant(self, CROP_IMAGES, row, col):
-        """
-        Displays the appropriate image depending on growth stage
-        and crop type
-        """
-        pygame.blit(CROP_IMAGES[f"growthstage{self._growth_days}"], (row, col))
-
-    def harvestable(self):
-        """
-        Introduces status "Harvestable" once the plant is ready
-
-        Returns the int number of growth days necessary for a certain plant to
-        be ready
-        """
-        if self._species == "PARSNIP":
-            return 5
-        return None
             
         
         

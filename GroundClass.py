@@ -1,5 +1,7 @@
 from ViewClass import View
 
+from plants import Plants
+
 WIDTH, HEIGHT = View.WIDTH, View.HEIGHT
 SQUARE_SIZE = View.GROUND_SIZE
 
@@ -20,14 +22,15 @@ class Ground:
     _tilled_land = "T"
     _crop_land = "C"
     _watered_land = "W"
+
     num_rows = WIDTH // SQUARE_SIZE
     num_cols = HEIGHT // SQUARE_SIZE
     land = []
 
     def __init__(self):
         self.land = [
-            [self._free_land for i in range(self.num_cols)]
-            for j in range(self.num_rows)
+            [self._free_land for j in range(self.num_cols)]
+            for i in range(self.num_rows)
         ]
 
     def get_square(self, row, col):
@@ -40,27 +43,44 @@ class Ground:
         """
         Returns a bool that says whether a square is watered
         """
-        return square == self._watered_land
+        if isinstance(square, str):
+            return self._watered_land in square
+        else:
+            return square.water
 
     def is_tilled(self, square):
         """
         Returns a bool that says whether a square is tilled
         """
-        return square == self._tilled_land
-        # shouldn't this be self._tilled_land in square since a square could
-        # potentially be "WT" or something similar?
+        if isinstance(square, str):
+            return self._tilled_land in square
+        else:
+            return True
 
     def has_crop(self, square):
         """
         Returns a bool that says whether a square has a crop on it
         """
-        return self._crop_land in square
+        return not isinstance(square, str)
 
     def water_square(self, row, col):
         """
         Update land to have a watered square at the row/col
         """
-        self.land[row][col] = self._watered_land
+        if isinstance(self.land[row][col], str):
+            if not self.is_watered(self.land[row][col]):
+                self.land[row][col] += self._watered_land
+        else:
+            self.land[row][col].plant_water()
+
+    def unwater_squares(self):
+        """
+        Update watered crop land to revert the square back to tilled
+        """
+        for i in range(self.num_rows):
+            for j in range(self.num_cols):
+                if isinstance(self.land[i][j], Plants):
+                    self.land[i][j].water = False
 
     def til_square(self, row, col):
         """
@@ -68,8 +88,9 @@ class Ground:
         """
         self.land[row][col] = self._tilled_land
 
-    def plant_crop(self, row, col):
+    def plant_crop(self, row, col, plant):
         """
         Update land to have a crop at the row/col
         """
-        self.land[row][col] = self._crop_land
+        # if self.has_crop(self.land[row][col]):
+        self.land[row][col] = plant

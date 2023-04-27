@@ -16,25 +16,6 @@ class View:
     INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
     INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
 
-    # PARSNIP SPRITES
-    PARSNIP_IMAGES = {
-        "PARSNIP_STAGE_1": pygame.image.load(
-            os.path.join("Assets", "parsnip1.png")
-        ),
-        "PARSNIP_STAGE_2": pygame.image.load(
-            os.path.join("Assets", "parsnip2.png")
-        ),
-        "PARSNIP_STAGE_3": pygame.image.load(
-            os.path.join("Assets", "parsnip3.png")
-        ),
-        "PARSNIP_STAGE_4": pygame.image.load(
-            os.path.join("Assets", "parsnip4.png")
-        ),
-        "PARSNIP_STAGE_5": pygame.image.load(
-            os.path.join("Assets", "parsnip5.png")
-        ),
-    }
-
     # FARMER SPRITES
     FRONT_FARMER = pygame.transform.scale(
         pygame.image.load(os.path.join("Assets", "Facing_Front.png")),
@@ -115,11 +96,10 @@ class View:
     type_ground = FREE_GROUND
     plant_image = None
 
-    def __init__(self, Farmer, Ground, Gamestate, Plants, Inventory):
+    def __init__(self, Farmer, Ground, Gamestate, Inventory):
         self.farmer = Farmer
         self.ground = Ground
         self.gamestate = Gamestate
-        self.plants = Plants
         self.inventory = Inventory
 
     def farmer_direction(self):
@@ -167,13 +147,12 @@ class View:
         else:
             self.type_ground = self.FREE_GROUND
 
-    def plant_appearance(self, row, col):
-        if self.ground.has_crop(self.ground.get_square(row, col)):
-            if self.plants.get_species == "PARSNIP":
-                # print(self.plants.growth_days)
-                self.plant_image = self.PARSNIP_IMAGES[
-                    f"PARSNIP_STAGE_{self.plants.growth_days}"
-                ]
+    # def plant_appearance(self, row, col):
+    #     if self.ground.has_crop(self.ground.get_square(row, col)):
+    #         if self.plants.species == "PARSNIP":
+    #             self.plant_image = self.PARSNIP_IMAGES[
+    #                 f"PARSNIP_STAGE_{self.plants.growth_stage}"
+    #             ]
 
     def draw_inventory_items(self):
         """
@@ -213,13 +192,25 @@ class View:
         for j in range(cols):
             for i in range(rows):
                 self.ground_type(i, j)
-                self.plant_appearance(i, j)
+                # self.plant_appearance(i, j)
                 self.WIN.blit(
                     self.type_ground,
                     ((i) * self.GROUND_SIZE, (j) * self.GROUND_SIZE),
                 )
-                if self.plant_image != None:
-                    self.WIN.blit(self.plant_image, ((i) * 50, (j) * 50))
+                if self.ground.has_crop(self.ground.get_square(i, j)):
+                    plant = self.ground.get_square(i, j)
+                    if self.ground.has_crop(self.ground.get_square(i, j)):
+                        plant_index = plant.growth_stage
+                        self.plant_image = pygame.image.load(
+                            os.path.join(
+                                f"Assets/{plant.species}",
+                                f"{plant.species}{plant_index}.png",
+                            )
+                        )
+                    self.WIN.blit(
+                        self.plant_image,
+                        ((i) * self.GROUND_SIZE, (j) * self.GROUND_SIZE),
+                    )
 
         # draw farmer
         self.farmer_direction()
