@@ -36,53 +36,69 @@ class View:
 
     # FARMER WATERING SPRITES
     WATER_FRONT_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Front_Water.png")),
+        pygame.image.load(
+            os.path.join("Assets/watering_farmer", "Front_Water.png")
+        ),
         (FARMER_WIDTH, FARMER_HEIGHT),
     )
     WATER_BACK_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Back_Water.png")),
+        pygame.image.load(
+            os.path.join("Assets/watering_farmer", "Back_Water.png")
+        ),
         (FARMER_WIDTH, FARMER_HEIGHT * 1.25),
     )
     WATER_RIGHT_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Right_Water.png")),
+        pygame.image.load(
+            os.path.join("Assets/watering_farmer", "Right_Water.png")
+        ),
         (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
     )
     WATER_LEFT_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Left_Water.png")),
+        pygame.image.load(
+            os.path.join("Assets/watering_farmer", "Left_Water.png")
+        ),
         (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
     )
 
     # FARMER TILLING SPRITES
     TILL_FRONT_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Front_Till.png")),
+        pygame.image.load(
+            os.path.join("Assets/tilling_farmer", "Front_Till.png")
+        ),
         (FARMER_WIDTH, FARMER_HEIGHT * 1.25),
     )
     TILL_BACK_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Back_Till.png")),
+        pygame.image.load(
+            os.path.join("Assets/tilling_farmer", "Back_Till.png")
+        ),
         (FARMER_WIDTH, FARMER_HEIGHT * 1.25),
     )
     TILL_RIGHT_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Right_Till.png")),
+        pygame.image.load(
+            os.path.join("Assets/tilling_farmer", "Right_Till.png")
+        ),
         (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
     )
     TILL_LEFT_FARMER = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "Left_Till.png")),
+        pygame.image.load(
+            os.path.join("Assets/tilling_farmer", "Left_Till.png")
+        ),
         (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
     )
 
     # GROUND SPRITES
     FREE_GROUND = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "free_ground.jpg")),
+        pygame.image.load(os.path.join("Assets/ground", "free_ground.jpg")),
         (GROUND_SIZE, GROUND_SIZE),
     )
 
     TILLED_GROUND = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "tilled_ground.jpg")),
+        pygame.image.load(os.path.join("Assets/ground", "tilled_ground.jpg")),
         (GROUND_SIZE, GROUND_SIZE),
     )
 
     WATERED_GROUND = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets", "watered_ground.jpg")),
+        pygame.image.load(os.path.join("Assets/ground", "watered_ground.jpg")),
         (GROUND_SIZE, GROUND_SIZE),
     )
 
@@ -112,7 +128,10 @@ class View:
             self.farmer.direction = "down"
         IDLE_FARMER = pygame.transform.scale(
             pygame.image.load(
-                os.path.join("Assets", f"facing_{self.farmer.direction}.png")
+                os.path.join(
+                    "Assets/idle_farmer",
+                    f"facing_{self.farmer.direction}.png",
+                )
             ),
             (self.FARMER_WIDTH, self.FARMER_HEIGHT),
         )

@@ -13,14 +13,12 @@ class Ground:
     Attributes:
         free_land: A string representing a free space of land
         tilled_land: A string representing a tilled space of land
-        crop_land: A string representing a space of land that has a crop on it
         watered_land: A string representing a space of land that is watered
         land: a nested list that represents all the spaces of land on the map
     """
 
     _free_land = ""
     _tilled_land = "T"
-    _crop_land = "C"
     _watered_land = "W"
 
     num_rows = WIDTH // SQUARE_SIZE
@@ -54,8 +52,7 @@ class Ground:
         """
         if isinstance(square, str):
             return self._tilled_land in square
-        else:
-            return True
+        return True
 
     def has_crop(self, square):
         """
@@ -92,5 +89,4 @@ class Ground:
         """
         Update land to have a crop at the row/col
         """
-        # if self.has_crop(self.land[row][col]):
         self.land[row][col] = plant

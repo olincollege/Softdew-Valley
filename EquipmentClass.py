@@ -84,7 +84,7 @@ class WateringCan(Equipment):
         super(Equipment, self).__init__()
         self._equipped = False
         self.update_inventory_slot(slot)
-        self.update_image(os.path.join("Assets", "Watering_Can.png"))
+        self.update_image(os.path.join("Assets/equipment", "watering_can.png"))
         self._gamestate = gamestate
 
     def action(self):
@@ -106,7 +106,7 @@ class Hoe(Equipment):
         super(Equipment, self).__init__()
         self._equipped = False
         self.update_inventory_slot(slot)
-        self.update_image(os.path.join("Assets", "Hoe.png"))
+        self.update_image(os.path.join("Assets/equipment", "hoe.png"))
         self._gamestate = gamestate
 
     def action(self):
@@ -129,7 +129,9 @@ class Seed(Equipment):
         self._equipped = False
         self.seed_type = seed_type
         self.update_inventory_slot(slot)
-        self.update_image(os.path.join("Assets", f"{seed_type}_seeds.png"))
+        self.update_image(
+            os.path.join("Assets/seeds", f"{seed_type}_seeds.png")
+        )
         self._gamestate = gamestate
 
     def action(self):
