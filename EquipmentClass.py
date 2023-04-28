@@ -102,7 +102,6 @@ class Hoe(Equipment):
         Till the ground
         """
         self._gamestate.till_ground()
-        play_sound("hoeing")
 
 
 class Seed(Equipment):

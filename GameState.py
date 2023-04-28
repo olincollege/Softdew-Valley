@@ -1,9 +1,6 @@
-from GroundClass import Ground
-from FarmerClass import Farmer
 from plants import Plants
-from EquipmentClass import Crop
+from ViewClass import View
 import pygame
-import random
 from audio import play_sound
 
 mixer_works = pygame.init()  # None if the mixer doesn't work
@@ -32,9 +29,25 @@ class GameState:
         return (action_pos_x, action_pos_y)
 
     def till_ground(self):
-        action_pos = self.get_action_position()
-        self.ground.till_square(action_pos[0], action_pos[1])
-        self._is_till = True
+        if (
+            (
+                self.farmer.farmer_rect.x
+                + self.farmer.farmer_rect.width
+                + View.GROUND_SIZE // 2
+            )
+            < View.WIDTH
+            and (
+                self.farmer.farmer_rect.y
+                + self.farmer.farmer_rect.height
+                + View.GROUND_SIZE // 2
+            )
+            < View.HEIGHT
+            and not (self.farmer.farmer_rect.x < View.GROUND_SIZE)
+        ):
+            play_sound("hoeing")
+            action_pos = self.get_action_position()
+            self.ground.till_square(action_pos[0], action_pos[1])
+            self._is_till = True
 
     def plant_seed(self, species):
         action_pos = self.get_action_position()

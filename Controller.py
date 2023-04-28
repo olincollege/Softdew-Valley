@@ -10,13 +10,12 @@ class Controller:
 
     def update_position(self):
         x = (
-            self.farmer.farmer_rect.x + View.FARMER_WIDTH // 2
+            self.farmer.farmer_rect.x + self.farmer.farmer_rect.width // 2
         ) // View.GROUND_SIZE
-
         y = (
-            self.farmer.farmer_rect.y + View.FARMER_HEIGHT // 2
+            self.farmer.farmer_rect.y
+            + int(self.farmer.farmer_rect.height * 0.75)
         ) // View.GROUND_SIZE
-
         self.farmer.set_position(x, y)
 
     def move_farmer(self, keys):
