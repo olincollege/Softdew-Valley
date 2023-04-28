@@ -20,6 +20,7 @@ class Equipment:
         self._equipped = False
         self._pg_image = None
         self._gamestate = gamestate
+        self._num_item = None
 
     def update_image(self, link):
         """
@@ -58,6 +59,10 @@ class Equipment:
     @property
     def pg_image(self):
         return self._pg_image
+
+    @property
+    def num_item(self):
+        return self._num_item
 
 
 class WateringCan(Equipment):
@@ -118,6 +123,7 @@ class Seed(Equipment):
         self.update_image(
             os.path.join("Assets/seeds", f"{seed_type}_seeds.png")
         )
+        # self._num_item = 1
 
     def action(self):
         """
@@ -150,10 +156,10 @@ class Crop(Equipment):
         super().__init__()
         self.update_image(os.path.join("Assets/crops", f"{crop_type}.png"))
         self.price = price
-        self.num_crops = 1
+        self._num_item = 1
 
     def add_crop(self):
-        self.num_crops += 1
+        self._num_item += 1
 
 
 class Parsnip_Crop(Crop):
@@ -161,7 +167,7 @@ class Parsnip_Crop(Crop):
 
     def __init__(self):
         super().__init__("parsnip", 35)
-        self.num_crops = 1
+        # self.num_item = 1
 
 
 class Cauliflower_Crop(Crop):
@@ -169,4 +175,4 @@ class Cauliflower_Crop(Crop):
 
     def __init__(self):
         super().__init__("cauliflower", 175)
-        self.num_crops = 1
+        # self.num_item = 1

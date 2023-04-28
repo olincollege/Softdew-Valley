@@ -22,6 +22,7 @@ FPS = 60
 
 
 def main():
+    pygame.init()
     farmer = Farmer  # should probably make this an instance?
     ground = Ground()
     gamestate = GameState(farmer, ground)
@@ -33,7 +34,6 @@ def main():
     display_farmer = View(farmer, ground, gamestate, inventory)
     clock = pygame.time.Clock()
     game_running = True
-    pygame.init()
     mixer_works = pygame.mixer.get_init()  # None if the mixer doesn't work
     if mixer_works is not None:
         music.play_music()

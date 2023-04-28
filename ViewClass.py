@@ -1,6 +1,8 @@
 import pygame
 import os
 
+pygame.font.init()
+
 
 class View:
     FARMER_WIDTH = 50
@@ -9,6 +11,7 @@ class View:
     WIDTH, HEIGHT = 900, 500
     WIN = pygame.display.set_mode((WIDTH, HEIGHT))
     INVENTORY_ITEM_SIZE = 40
+    INVENTORY_FONT = pygame.font.SysFont("comicsans", 40)
 
     WHITE = (255, 255, 255)
     RED = (255, 0, 0)
@@ -191,6 +194,28 @@ class View:
                         self.INVENTORY_START_HEIGHT + 5,
                     ),
                 )
+                if item.num_item is not None:
+                    pass  # draw number of item
+                    num_text = str(item.num_item)
+                    draw_text = self.INVENTORY_FONT.render(
+                        num_text, 1, self.RED
+                    )
+                    self.WIN.blit(
+                        draw_text,
+                        (
+                            (
+                                self.INVENTORY_START_WIDTH
+                                + (idx * self.GROUND_SIZE)
+                                + self.INVENTORY_ITEM_SIZE
+                                - 5
+                            ),
+                            (
+                                self.INVENTORY_START_HEIGHT
+                                + self.INVENTORY_ITEM_SIZE
+                                - 5
+                            ),
+                        ),
+                    )
 
     def draw_equipped_square(self):
         """
