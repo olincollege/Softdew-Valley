@@ -28,8 +28,11 @@ class GameState:
             action_pos_x += 1
         return (action_pos_x, action_pos_y)
 
-    def till_ground(self):
-        if (
+    def action_on_map(self):
+        """
+        Returns true if the action can be performed on the map, false if not
+        """
+        return (
             (
                 self.farmer.farmer_rect.x
                 + self.farmer.farmer_rect.width
@@ -43,25 +46,29 @@ class GameState:
             )
             < View.HEIGHT
             and not (self.farmer.farmer_rect.x < View.GROUND_SIZE)
-        ):
+        )
+
+    def till_ground(self):
+        if self.action_on_map():
             play_sound("hoeing")
             action_pos = self.get_action_position()
             self.ground.till_square(action_pos[0], action_pos[1])
             self._is_till = True
 
     def plant_seed(self, species):
-        action_pos = self.get_action_position()
-        square = self.ground.get_square(action_pos[0], action_pos[1])
-        if (
-            self.ground.is_watered(square) or self.ground.is_tilled(square)
-        ) and not isinstance(square, Plants):
-            ground_watered = self.ground.is_watered(square)
-            plant = Plants(
-                action_pos[0], action_pos[1], ground_watered, species
-            )
-            print("Woo! You planted a seed <3")
-            play_sound("planting", 1)
-            self.ground.plant_crop(action_pos[0], action_pos[1], plant)
+        if self.action_on_map():
+            action_pos = self.get_action_position()
+            square = self.ground.get_square(action_pos[0], action_pos[1])
+            if (
+                self.ground.is_watered(square) or self.ground.is_tilled(square)
+            ) and not isinstance(square, Plants):
+                ground_watered = self.ground.is_watered(square)
+                plant = Plants(
+                    action_pos[0], action_pos[1], ground_watered, species
+                )
+                print("Woo! You planted a seed <3")
+                play_sound("planting", 1)
+                self.ground.plant_crop(action_pos[0], action_pos[1], plant)
 
     def harvest_crop(self, inventory):
         print("you called harvest_crop in gamestate")
@@ -86,16 +93,17 @@ class GameState:
                 inventory.add_item(slot, square.crop)
 
     def water_ground(self):
-        action_pos = self.get_action_position()
-        square = self.ground.get_square(action_pos[0], action_pos[1])
-        if self.ground.is_tilled(square):
-            self.ground.water_square(action_pos[0], action_pos[1])
-            self._is_water = True
-            play_sound("watering", 2)
+        if self.action_on_map():
+            action_pos = self.get_action_position()
+            square = self.ground.get_square(action_pos[0], action_pos[1])
+            if self.ground.is_tilled(square):
+                self.ground.water_square(action_pos[0], action_pos[1])
+                self._is_water = True
+                play_sound("watering", 2)
 
-        if isinstance(square, Plants):
-            play_sound("watering", 2)
-            square.plant_water()
+            if isinstance(square, Plants):
+                play_sound("watering", 2)
+                square.plant_water()
 
     def stop_watering(self):
         self._is_water = False
