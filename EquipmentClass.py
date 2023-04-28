@@ -1,6 +1,7 @@
 import pygame
 import os
 from ViewClass import View
+import random
 
 INVENTORY_ITEM_SIZE = View.INVENTORY_ITEM_SIZE
 
@@ -108,6 +109,11 @@ class Hoe(Equipment):
         Till the ground
         """
         self._gamestate.till_ground()
+        pygame.mixer.Sound.play(
+            pygame.mixer.Sound(
+                os.path.join("Assets/sound_bites/hoeing_sound.wav")
+            )
+        )
 
 
 class Seed(Equipment):

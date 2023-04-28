@@ -2,6 +2,7 @@
 Inventory_Class
 """
 from ViewClass import View
+import pygame
 
 
 class Inventory:
@@ -35,6 +36,10 @@ class Inventory:
         item = self._inventory[slot]
         if not isinstance(item, str):
             item.equip()
+            pygame.mixer.Sound.play(
+                pygame.mixer.Sound(("Assets/sound_bites/inventory_swap.wav")
+                )
+            )
 
     def get_equipped_item(self):
         """Return the equipped item of inventory"""
