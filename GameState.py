@@ -5,6 +5,8 @@ from EquipmentClass import Crop
 import pygame
 import random
 
+mixer_works = pygame.mixer.get_init()  # None if the mixer doesn't work
+
 
 class GameState:
     def __init__(self, Farmer, Ground):
@@ -44,11 +46,12 @@ class GameState:
                 action_pos[0], action_pos[1], ground_watered, species
             )
             print("Woo! You planted a seed <3")
-            pygame.mixer.Sound.play(
-                pygame.mixer.Sound(
-                    f"Assets/sound_bites/planting_sound{random.randint(0,1)}.wav"
+            if mixer_works is not None:
+                pygame.mixer.Sound.play(
+                    pygame.mixer.Sound(
+                        f"Assets/sound_bites/planting_sound{random.randint(0,1)}.wav"
+                    )
                 )
-            )
             self.ground.plant_crop(action_pos[0], action_pos[1], plant)
 
     def harvest_crop(self, inventory):
@@ -87,17 +90,19 @@ class GameState:
         if self.ground.is_tilled(square):
             self.ground.water_square(action_pos[0], action_pos[1])
             self._is_water = True
-            pygame.mixer.Sound.play(
-                pygame.mixer.Sound(
-                    f"Assets/sound_bites/watering_sound{random.randint(0, 2)}.wav"
+            if mixer_works is not None:
+                pygame.mixer.Sound.play(
+                    pygame.mixer.Sound(
+                        f"Assets/sound_bites/watering_sound{random.randint(0, 2)}.wav"
+                    )
                 )
-            )
         if isinstance(square, Plants):
-            pygame.mixer.Sound.play(
-                pygame.mixer.Sound(
-                    f"Assets/sound_bites/watering_sound{random.randint(0, 2)}.wav"
+            if mixer_works is not None:
+                pygame.mixer.Sound.play(
+                    pygame.mixer.Sound(
+                        f"Assets/sound_bites/watering_sound{random.randint(0, 2)}.wav"
+                    )
                 )
-            )
             square.plant_water()
 
     def stop_watering(self):

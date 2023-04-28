@@ -3,6 +3,7 @@ import os
 from ViewClass import View
 import random
 
+mixer_works = pygame.mixer.get_init()
 INVENTORY_ITEM_SIZE = View.INVENTORY_ITEM_SIZE
 
 # LOOK INTO WHETHER WE SHOULD ACTUALLY BE ASSIGNING SLOT HERE
@@ -17,18 +18,8 @@ class Equipment:
 
     def __init__(self, gamestate=None):
         self._equipped = False
-        # self._inventory_slot = slot
         self._pg_image = None
         self._gamestate = gamestate
-
-    # def update_inventory_slot(self, new_slot):
-    #     """
-    #     Update the inventory_slot attribute if the item is moved
-
-    #     Args:
-    #         new_slot: An int representing the slot the item is being moved to
-    #     """
-    #     self._inventory_slot = new_slot
 
     def update_image(self, link):
         """
@@ -63,10 +54,6 @@ class Equipment:
     @property
     def equipped(self):
         return self._equipped
-
-    # @property
-    # def inventory_slot(self):
-    #     return self._inventory_slot
 
     @property
     def pg_image(self):
@@ -109,11 +96,12 @@ class Hoe(Equipment):
         Till the ground
         """
         self._gamestate.till_ground()
-        pygame.mixer.Sound.play(
-            pygame.mixer.Sound(
-                os.path.join("Assets/sound_bites/hoeing_sound.wav")
+        if mixer_works is not None:
+            pygame.mixer.Sound.play(
+                pygame.mixer.Sound(
+                    os.path.join("Assets/sound_bites/hoeing_sound.wav")
+                )
             )
-        )
 
 
 class Seed(Equipment):
