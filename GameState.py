@@ -1,9 +1,6 @@
 from plants import Plants
 from ViewClass import View
-import pygame
 from audio import play_sound
-
-mixer_works = pygame.init()  # None if the mixer doesn't work
 
 
 class GameState:
@@ -15,8 +12,8 @@ class GameState:
 
     def get_action_position(self):
         pos = self.farmer.position
-        action_pos_x = pos[0]  # - self.farmer.farmer_rect.width // 2
-        action_pos_y = pos[1]  # - self.farmer.farmer_rect.height // 2
+        action_pos_x = pos[0]
+        action_pos_y = pos[1]
         farmer_direction = self.farmer.direction
         if farmer_direction == "up":
             action_pos_y -= 1
@@ -112,7 +109,7 @@ class GameState:
         self._is_till = False
 
     # These are for display purposes, it tells the view class to pause while
-    # the action is occuring
+    # the action is occurring
     @property
     def is_water(self):
         return self._is_water

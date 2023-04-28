@@ -37,11 +37,6 @@ class Farmer:
     def position(self):
         return self._position
 
-    def harvest_crops(self):
-        """
-        Harvest fully grown crops and store them in the inventory
-        """
-
     def add_funds(self, amount):
         """
         Add amount funds to the wallet attribute
