@@ -158,33 +158,6 @@ class View:
 
         self.farmer_image = direction_map[(self.farmer.direction, tile_value)]
 
-        # if self.gamestate.is_water and self.farmer.direction == "down":
-        #     self.farmer_image = self.WATER_FRONT_FARMER
-        # elif self.gamestate.is_water and self.farmer.direction == "up":
-        #     self.farmer_image = self.WATER_BACK_FARMER
-        # elif self.gamestate.is_water and self.farmer.direction == "right":
-        #     self.farmer_image = self.WATER_RIGHT_FARMER
-        # elif self.gamestate.is_water and self.farmer.direction == "left":
-        #     self.farmer_image = self.WATER_LEFT_FARMER
-
-        # elif self.gamestate.is_till and self.farmer.direction == "down":
-        #     self.farmer_image = self.TILL_FRONT_FARMER
-        # elif self.gamestate.is_till and self.farmer.direction == "up":
-        #     self.farmer_image = self.TILL_BACK_FARMER
-        # elif self.gamestate.is_till and self.farmer.direction == "right":
-        #     self.farmer_image = self.TILL_RIGHT_FARMER
-        # elif self.gamestate.is_till and self.farmer.direction == "left":
-        #     self.farmer_image = self.TILL_LEFT_FARMER
-
-        # elif self.farmer.direction == "down":
-        #     self.farmer_image = self.FRONT_FARMER
-        # elif self.farmer.direction == "up":
-        #     self.farmer_image = self.BACK_FARMER
-        # elif self.farmer.direction == "left":
-        #     self.farmer_image = self.LEFT_FARMER
-        # elif self.farmer.direction == "right":
-        #     self.farmer_image = self.RIGHT_FARMER
-
     def ground_type(self, row, col):
         """
         Get the type of square from the Ground class adn display the matching

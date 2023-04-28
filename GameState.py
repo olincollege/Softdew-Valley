@@ -30,14 +30,12 @@ class GameState:
         self.ground.till_square(action_pos[0], action_pos[1])
         self._is_till = True
 
-    def plant_seed(self, species="parsnip"):
+    def plant_seed(self, species):
         action_pos = self.get_action_position()
         square = self.ground.get_square(action_pos[0], action_pos[1])
         if (
-            self.ground.is_watered(square)
-            or self.ground.is_tilled(square)
-            and not isinstance(square, Plants)
-        ):
+            self.ground.is_watered(square) or self.ground.is_tilled(square)
+        ) and not isinstance(square, Plants):
             ground_watered = self.ground.is_watered(square)
             plant = Plants(
                 action_pos[0], action_pos[1], ground_watered, species
@@ -50,11 +48,13 @@ class GameState:
         square = self.ground.get_square(action_pos[0], action_pos[1])
         if isinstance(square, Plants):
             print("i am successfully seeing a plant in a square")
-            print(square.harvestable)  # for some reason won't
+            print(
+                f"square.harvestable is {square.harvestable}"
+            )  # for some reason won't
             print(square.growth_stage)
             if square.harvestable:
                 print("it's a harvestable plant")
-                self.ground.harvest(square)
+                self.ground.harvest(action_pos[0], action_pos[1])
             # add the crop to inventory here
 
     def water_ground(self):

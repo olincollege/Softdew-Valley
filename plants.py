@@ -11,7 +11,7 @@ class Plants:
     given crop from a seed.
     """
 
-    def __init__(self, row, col, water, species="parsnip"):
+    def __init__(self, row, col, water, species):
         self._growth_stage = 0
         self._growth_days = 0
         self._species = species
@@ -35,10 +35,13 @@ class Plants:
         """
         if self.water:
             self._growth_days += 1
+            # min of growth and list
             try: self._growth_stage = plant_dictionary[self._species][self._growth_days]
             except IndexError:
                 self._growth_stage = plant_dictionary[self._species][-1]
-                self._harvestable = True
+        if self._growth_stage == plant_dictionary[self._species][-1]:
+            print("grow has set harvestable to true")
+            self._harvestable = True
 
     @property
     def harvestable(self):

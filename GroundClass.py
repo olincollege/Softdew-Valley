@@ -23,7 +23,6 @@ class Ground:
 
     num_rows = WIDTH // SQUARE_SIZE
     num_cols = HEIGHT // SQUARE_SIZE
-    land = []
 
     def __init__(self):
         self.land = [
@@ -91,6 +90,13 @@ class Ground:
         """
         self.land[row][col] = plant
 
-    def harvest(self, square):
+    def harvest(self, row, col):
         # square.species
-        square = "W" if square.water else "T"
+        print("i am calling harvest in groundclass")
+        square = self.land[row][col]
+        if square.water:
+            self.water_square(row, col)
+        else:
+            self.till_square(row, col)
+        # self.land = "W" if square.water else "T"
+        print(square)
