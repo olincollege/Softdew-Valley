@@ -1,6 +1,6 @@
 import pygame
 
-# import music
+import music
 from FarmerClass import Farmer
 from ViewClass import View
 from GroundClass import Ground
@@ -31,15 +31,18 @@ def main():
     clock = pygame.time.Clock()
     game_running = True
     pygame.init()
-    # music.play_music()
+    mixer_works = pygame.mixer.get_init()  # None if the mixer doesn't work
+    if mixer_works is not None:
+        music.play_music()
     pygame.display.set_caption("Super Swag Stardew")
     while game_running:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_running = False
-            # if event.type == music.MUSIC_END:
-            #     music.play_music()
+            if event.type == music.MUSIC_END:
+                if mixer_works is not None:
+                    music.play_music()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     equipped_item = inventory.get_equipped_item()
