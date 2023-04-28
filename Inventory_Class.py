@@ -50,6 +50,10 @@ class Inventory:
                 if item.equipped:
                     return idx
 
+    def get_item(self, slot):
+        """Get an item at the specified inventory slot"""
+        return self.inventory[slot]
+
     def add_item(self, slot, item):
         """
         Function used to add an item to the player's inventory.

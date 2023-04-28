@@ -156,6 +156,10 @@ class Crop(Equipment):
         super().__init__()
         self.update_image(os.path.join("Assets/crops", f"{crop_type}.png"))
         self.price = price
+        self.num_crops = 1
+
+    def add_crop(self):
+        self.num_crops += 1
 
 
 class Parsnip_Crop(Crop):
@@ -163,6 +167,7 @@ class Parsnip_Crop(Crop):
 
     def __init__(self):
         super().__init__("parsnip", 35)
+        self.num_crops = 1
 
 
 class Cauliflower_Crop(Crop):
@@ -170,3 +175,4 @@ class Cauliflower_Crop(Crop):
 
     def __init__(self):
         super().__init__("cauliflower", 175)
+        self.num_crops = 1

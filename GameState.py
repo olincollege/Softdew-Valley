@@ -1,6 +1,7 @@
 from GroundClass import Ground
 from FarmerClass import Farmer
 from plants import Plants
+from EquipmentClass import Crop
 
 
 class GameState:
@@ -55,8 +56,23 @@ class GameState:
                 print("it's a harvestable plant")
                 self.ground.harvest(action_pos[0], action_pos[1])
             # add the crop to inventory here
-            slot = inventory.first_empty_slot()
-            inventory.add_item(slot, square.crop)
+            # check if it is already in the inventory
+            found_item = False
+            for idx, item in enumerate(inventory.inventory):
+                if type(item) is type(square.crop):
+                    inventory.get_item(idx).add_crop()
+                    found_item = True
+            if not found_item:
+                slot = inventory.first_empty_slot()
+                inventory.add_item(slot, square.crop)
+
+            # for checking purposes I know it's kinda stupid
+            # Checks if the object stored in the inventory is keeping track of
+            # how many crops there should be
+            for idx, item in enumerate(inventory.inventory):
+                if type(item) is type(square.crop):
+                    num = inventory.get_item(idx).num_crops
+            print(f"You have {num} of {square.crop}")
 
     def water_ground(self):
         action_pos = self.get_action_position()
