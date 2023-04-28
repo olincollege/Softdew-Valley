@@ -1,4 +1,3 @@
-import music
 from FarmerClass import Farmer
 from ViewClass import View
 from GroundClass import Ground
@@ -6,12 +5,8 @@ from GameState import GameState
 from EquipmentClass import (
     WateringCan,
     Hoe,
-    Seed,
     ParsnipSeeds,
     CauliflowerSeeds,
-    Crop,
-    Parsnip_Crop,
-    Cauliflower_Crop,
 )
 from Inventory_Class import Inventory
 from plants import Plants
@@ -19,7 +14,7 @@ from plants import Plants
 
 class Model:
     def __init__(self):
-        self.farmer = Farmer  # should probably make this an instance?
+        self.farmer = Farmer()
         self.ground = Ground()
         self.gamestate = GameState(self.farmer, self.ground)
         self.watering_can = WateringCan(self.gamestate)
