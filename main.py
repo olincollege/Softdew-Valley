@@ -1,9 +1,7 @@
 import pygame
 
 import audio
-from FarmerClass import Farmer
 from ViewClass import View
-from plants import Plants
 from Model import Model
 
 FPS = 60
