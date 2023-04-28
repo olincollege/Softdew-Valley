@@ -26,12 +26,13 @@ def main():
                 audio.play_music()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    model.perform_action()
+                    control.perform_action()
                 for i in range(1, 9):
                     if event.key == getattr(pygame, f"K_{i}"):
                         control.select_inventory(num=i - 1)
                 if event.key == pygame.K_h:
                     model.gamestate.harvest_crop(model.inventory)
+                # should be triggered by house interaction event
                 if event.key == pygame.K_p:
                     model.day_passes()
             if event.type == pygame.MOUSEBUTTONDOWN:

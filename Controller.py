@@ -78,3 +78,9 @@ class Controller:
                 < View.INVENTORY_START_HEIGHT + View.GROUND_SIZE
             ):
                 self.select_inventory(mouse_pos)
+
+    def perform_action(self):
+        equipped_item = self.inventory.get_equipped_item()
+        if equipped_item is not None:
+            # the action function is different for each item
+            equipped_item.action()
