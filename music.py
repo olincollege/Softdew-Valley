@@ -14,15 +14,18 @@ MUSIC_END = pygame.USEREVENT + 1
 
 
 def play_music():
-    # randomize the song list
-    random.shuffle(discography)
-    # play the songs in the list one by one
-    for song in discography:
-        pygame.mixer.music.load(f"Assets/music/{song}.mp3")
-    pygame.mixer.music.play()
-    print(f"playing '{song}' ...")
-    # wait until the song completes
-    pygame.mixer.music.set_endevent(MUSIC_END)
+    try:
+        # randomize the song list
+        random.shuffle(discography)
+        # play the songs in the list one by one
+        for song in discography:
+            pygame.mixer.music.load(f"Assets/music/{song}.mp3")
+        pygame.mixer.music.play()
+        print(f"playing '{song}' ...")
+        # wait until the song completes
+        pygame.mixer.music.set_endevent(MUSIC_END)
+    except pygame.error:
+        pass
 
 
 def play_sound(sound_name, num_versions=0):

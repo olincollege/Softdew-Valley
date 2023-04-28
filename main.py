@@ -34,9 +34,7 @@ def main():
     display_farmer = View(farmer, ground, gamestate, inventory)
     clock = pygame.time.Clock()
     game_running = True
-    mixer_works = pygame.mixer.get_init()  # None if the mixer doesn't work
-    if mixer_works is not None:
-        music.play_music()
+    music.play_music()
     pygame.display.set_caption("Super Swag Stardew")
     while game_running:
         clock.tick(FPS)
@@ -44,8 +42,7 @@ def main():
             if event.type == pygame.QUIT:
                 game_running = False
             if event.type == music.MUSIC_END:
-                if mixer_works is not None:
-                    music.play_music()
+                music.play_music()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     equipped_item = inventory.get_equipped_item()
