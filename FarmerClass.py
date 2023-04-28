@@ -22,7 +22,18 @@ class Farmer:
     # position is the (x, y) or (row, col) position of the farmer on the map
     position = (start_square_x, start_square_y)
 
-    def __init__():
+    def __init__(self):
+        # self.start_square_x = 2
+        # self.start_square_y = 2
+        # self.farmer_rect = pygame.Rect(
+        #     self.start_square_x * self.SQUARE_SIZE,
+        #     self.start_square_y * self.SQUARE_SIZE,
+        #     self.FARMER_WIDTH,
+        #     self.FARMER_HEIGHT,
+        # )
+        # self._direction = "down"  # random direction to start
+        # # position is the (x, y) or (row, col) position of the farmer on the map
+        # self._position = (self.start_square_x, self.start_square_y)
         pass
 
     def move(self, keys):

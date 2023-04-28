@@ -1,4 +1,5 @@
 import pygame
+
 import music
 from FarmerClass import Farmer
 from ViewClass import View
@@ -10,6 +11,9 @@ from EquipmentClass import (
     Seed,
     ParsnipSeeds,
     CauliflowerSeeds,
+    Crop,
+    Parsnip_Crop,
+    Cauliflower_Crop,
 )
 from Inventory_Class import Inventory
 from plants import Plants
@@ -18,19 +22,23 @@ FPS = 60
 
 
 def main():
-    farmer = Farmer
+    farmer = Farmer  # should probably make this an instance?
     ground = Ground()
     gamestate = GameState(farmer, ground)
     watering_can = WateringCan(0, gamestate)
     hoe = Hoe(1, gamestate)
     parsnipseeds = ParsnipSeeds(2, gamestate)
     cauliflowerseeds = CauliflowerSeeds(3, gamestate)
+    parsnip = Parsnip_Crop(4, gamestate)
     inventory = Inventory(watering_can, hoe, parsnipseeds, cauliflowerseeds)
+    inventory.add_item(parsnip.inventory_slot, parsnip)
     display_farmer = View(farmer, ground, gamestate, inventory)
     clock = pygame.time.Clock()
     game_running = True
     pygame.init()
-    music.play_music()
+    mixer_works = pygame.mixer.get_init()  # None if the mixer doesn't work
+    if mixer_works is not None:
+        music.play_music()
     pygame.display.set_caption("Super Swag Stardew")
     while game_running:
         clock.tick(FPS)
@@ -38,7 +46,8 @@ def main():
             if event.type == pygame.QUIT:
                 game_running = False
             if event.type == music.MUSIC_END:
-                music.play_music()
+                if mixer_works is not None:
+                    music.play_music()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     equipped_item = inventory.get_equipped_item()
@@ -71,16 +80,6 @@ def main():
                             if isinstance(ground.land[i][j], Plants):
                                 ground.land[i][j].grow()
                     ground.unwater_squares()
-                if event.key == pygame.K_SPACE:
-                    equipped_item = inventory.get_equipped_item()
-                    print(equipped_item)
-                    if isinstance(equipped_item, WateringCan):
-                        gamestate.water_ground()
-                    if isinstance(equipped_item, Hoe):
-                        gamestate.till_ground()
-                    if isinstance(equipped_item, Seed):
-                        print(equipped_item.seed_type)
-                        gamestate.plant_seed(equipped_item.seed_type)
 
         keys_pressed = pygame.key.get_pressed()
         farmer.move(farmer, keys_pressed)
