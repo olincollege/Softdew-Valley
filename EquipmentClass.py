@@ -3,7 +3,7 @@ import os
 from ViewClass import View
 import random
 
-mixer_works = pygame.mixer.get_init()
+mixer_works = pygame.init()
 INVENTORY_ITEM_SIZE = View.INVENTORY_ITEM_SIZE
 
 # LOOK INTO WHETHER WE SHOULD ACTUALLY BE ASSIGNING SLOT HERE

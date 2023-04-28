@@ -14,7 +14,8 @@ class View:
     INVENTORY_FONT = pygame.font.SysFont("comicsans", 40)
 
     WHITE = (255, 255, 255)
-    RED = (255, 0, 0)
+    RED = (255, 30, 0)
+    SELECTION_BOX_COLOR = (244, 88, 66)
 
     INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
     INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
@@ -228,7 +229,9 @@ class View:
                 self.INVENTORY_START_WIDTH + equipped_slot * self.GROUND_SIZE
             )
             rect = pygame.Rect(x_pos, y_pos, self.GROUND_SIZE, self.GROUND_SIZE)
-            pygame.draw.rect(self.WIN, self.RED, rect, 2, border_radius=1)
+            pygame.draw.rect(
+                self.WIN, self.SELECTION_BOX_COLOR, rect, 2, border_radius=1
+            )
 
     def draw_window(self):
         self.WIN.fill(self.WHITE)

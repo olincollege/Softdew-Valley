@@ -5,7 +5,7 @@ from EquipmentClass import Crop
 import pygame
 import random
 
-mixer_works = pygame.mixer.get_init()  # None if the mixer doesn't work
+mixer_works = pygame.init()  # None if the mixer doesn't work
 
 
 class GameState:

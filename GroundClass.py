@@ -1,5 +1,6 @@
+import pygame
+import random
 from ViewClass import View
-
 from plants import Plants
 
 WIDTH, HEIGHT = View.WIDTH, View.HEIGHT
@@ -93,12 +94,18 @@ class Ground:
     def harvest(self, row, col):
         # square.species
         print("i am calling harvest in groundclass")
+        pygame.mixer.Sound.play(
+            pygame.mixer.Sound(
+                f"Assets/sound_bites/harvest_sound{random.randint(0,3)}.wav"
+            )
+        )
         if self.land[row][col].water:
             # self.water_square(row, col)
             self.land[row][col] = "W"
             print("Harvest trying to turn the square into a watered square")
         else:
             self.till_square(row, col)
+
         if isinstance(self.land[row][col], type):
             print("uh oh, harvest in groundclass says this square is a class")
         if isinstance(self.land[row][col], Plants):
