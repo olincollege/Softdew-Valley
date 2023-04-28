@@ -1,6 +1,7 @@
 import pygame
 import os
 from ViewClass import View
+import random
 
 INVENTORY_ITEM_SIZE = View.INVENTORY_ITEM_SIZE
 
@@ -114,6 +115,11 @@ class Hoe(Equipment):
         Till the ground
         """
         self._gamestate.till_ground()
+        pygame.mixer.Sound.play(
+            pygame.mixer.Sound(
+                os.path.join("Assets/sound_bites/hoeing_sound.wav")
+            )
+        )
 
 
 class Seed(Equipment):
@@ -162,7 +168,7 @@ class Crop(Equipment):
 
     def __init__(self, slot, gamestate, crop_type, price):
         super().__init__(slot, gamestate)
-        # ADD IN ASSETS AN ADOPT NAMING CONVENTION
+        # ADD IN ASSETS AND ADOPT NAMING CONVENTION
         self.update_image(os.path.join("Assets/crops", f"{crop_type}.png"))
         self.price = price
 

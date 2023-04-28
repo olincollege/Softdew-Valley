@@ -2,6 +2,9 @@ import random
 import pygame
 
 discography = [
+    "Cloud Country",
+    "Distant Banjo",
+    "Playful",
     "It's A Big World Outside",
     "The Valley Comes Alive",
     "Wild Horseradish Jam",
@@ -15,7 +18,7 @@ def play_music():
     random.shuffle(discography)
     # play the songs in the list one by one
     for song in discography:
-        pygame.mixer.music.load(f"Assets/music/Spring ({song}).mp3")
+        pygame.mixer.music.load(f"Assets/music/{song}.mp3")
     pygame.mixer.music.play()
     print(f"playing '{song}' ...")
     # wait until the song completes
