@@ -4,7 +4,7 @@ from ViewClass import View
 
 INVENTORY_ITEM_SIZE = View.INVENTORY_ITEM_SIZE
 
-
+# LOOK INTO WHETHER WE SHOULD ACTUALLY BE ASSIGNING SLOT HERE
 class Equipment:
     """
     Class that represents an item that can be equipped from the inventory
@@ -145,3 +145,31 @@ class CauliflowerSeeds(Seed):
 
     def __init__(self, slot, gamestate):
         super().__init__(slot, gamestate, "cauliflower")
+
+
+class Crop(Equipment):
+    """
+    Class representing the different crops a player can hold in their inventory
+    """
+
+    def __init__(self, slot, gamestate, crop_type, price):
+        super().__init__(slot, gamestate)
+        # ADD IN ASSETS AN ADOPT NAMING CONVENTION
+        self.update_image(os.path.join("Assets/crops", f"{crop_type}.png"))
+        self.price = price
+
+
+class Parsnip_Crop(Crop):
+    """Class representing sellable parsnip inventory item"""
+
+    def __init__(self, slot, gamestate):
+        # Make sure crop_type matches naming convention
+        super().__init__(slot, gamestate, "parsnip", 35)
+
+
+class Cauliflower_Crop(Crop):
+    """Class representing sellable parsnip inventory item"""
+
+    def __init__(self, slot, gamestate):
+        # Make sure crop_type matches naming convention
+        super().__init__(slot, gamestate, "cauliflower", 175)

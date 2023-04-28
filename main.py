@@ -11,6 +11,9 @@ from EquipmentClass import (
     Seed,
     ParsnipSeeds,
     CauliflowerSeeds,
+    Crop,
+    Parsnip_Crop,
+    Cauliflower_Crop,
 )
 from Inventory_Class import Inventory
 from plants import Plants
@@ -26,7 +29,9 @@ def main():
     hoe = Hoe(1, gamestate)
     parsnipseeds = ParsnipSeeds(2, gamestate)
     cauliflowerseeds = CauliflowerSeeds(3, gamestate)
+    parsnip = Parsnip_Crop(4, gamestate)
     inventory = Inventory(watering_can, hoe, parsnipseeds, cauliflowerseeds)
+    inventory.add_item(parsnip.inventory_slot, parsnip)
     display_farmer = View(farmer, ground, gamestate, inventory)
     clock = pygame.time.Clock()
     game_running = True

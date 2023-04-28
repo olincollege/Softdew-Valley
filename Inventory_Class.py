@@ -60,6 +60,7 @@ class Inventory:
             item: ?class? representing the item to put in the specified
             inventory spot
         """
+        self._inventory[slot] = item
 
     def __repr__(self):
         """for debugging purposes"""
