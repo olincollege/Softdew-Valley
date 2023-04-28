@@ -1,7 +1,7 @@
 import pygame
 
-import music
-
+import audio
+from FarmerClass import Farmer
 from ViewClass import View
 from plants import Plants
 from Model import Model
@@ -15,15 +15,15 @@ def main():
     display = View(model.farmer, model.ground, model.gamestate, model.inventory)
     clock = pygame.time.Clock()
     game_running = True
-    music.play_music()
+    audio.play_music()
     pygame.display.set_caption("Super Swag Stardew")
     while game_running:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_running = False
-            if event.type == music.MUSIC_END:
-                music.play_music()
+            if event.type == audio.MUSIC_END:
+                audio.play_music()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     model.perform_action()

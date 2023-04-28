@@ -3,7 +3,7 @@ Inventory_Class
 """
 from ViewClass import View
 import pygame
-from music import play_sound
+from audio import play_sound
 
 mixer_works = pygame.mixer.get_init()
 

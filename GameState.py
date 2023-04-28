@@ -4,7 +4,7 @@ from plants import Plants
 from EquipmentClass import Crop
 import pygame
 import random
-from music import play_sound
+from audio import play_sound
 
 mixer_works = pygame.init()  # None if the mixer doesn't work
 
