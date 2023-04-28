@@ -2,7 +2,7 @@ import pygame
 import os
 from ViewClass import View
 import random
-from music import play_sound
+from audio import play_sound
 
 mixer_works = pygame.init()
 INVENTORY_ITEM_SIZE = View.INVENTORY_ITEM_SIZE

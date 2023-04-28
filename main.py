@@ -1,6 +1,6 @@
 import pygame
 
-import music
+import audio
 from FarmerClass import Farmer
 from ViewClass import View
 from GroundClass import Ground
@@ -34,15 +34,15 @@ def main():
     display_farmer = View(farmer, ground, gamestate, inventory)
     clock = pygame.time.Clock()
     game_running = True
-    music.play_music()
+    audio.play_music()
     pygame.display.set_caption("Super Swag Stardew")
     while game_running:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_running = False
-            if event.type == music.MUSIC_END:
-                music.play_music()
+            if event.type == audio.MUSIC_END:
+                audio.play_music()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     equipped_item = inventory.get_equipped_item()

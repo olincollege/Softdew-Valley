@@ -2,7 +2,7 @@ import pygame
 import random
 from ViewClass import View
 from plants import Plants
-from music import play_sound
+from audio import play_sound
 
 WIDTH, HEIGHT = View.WIDTH, View.HEIGHT
 SQUARE_SIZE = View.GROUND_SIZE
