@@ -82,15 +82,15 @@ class GameState:
                 print("it's a harvestable plant")
                 self.ground.harvest(action_pos[0], action_pos[1])
 
-            # check if it is already in the inventory
-            found_item = False
-            for idx, item in enumerate(inventory.inventory):
-                if type(item) is type(square.crop):
-                    inventory.get_item(idx).add_crop()
-                    found_item = True
-            if not found_item:
-                slot = inventory.first_empty_slot()
-                inventory.add_item(slot, square.crop)
+                # check if it is already in the inventory
+                found_item = False
+                for idx, item in enumerate(inventory.inventory):
+                    if type(item) is type(square.crop):
+                        inventory.get_item(idx).add_crop()
+                        found_item = True
+                if not found_item:
+                    slot = inventory.first_empty_slot()
+                    inventory.add_item(slot, square.crop)
 
     def water_ground(self):
         if self.action_on_map():
