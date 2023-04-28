@@ -12,7 +12,7 @@ def main():
     pygame.init()
     model = Model()
     display = View(model.farmer, model.ground, model.gamestate, model.inventory)
-    control = Controller(model.farmer)
+    control = Controller(model.farmer, model.inventory)
     clock = pygame.time.Clock()
     game_running = True
     audio.play_music()
@@ -29,14 +29,14 @@ def main():
                     model.perform_action()
                 for i in range(1, 9):
                     if event.key == getattr(pygame, f"K_{i}"):
-                        model.inventory.control_inventory(num=i - 1)
+                        control.select_inventory(num=i - 1)
                 if event.key == pygame.K_h:
                     model.gamestate.harvest_crop(model.inventory)
                 if event.key == pygame.K_p:
                     model.day_passes()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                model.update_equipped_inventory(mouse_pos)
+                control.click_inventory(mouse_pos)
 
         keys_pressed = pygame.key.get_pressed()
         control.move_farmer(keys_pressed)

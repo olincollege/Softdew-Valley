@@ -23,10 +23,10 @@ class Farmer:
         # position is the (x, y) or (row, col) position of the farmer on the map
         self._position = (self.start_square_x, self.start_square_y)
 
-    def update_position(self, x, y):
+    def set_position(self, x, y):
         self._position = (x, y)
 
-    def update_direction(self, direction):
+    def set_direction(self, direction):
         self._direction = direction
 
     @property

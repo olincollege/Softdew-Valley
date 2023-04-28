@@ -1,5 +1,6 @@
 from FarmerClass import Farmer
-from ViewClass import View
+
+# from ViewClass import View
 from GroundClass import Ground
 from GameState import GameState
 from EquipmentClass import (
@@ -34,17 +35,17 @@ class Model:
             # the action function is different for each item
             equipped_item.action()
 
-    def update_equipped_inventory(self, mouse_pos):
-        if (
-            mouse_pos[0] > View.INVENTORY_START_WIDTH
-            and mouse_pos[0] < View.INVENTORY_START_WIDTH + 7 * 50
-        ):
-            if (
-                mouse_pos[1] > View.INVENTORY_START_HEIGHT
-                and mouse_pos[1]
-                < View.INVENTORY_START_HEIGHT + View.GROUND_SIZE
-            ):
-                self.inventory.control_inventory(mouse_pos)
+    # def update_equipped_inventory(self, mouse_pos):
+    #     if (
+    #         mouse_pos[0] > View.INVENTORY_START_WIDTH
+    #         and mouse_pos[0] < View.INVENTORY_START_WIDTH + 7 * 50
+    #     ):
+    #         if (
+    #             mouse_pos[1] > View.INVENTORY_START_HEIGHT
+    #             and mouse_pos[1]
+    #             < View.INVENTORY_START_HEIGHT + View.GROUND_SIZE
+    #         ):
+    #             self.inventory.control_inventory(mouse_pos)
 
     def day_passes(self):
         rows = self.ground.num_rows
