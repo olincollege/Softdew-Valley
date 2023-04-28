@@ -20,9 +20,9 @@ class Plants:
         self.water = water
         self._harvestable = False
         if species == "parsnip":
-            self._crop = Parsnip_Crop(6) #random slot, reassigned later
+            self._crop = Parsnip_Crop() #random slot, reassigned later
         if species == "cauliflower":
-            self._crop = Cauliflower_Crop(6)
+            self._crop = Cauliflower_Crop()
 
     
     def plant_water(self):

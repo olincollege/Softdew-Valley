@@ -56,9 +56,7 @@ class GameState:
                 self.ground.harvest(action_pos[0], action_pos[1])
             # add the crop to inventory here
             slot = inventory.first_empty_slot()
-            in_crop = square.crop
-            in_crop.update_inventory_slot(slot)
-            inventory.add_item(slot, in_crop)
+            inventory.add_item(slot, square.crop)
 
     def water_ground(self):
         action_pos = self.get_action_position()
