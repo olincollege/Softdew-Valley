@@ -1,37 +1,80 @@
 import pygame
+
+# import music
 from FarmerClass import Farmer
 from ViewClass import View
 from GroundClass import Ground
 from GameState import GameState
+from EquipmentClass import (
+    WateringCan,
+    Hoe,
+    Seed,
+    ParsnipSeeds,
+    CauliflowerSeeds,
+)
+from Inventory_Class import Inventory
+from plants import Plants
 
 FPS = 60
 
 
 def main():
-    farmer = Farmer
+    farmer = Farmer  # should probably make this an instance?
     ground = Ground()
     gamestate = GameState(farmer, ground)
-    display_farmer = View(farmer, ground, gamestate)
+    watering_can = WateringCan(0, gamestate)
+    hoe = Hoe(1, gamestate)
+    parsnipseeds = ParsnipSeeds(2, gamestate)
+    cauliflowerseeds = CauliflowerSeeds(3, gamestate)
+    inventory = Inventory(watering_can, hoe, parsnipseeds, cauliflowerseeds)
+    display_farmer = View(farmer, ground, gamestate, inventory)
     clock = pygame.time.Clock()
-    run = True
-    while run:
+    game_running = True
+    pygame.init()
+    # music.play_music()
+    pygame.display.set_caption("Super Swag Stardew")
+    while game_running:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
-            # FOR NOW: if the space key is hit, till the space in front
+                game_running = False
+            # if event.type == music.MUSIC_END:
+            #     music.play_music()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    gamestate.till_ground()
-            # FOR NOW: if the q key is hit, water the space in front
+                    equipped_item = inventory.get_equipped_item()
+                    if equipped_item is not None:
+                        # the action function is different for each item
+                        equipped_item.action()
+                for i in range(1, 9):
+                    if event.key == getattr(pygame, f"K_{i}"):
+                        inventory.control_inventory(num=i - 1)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if (
+                    mouse_pos[0] > View.INVENTORY_START_WIDTH
+                    and mouse_pos[0] < View.INVENTORY_START_WIDTH + 7 * 50
+                ):
+                    if (
+                        mouse_pos[1] > View.INVENTORY_START_HEIGHT
+                        and mouse_pos[1]
+                        < View.INVENTORY_START_HEIGHT + View.GROUND_SIZE
+                    ):
+                        inventory.control_inventory(mouse_pos)
+
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    gamestate.water_ground()
+                if event.key == pygame.K_p:
+                    print("you hit p")
+                    rows = ground.num_rows
+                    cols = ground.num_cols
+                    for j in range(cols):
+                        for i in range(rows):
+                            if isinstance(ground.land[i][j], Plants):
+                                ground.land[i][j].grow()
+                    ground.unwater_squares()
 
         keys_pressed = pygame.key.get_pressed()
         farmer.move(farmer, keys_pressed)
-        # print(farmer.position)
-        # ground.til_square(farmer.position[0], farmer.position[1])
         display_farmer.draw_window()
     pygame.quit()
 

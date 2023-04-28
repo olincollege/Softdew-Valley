@@ -1,7 +1,7 @@
 """
 Inventory_Class
 """
-import farmer
+from ViewClass import View
 
 
 class Inventory:
@@ -16,22 +16,39 @@ class Inventory:
 
     empty_slot = " "
 
-    def __init__(self):
+    def __init__(self, watering_can, hoe, parsnipseeds, cauliflowerseeds):
         """
         Initializes _inventory attribute so that it starts as a list of empty
         strings to represent the initial state of the inventory being empty
+        Adds items that the player starts with
         """
-
-        _inventory = [self.empty_slot for i in range(8)]  # list of 8 items
-        _inventory[0] = farmer.WateringCan()
-        _inventory[1] = farmer.Hoe()
-        _inventory[2] = farmer.Seeds()
+        self._inventory = [self.empty_slot for i in range(8)]
+        self._inventory[0] = watering_can
+        self._inventory[1] = hoe
+        self._inventory[2] = parsnipseeds
+        self._inventory[3] = cauliflowerseeds
 
     def equip_item(self, slot):
         """
         Equip the item in the specified inventory slot
         """
-        pass
+        item = self._inventory[slot]
+        if not isinstance(item, str):
+            item.equip()
+
+    def get_equipped_item(self):
+        """Return the equipped item of inventory"""
+        for item in self.inventory:
+            if not isinstance(item, str):
+                if item.equipped:
+                    return item
+
+    def get_equipped_item_slot(self):
+        """Return the slot of the equipped item"""
+        for idx, item in enumerate(self.inventory):
+            if not isinstance(item, str):
+                if item.equipped:
+                    return idx
 
     def add_item(self, slot, item):
         """
@@ -43,14 +60,29 @@ class Inventory:
             item: ?class? representing the item to put in the specified
             inventory spot
         """
-        pass
 
     def __repr__(self):
-        """
-        Determines how the inventory game should be displayed given the current
-        state of the player's inventory.
+        """for debugging purposes"""
+        return f"{self._inventory}"
 
-        Returns: A string representing the current state of the player's
-        inventory
-        """
-        pass
+    def control_inventory(self, mouse_pos=None, num=None):
+        """click the thing and do the thing"""
+        current_item = self.get_equipped_item()
+        if current_item is not None:
+            current_item.unequip()
+        slot = num
+        if mouse_pos is not None:
+            mouse_posx = mouse_pos[0]
+            for i in range(8):
+                if mouse_posx > View.INVENTORY_START_WIDTH + (
+                    i * View.GROUND_SIZE
+                ) and mouse_posx < View.INVENTORY_START_WIDTH + (
+                    (i + 1) * View.GROUND_SIZE
+                ):
+                    slot = i
+
+        self.equip_item(slot)
+
+    @property
+    def inventory(self):
+        return self._inventory

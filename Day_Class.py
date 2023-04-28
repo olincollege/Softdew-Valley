@@ -1,6 +1,7 @@
 """
 Day_Class
 """
+from plants import Plants
 
 
 class Day:
@@ -30,3 +31,8 @@ class Day:
         Returns a copy of the private day_number attribute
         """
         return self._day_number
+
+    def update_game_state(self):
+        """
+        Updates all the tiles when the player goes to sleep
+        """

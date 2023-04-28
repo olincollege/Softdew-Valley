@@ -1,7 +1,9 @@
-from farmer.py import is_watered
 import pygame
 
-PARNSIP_IMAGES = {"seed": "parsnipseed.png", "sprout": "parsnipsprout.png", "ready": "parsnipready.png"}
+# Crop growth cycle dictionary
+plant_dictionary = {"cauliflower": [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5], "parsnip" : [0, 1, 2, 3, 4]}
+
+
 
 class Plants:
     """
@@ -9,54 +11,58 @@ class Plants:
     given crop from a seed.
     """
 
-    def __init__(self, _growth_stage):
+    def __init__(self, row, col, water, species):
         self._growth_stage = 0
-        self._species = None
-
-    def grow(self, row, col):
+        self._growth_days = 0
+        self._species = species
+        self.row = row
+        self.col = col
+        self.water = water
+        self._harvestable = False
+    
+    def plant_water(self):
         """
-        If the plant at row, col is watered when sleep is triggered, grow
+        Sets the water attribute of a specific plant instance to true
         """
+        self.water = True
 
-        if player_sleeping and is_watered(row, col):
-            self._growth_stage += 1
 
-        pass
-
-    def get_growth_stage(self):
+    def grow(self):
         """
-        Determines the growth stage of any given plant
+        If the plant is watered when sleep is triggered, grow.
+        This is only intended to be called by the Day class when sleep is 
+        triggered.
         """
-        pass
+        if self.water:
+            self._growth_days += 1
+            try: self._growth_stage = plant_dictionary[self._species][self._growth_days]
+            except IndexError:
+                self._growth_stage = plant_dictionary[self._species][-1]
+                self._harvestable = True
 
-    def get_plant_type(self, row, col):
-        """
-        Determines what plant type is in a square
-
-        returns
-            species: a string representing a type of plant
-        """
-        pass
-        return species
-
-
-    def display_plant(self, CROP_IMAGES):
-        """
-        Displays the appropriate image depending on growth stage
-        and crop type
-        """
-        if self._growth_stage == 1:
-            pygame.display(CROP_IMAGES["seed"])
-        if self._growth_stage == 4:
-            pygame.display(CROP_IMAGES["sprout"])
-        if self._growth_stage == 6:
-            pygame.display(CROP_IMAGES["ready"])
-
+    @property
     def harvestable(self):
         """
-        Introduces status "Harvestable" once the plant is ready
+        Returns whether a plant can be harvested
         """
-        pass
+        return self._harvestable
+    
+    @property
+    def growth_stage(self):
+        """
+        Returns the plant's growth stage
+        """
+        return self._growth_stage
+
+    # def print_growth_stage(self):
+    #     print(self._growth_stage)
+
+    @property
+    def species(self):
+        """
+        Returns the species of a crop
+        """
+        return self._species
             
         
         

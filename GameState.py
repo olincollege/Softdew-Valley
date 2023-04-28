@@ -1,6 +1,6 @@
-import pygame
 from GroundClass import Ground
 from FarmerClass import Farmer
+from plants import Plants
 
 
 class GameState:
@@ -12,8 +12,8 @@ class GameState:
 
     def get_action_position(self):
         pos = self.farmer.position
-        action_pos_x = pos[0]
-        action_pos_y = pos[1]
+        action_pos_x = pos[0]  # - self.farmer.farmer_rect.width // 2
+        action_pos_y = pos[1]  # - self.farmer.farmer_rect.height // 2
         farmer_direction = self.farmer.direction
         if farmer_direction == "up":
             action_pos_y -= 1
@@ -27,16 +27,45 @@ class GameState:
 
     def till_ground(self):
         action_pos = self.get_action_position()
-        self.ground.til_square(action_pos[0], action_pos[1])
+        self.ground.till_square(action_pos[0], action_pos[1])
         self._is_till = True
+
+    def plant_seed(self, species):
+        action_pos = self.get_action_position()
+        square = self.ground.get_square(action_pos[0], action_pos[1])
+        if (
+            self.ground.is_watered(square)
+            or self.ground.is_tilled(square)
+            and not isinstance(square, Plants)
+        ):
+            ground_watered = self.ground.is_watered(square)
+            plant = Plants(
+                action_pos[0], action_pos[1], ground_watered, species
+            )
+            self.ground.plant_crop(action_pos[0], action_pos[1], plant)
+
+    def harvest_crop(self):
+        print("it's really in the ground")
+        action_pos = self.get_action_position()
+        square = self.ground.get_square(action_pos[0], action_pos[1])
+        if isinstance(square, Plants):
+            print("i am successfully seeing a plant in a square")
+            print(square.harvestable)  # for some reason won't
+            print(square.growth_stage)
+            if square.harvestable:
+                print("it's a harvestable plant")
+                self.ground.harvest(square)
+            # add the crop to inventory here
 
     def water_ground(self):
         action_pos = self.get_action_position()
-        if self.ground.is_tilled(
-            self.ground.get_square(action_pos[0], action_pos[1])
-        ):
+        square = self.ground.get_square(action_pos[0], action_pos[1])
+        if self.ground.is_tilled(square):
             self.ground.water_square(action_pos[0], action_pos[1])
             self._is_water = True
+
+        if isinstance(square, Plants):
+            square.plant_water()
 
     def stop_watering(self):
         self._is_water = False
@@ -44,6 +73,8 @@ class GameState:
     def stop_tilling(self):
         self._is_till = False
 
+    # These are for display purposes, it tells the view class to pause while
+    # the action is occuring
     @property
     def is_water(self):
         return self._is_water
