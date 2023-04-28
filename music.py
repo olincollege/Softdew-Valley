@@ -23,3 +23,14 @@ def play_music():
     print(f"playing '{song}' ...")
     # wait until the song completes
     pygame.mixer.music.set_endevent(MUSIC_END)
+
+
+def play_sound(sound_name, num_versions=0):
+    try:
+        pygame.mixer.Sound.play(
+            pygame.mixer.Sound(
+                f"Assets/sound_bites/{sound_name}{random.randint(0, num_versions)}.wav"
+            )
+        )
+    except pygame.error:
+        pass

@@ -2,6 +2,7 @@ import pygame
 import random
 from ViewClass import View
 from plants import Plants
+from music import play_sound
 
 WIDTH, HEIGHT = View.WIDTH, View.HEIGHT
 SQUARE_SIZE = View.GROUND_SIZE
@@ -94,11 +95,7 @@ class Ground:
     def harvest(self, row, col):
         # square.species
         print("i am calling harvest in groundclass")
-        pygame.mixer.Sound.play(
-            pygame.mixer.Sound(
-                f"Assets/sound_bites/harvest_sound{random.randint(0,3)}.wav"
-            )
-        )
+        play_sound("harvest", 3)
         if self.land[row][col].water:
             # self.water_square(row, col)
             self.land[row][col] = "W"

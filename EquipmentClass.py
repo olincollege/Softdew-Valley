@@ -2,6 +2,7 @@ import pygame
 import os
 from ViewClass import View
 import random
+from music import play_sound
 
 mixer_works = pygame.init()
 INVENTORY_ITEM_SIZE = View.INVENTORY_ITEM_SIZE
@@ -101,12 +102,7 @@ class Hoe(Equipment):
         Till the ground
         """
         self._gamestate.till_ground()
-        if mixer_works is not None:
-            pygame.mixer.Sound.play(
-                pygame.mixer.Sound(
-                    os.path.join("Assets/sound_bites/hoeing_sound.wav")
-                )
-            )
+        play_sound("hoeing")
 
 
 class Seed(Equipment):

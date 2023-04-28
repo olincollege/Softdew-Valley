@@ -4,6 +4,7 @@ from plants import Plants
 from EquipmentClass import Crop
 import pygame
 import random
+from music import play_sound
 
 mixer_works = pygame.init()  # None if the mixer doesn't work
 
@@ -46,12 +47,7 @@ class GameState:
                 action_pos[0], action_pos[1], ground_watered, species
             )
             print("Woo! You planted a seed <3")
-            if mixer_works is not None:
-                pygame.mixer.Sound.play(
-                    pygame.mixer.Sound(
-                        f"Assets/sound_bites/planting_sound{random.randint(0,1)}.wav"
-                    )
-                )
+            play_sound("planting", 1)
             self.ground.plant_crop(action_pos[0], action_pos[1], plant)
 
     def harvest_crop(self, inventory):
@@ -82,19 +78,10 @@ class GameState:
         if self.ground.is_tilled(square):
             self.ground.water_square(action_pos[0], action_pos[1])
             self._is_water = True
-            if mixer_works is not None:
-                pygame.mixer.Sound.play(
-                    pygame.mixer.Sound(
-                        f"Assets/sound_bites/watering_sound{random.randint(0, 2)}.wav"
-                    )
-                )
+            play_sound("watering", 2)
+
         if isinstance(square, Plants):
-            if mixer_works is not None:
-                pygame.mixer.Sound.play(
-                    pygame.mixer.Sound(
-                        f"Assets/sound_bites/watering_sound{random.randint(0, 2)}.wav"
-                    )
-                )
+            play_sound("watering", 2)
             square.plant_water()
 
     def stop_watering(self):

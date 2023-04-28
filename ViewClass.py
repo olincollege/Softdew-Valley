@@ -230,7 +230,7 @@ class View:
             )
             rect = pygame.Rect(x_pos, y_pos, self.GROUND_SIZE, self.GROUND_SIZE)
             pygame.draw.rect(
-                self.WIN, self.SELECTION_BOX_COLOR, rect, 2, border_radius=1
+                self.WIN, self.SELECTION_BOX_COLOR, rect, 3, border_radius=1
             )
 
     def draw_window(self):
