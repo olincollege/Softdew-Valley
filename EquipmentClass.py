@@ -15,20 +15,20 @@ class Equipment:
         equipped: a boolean that shows whether the item is equipped or not
     """
 
-    def __init__(self, slot, gamestate):
+    def __init__(self, gamestate=None):
         self._equipped = False
-        self._inventory_slot = slot
+        # self._inventory_slot = slot
         self._pg_image = None
         self._gamestate = gamestate
 
-    def update_inventory_slot(self, new_slot):
-        """
-        Update the inventory_slot attribute if the item is moved
+    # def update_inventory_slot(self, new_slot):
+    #     """
+    #     Update the inventory_slot attribute if the item is moved
 
-        Args:
-            new_slot: An int representing the slot the item is being moved to
-        """
-        self._inventory_slot = new_slot
+    #     Args:
+    #         new_slot: An int representing the slot the item is being moved to
+    #     """
+    #     self._inventory_slot = new_slot
 
     def update_image(self, link):
         """
@@ -64,9 +64,9 @@ class Equipment:
     def equipped(self):
         return self._equipped
 
-    @property
-    def inventory_slot(self):
-        return self._inventory_slot
+    # @property
+    # def inventory_slot(self):
+    #     return self._inventory_slot
 
     @property
     def pg_image(self):
@@ -81,11 +81,8 @@ class WateringCan(Equipment):
         inventory_slot: an int that represents the inventory location
     """
 
-    def __init__(self, slot, gamestate):
-        super(Equipment, self).__init__()
-        self._equipped = False
-        self.update_inventory_slot(slot)
-        super().__init__(slot, gamestate)
+    def __init__(self, gamestate):
+        super().__init__(gamestate)
         self.update_image(os.path.join("Assets/equipment", "watering_can.png"))
 
     def action(self):
@@ -103,11 +100,8 @@ class Hoe(Equipment):
         inventory_slot: an int that represents the inventory location
     """
 
-    def __init__(self, slot, gamestate):
-        super(Equipment, self).__init__()
-        self._equipped = False
-        self.update_inventory_slot(slot)
-        super().__init__(slot, gamestate)
+    def __init__(self, gamestate):
+        super().__init__(gamestate)
         self.update_image(os.path.join("Assets/equipment", "hoe.png"))
 
     def action(self):
@@ -130,11 +124,9 @@ class Seed(Equipment):
         inventory_slot: an int that represents the inventory location
     """
 
-    def __init__(self, slot, gamestate, seed_type):
-        super().__init__(slot, gamestate)
+    def __init__(self, gamestate, seed_type):
+        super().__init__(gamestate)
         self.seed_type = seed_type
-        self.update_inventory_slot(slot)
-        super().__init__(slot, gamestate)
         self.update_image(
             os.path.join("Assets/seeds", f"{seed_type}_seeds.png")
         )
@@ -143,22 +135,22 @@ class Seed(Equipment):
         """
         Plant a seed
         """
-        self._gamestate.harvest_crop()
+        # self._gamestate.harvest_crop()
         self._gamestate.plant_seed(self.seed_type)
 
 
 class ParsnipSeeds(Seed):
     """Class representing parsnip seeds"""
 
-    def __init__(self, slot, gamestate):
-        super().__init__(slot, gamestate, "parsnip")
+    def __init__(self, gamestate):
+        super().__init__(gamestate, "parsnip")
 
 
 class CauliflowerSeeds(Seed):
     """Class representing cauliflower seeds"""
 
-    def __init__(self, slot, gamestate):
-        super().__init__(slot, gamestate, "cauliflower")
+    def __init__(self, gamestate):
+        super().__init__(gamestate, "cauliflower")
 
 
 class Crop(Equipment):
@@ -166,9 +158,8 @@ class Crop(Equipment):
     Class representing the different crops a player can hold in their inventory
     """
 
-    def __init__(self, slot, gamestate, crop_type, price):
-        super().__init__(slot, gamestate)
-        # ADD IN ASSETS AND ADOPT NAMING CONVENTION
+    def __init__(self, crop_type, price):
+        super().__init__()
         self.update_image(os.path.join("Assets/crops", f"{crop_type}.png"))
         self.price = price
 
@@ -176,14 +167,12 @@ class Crop(Equipment):
 class Parsnip_Crop(Crop):
     """Class representing sellable parsnip inventory item"""
 
-    def __init__(self, slot, gamestate):
-        # Make sure crop_type matches naming convention
-        super().__init__(slot, gamestate, "parsnip", 35)
+    def __init__(self):
+        super().__init__("parsnip", 35)
 
 
 class Cauliflower_Crop(Crop):
     """Class representing sellable parsnip inventory item"""
 
-    def __init__(self, slot, gamestate):
-        # Make sure crop_type matches naming convention
-        super().__init__(slot, gamestate, "cauliflower", 175)
+    def __init__(self):
+        super().__init__("cauliflower", 175)

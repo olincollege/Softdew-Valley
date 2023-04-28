@@ -50,7 +50,7 @@ class GameState:
             )
             self.ground.plant_crop(action_pos[0], action_pos[1], plant)
 
-    def harvest_crop(self):
+    def harvest_crop(self, inventory):
         print("you called harvest_crop in gamestate")
         action_pos = self.get_action_position()
         square = self.ground.get_square(action_pos[0], action_pos[1])
@@ -62,6 +62,8 @@ class GameState:
                 print("it's a harvestable plant")
                 self.ground.harvest(action_pos[0], action_pos[1])
             # add the crop to inventory here
+            slot = inventory.first_empty_slot()
+            inventory.add_item(slot, square.crop)
 
     def water_ground(self):
         action_pos = self.get_action_position()
