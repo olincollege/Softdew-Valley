@@ -93,10 +93,15 @@ class Ground:
     def harvest(self, row, col):
         # square.species
         print("i am calling harvest in groundclass")
-        square = self.land[row][col]
-        if square.water:
-            self.water_square(row, col)
+        if self.land[row][col].water:
+            # self.water_square(row, col)
+            self.land[row][col] = "W"
+            print("Harvest trying to turn the square into a watered square")
         else:
             self.till_square(row, col)
+        if isinstance(self.land[row][col], type):
+            print("uh oh, harvest in groundclass says this square is a class")
+        if isinstance(self.land[row][col], Plants):
+            print("for some reason, this square is still a plant.")
         # self.land = "W" if square.water else "T"
-        print(square)
+        print(f"{self.land[row][col]} should be a W or a T")

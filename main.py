@@ -72,7 +72,7 @@ def main():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
-                    print("you hit p")
+                    # print("you hit p")
                     rows = ground.num_rows
                     cols = ground.num_cols
                     for j in range(cols):

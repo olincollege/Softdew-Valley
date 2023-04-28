@@ -40,17 +40,16 @@ class GameState:
             plant = Plants(
                 action_pos[0], action_pos[1], ground_watered, species
             )
+            print("Woo! You planted a seed <3")
             self.ground.plant_crop(action_pos[0], action_pos[1], plant)
 
     def harvest_crop(self):
-        print("it's really in the ground")
+        print("you called harvest_crop in gamestate")
         action_pos = self.get_action_position()
         square = self.ground.get_square(action_pos[0], action_pos[1])
         if isinstance(square, Plants):
             print("i am successfully seeing a plant in a square")
-            print(
-                f"square.harvestable is {square.harvestable}"
-            )  # for some reason won't
+            print(f"square.harvestable is {square.harvestable}")
             print(square.growth_stage)
             if square.harvestable:
                 print("it's a harvestable plant")
