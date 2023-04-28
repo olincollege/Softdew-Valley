@@ -1,5 +1,5 @@
 import pygame
-
+from EquipmentClass import Parsnip_Crop, Cauliflower_Crop
 # Crop growth cycle dictionary
 plant_dictionary = {"cauliflower": [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5], "parsnip" : [0, 1, 2, 3, 4]}
 
@@ -19,6 +19,11 @@ class Plants:
         self.col = col
         self.water = water
         self._harvestable = False
+        if species == "parsnip":
+            self._crop = Parsnip_Crop(6) #random slot, reassigned later
+        if species == "cauliflower":
+            self._crop = Cauliflower_Crop(6)
+
     
     def plant_water(self):
         """
@@ -66,6 +71,10 @@ class Plants:
         Returns the species of a crop
         """
         return self._species
+    
+    @property
+    def crop(self):
+        return self._crop
             
         
         

@@ -29,9 +29,7 @@ def main():
     hoe = Hoe(1, gamestate)
     parsnipseeds = ParsnipSeeds(2, gamestate)
     cauliflowerseeds = CauliflowerSeeds(3, gamestate)
-    parsnip = Parsnip_Crop(4, gamestate)
     inventory = Inventory(watering_can, hoe, parsnipseeds, cauliflowerseeds)
-    inventory.add_item(parsnip.inventory_slot, parsnip)
     display_farmer = View(farmer, ground, gamestate, inventory)
     clock = pygame.time.Clock()
     game_running = True
@@ -57,6 +55,9 @@ def main():
                 for i in range(1, 9):
                     if event.key == getattr(pygame, f"K_{i}"):
                         inventory.control_inventory(num=i - 1)
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_h:
+                    gamestate.harvest_crop(inventory)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if (

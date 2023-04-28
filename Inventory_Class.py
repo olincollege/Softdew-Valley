@@ -62,6 +62,16 @@ class Inventory:
         """
         self._inventory[slot] = item
 
+    def first_empty_slot(self):
+        """
+        Returns the index of the first empty slot in the inventory
+        If the inventory is full, returns none
+        """
+        for idx, item in enumerate(self._inventory):
+            if isinstance(item, str):
+                return idx
+        return None
+
     def __repr__(self):
         """for debugging purposes"""
         return f"{self._inventory}"
