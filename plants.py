@@ -40,10 +40,7 @@ class Plants:
         """
         if self.water:
             self._growth_days += 1
-            # min of growth and list
-            try: self._growth_stage = plant_dictionary[self._species][self._growth_days]
-            except IndexError:
-                self._growth_stage = plant_dictionary[self._species][-1]
+            self._growth_stage = min(plant_dictionary[self.species][self._growth_days], self._growth_days)
         if self._growth_stage == plant_dictionary[self._species][-1]:
             print("grow has set harvestable to true")
             self._harvestable = True
