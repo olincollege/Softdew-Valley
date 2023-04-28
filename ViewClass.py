@@ -258,7 +258,6 @@ class View:
                         self.plant_image,
                         ((i) * self.GROUND_SIZE, (j) * self.GROUND_SIZE),
                     )
-                self.WIN.blit(self.type_ground, ((i) * 50, (j) * 50))
         # draw house
         num_house_rows = 5
         num_house_cols = 4
