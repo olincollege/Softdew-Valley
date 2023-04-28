@@ -1,5 +1,3 @@
-import pygame
-import random
 from ViewClass import View
 from plants import Plants
 from audio import play_sound
