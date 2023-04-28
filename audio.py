@@ -14,6 +14,16 @@ MUSIC_END = pygame.USEREVENT + 1
 
 
 def play_music():
+    """
+    Shuffles the list representation (discography) of the some of the mp3s
+    provided in Assets/music and plays a random track; prints the track name
+    to the terminal and waits until the track completes to start another
+
+    Returns:
+        None
+    Raises:
+        pygame.error: WSL has issues supporting pygame audio and throws this error
+    """
     try:
         # randomize the song list
         random.shuffle(discography)
@@ -29,6 +39,18 @@ def play_music():
 
 
 def play_sound(sound_name, num_versions=0):
+    """
+    Plays a sound from Assets/sound_bites based off of a provided sound name and number of versions
+
+    Args:
+        sound_name: a string representing the name of a sound in sound_bites   without the ending index number
+        num_versions: an int representing the largest index number of any file in sound_bites with sound_name (for example, harvest3.wav means num_versions should be 3)
+
+    Returns:
+        None
+    Raises:
+        pygame.error: WSL has issues supporting pygame audio and throws this error
+    """
     try:
         pygame.mixer.Sound.play(
             pygame.mixer.Sound(

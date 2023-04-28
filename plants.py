@@ -34,9 +34,12 @@ class Plants:
 
     def grow(self):
         """
-        If the plant is watered when sleep is triggered, grow.
-        This is only intended to be called by the Day class when sleep is 
-        triggered.
+        If the crop is watered when sleep is triggered, grow. If a crop is fully grown, set self._harvestable to True. grow() is only intended to be called by the Day class when sleep is triggered.
+        
+        Returns:
+            None
+        Raises:
+            IndexError: number of growth days has become longer than the associated crop's growth cycle list
         """
         if self.water:
             self._growth_days += 1
