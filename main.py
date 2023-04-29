@@ -8,6 +8,7 @@ FPS = 60
 
 
 def main():
+    """Run the game by creating instances"""
     pygame.init()
     model = Model()
     display = View(model.farmer, model.ground, model.gamestate, model.inventory)
