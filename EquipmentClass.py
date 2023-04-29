@@ -91,7 +91,8 @@ class WateringCan(Equipment):
         """
         Water the ground
 
-        Calls the gamestate function water_ground, which updates the ground and/or plant class, updates the action occurring in the view class
+        Calls the gamestate function water_ground, which updates the ground
+        and/or plant class, updates the action occurring in the view class
         """
         self._gamestate.water_ground()
 
@@ -116,7 +117,8 @@ class Hoe(Equipment):
         """
         Till the ground
 
-        Calls the gamestate function till_ground, which updates the ground class, updates the action occurring in the view class
+        Calls the gamestate function till_ground, which updates the ground
+        class, updates the action occurring in the view class
         """
         self._gamestate.till_ground()
 
@@ -146,7 +148,8 @@ class Seed(Equipment):
         """
         Plant a seed
 
-        Calls the gamestate function plant, which updates the ground class and initializes a plant class. The plant depends on the seed_type
+        Calls the gamestate function plant, which updates the ground class and
+        initializes a plant class. The plant depends on the seed_type
         """
         self._gamestate.plant_seed(self.seed_type)
 

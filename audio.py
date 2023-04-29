@@ -22,7 +22,7 @@ def play_music():
     Returns:
         None
     Raises:
-        pygame.error: WSL has issues supporting pygame audio and throws this error
+        pygame.error: safeguarding against WSL pygame errors
     """
     try:
         # randomize the song list
@@ -38,23 +38,28 @@ def play_music():
         pass
 
 
-def play_sound(sound_name, num_versions=0):
+def play_sound(sound_name, num_vers=0):
     """
-    Plays a sound from Assets/sound_bites based off of a provided sound name and number of versions
+    Plays a sound from Assets/sound_bites based off of a provided sound name
+    and number of versions
 
     Args:
-        sound_name: a string representing the name of a sound in sound_bites   without the ending index number
-        num_versions: an int representing the largest index number of any file in sound_bites with sound_name (for example, harvest3.wav means num_versions should be 3)
+        sound_name: a string representing the name of a sound in sound_bites
+        without the ending index number
+        num_vers: an int representing the largest index number of any file
+        in sound_bites with sound_name (for example, harvest3.wav means
+        num_vers should be 3)
 
     Returns:
         None
     Raises:
-        pygame.error: WSL has issues supporting pygame audio and throws this error
+        pygame.error: WSL has issues supporting pygame audio and throws this
+        error
     """
     try:
         pygame.mixer.Sound.play(
             pygame.mixer.Sound(
-                f"Assets/sound_bites/{sound_name}{random.randint(0, num_versions)}.wav"
+                f"Assets/sound_bites/{sound_name}{random.randint(0, num_vers)}.wav"
             )
         )
     except pygame.error:

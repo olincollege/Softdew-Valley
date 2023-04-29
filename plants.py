@@ -1,7 +1,5 @@
 import pygame
 from EquipmentClass import Parsnip_Crop, Cauliflower_Crop
-# Crop growth cycle dictionary
-plant_dictionary = {"cauliflower": [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5], "parsnip" : [0, 1, 2, 3, 4]}
 
 
 
@@ -10,8 +8,24 @@ class Plants:
     This parent class is responsible for keeping track of the state of any
     given crop from a seed.
     """
+    # Crop growth cycle dictionary
+    plant_dictionary = {
+        "cauliflower": ([0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5], Cauliflower_Crop()),
+        "parsnip" : ([0, 1, 2, 3, 4], Parsnip_Crop())
+    }
+
 
     def __init__(self, row, col, water, species):
+        """
+        Initializes instance attributes and creates a plant instance
+
+        Args:
+            row: An int row value of a given square plot
+            col: An int column value of a given square plot
+            water: A bool representing whether a crop is watered or not 
+            (watered is True)
+            species: A string representing the species of crop (i.e. "parsnip")
+        """
         self._growth_stage = 0
         self._growth_days = 0
         self._species = species
@@ -19,10 +33,7 @@ class Plants:
         self.col = col
         self.water = water
         self._harvestable = False
-        if species == "parsnip":
-            self._crop = Parsnip_Crop() #random slot, reassigned later
-        if species == "cauliflower":
-            self._crop = Cauliflower_Crop()
+        self._crop = self.plant_dictionary[species][1] #random slot, reassigned later
 
     
     def plant_water(self):
@@ -34,19 +45,23 @@ class Plants:
 
     def grow(self):
         """
-        If the crop is watered when sleep is triggered, grow. If a crop is fully grown, set self._harvestable to True. grow() is only intended to be called by the Day class when sleep is triggered.
+        If the crop is watered when sleep is triggered, grow. If a crop is 
+        fully grown, set self._harvestable to True. grow() is only intended to
+        be called by the Day class when sleep is triggered.
         
         Returns:
             None
         Raises:
-            IndexError: number of growth days has become longer than the associated crop's growth cycle list
+            IndexError: number of growth days has become longer than the 
+            associated crop's growth cycle list
         """
         if self.water:
             self._growth_days += 1
-            try: self._growth_stage = plant_dictionary[self._species][self._growth_days]
+            try: self._growth_stage = (
+                self.plant_dictionary[self._species][0][self._growth_days])
             except IndexError:
-                self._growth_stage = plant_dictionary[self._species][-1]
-        if self._growth_stage == plant_dictionary[self._species][-1]:
+                self._growth_stage = self.plant_dictionary[self._species][0][-1]
+        if self._growth_stage == self.plant_dictionary[self._species][0][-1]:
             print("grow has set harvestable to true")
             self._harvestable = True
 
@@ -64,9 +79,6 @@ class Plants:
         """
         return self._growth_stage
 
-    # def print_growth_stage(self):
-    #     print(self._growth_stage)
-
     @property
     def species(self):
         """
@@ -76,6 +88,7 @@ class Plants:
     
     @property
     def crop(self):
+        """"""
         return self._crop
             
         
