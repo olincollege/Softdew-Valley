@@ -77,52 +77,52 @@ TILL_LEFT_FARMER = pygame.transform.scale(
     (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
 )
 
-    # GROUND SPRITES
-    def randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE):
-        """
-        Randomizes the free ground image to bring the spice of variety into the
-        farm
+# GROUND SPRITES
+def randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE):
+    """
+    Randomizes the free ground image to bring the spice of variety into the
+    farm
 
-        Args:
-            WIDTH: int value representing the game's pixel width
-            HEIGHT: int value representing the game's pixel height
-            GROUND_SIZE: int value representing each tile's pixel height/width
+    Args:
+        WIDTH: int value representing the game's pixel width
+        HEIGHT: int value representing the game's pixel height
+        GROUND_SIZE: int value representing each tile's pixel height/width
 
-        Returns:
-            FREE_GROUND_MAP: a two-dimensional list that is width of game in
-            tiles by height of game in tiles in dimension and consists only of
-            randomized pygame image pathways
-        """
-        FREE_GROUND_MAP = [
-            [None] * (HEIGHT // GROUND_SIZE)
-            for _ in range(WIDTH // GROUND_SIZE)
-        ]
-        # Define the corresponding probabilities for each ground file
-        probabilities = [0.82, 0.02, 0.02, 0.02, 0.02, 0.02, 0.03, 0.03, 0.02]
-        for i in range(WIDTH // GROUND_SIZE):
-            for j in range(HEIGHT // GROUND_SIZE):
-                FREE_GROUND_MAP[i][j] = pygame.transform.scale(
-                    pygame.image.load(
-                        os.path.join(
-                            "Assets/ground/free_ground_versions",
-                            f"free_ground{random.choices(range(9), probabilities)[0]}.png",
-                        )
-                    ),
-                    (GROUND_SIZE, GROUND_SIZE),
-                )
-        return FREE_GROUND_MAP
+    Returns:
+        FREE_GROUND_MAP: a two-dimensional list that is width of game in
+        tiles by height of game in tiles in dimension and consists only of
+        randomized pygame image pathways
+    """
+    FREE_GROUND_MAP = [
+        [None] * (HEIGHT // GROUND_SIZE) for _ in range(WIDTH // GROUND_SIZE)
+    ]
+    # Define the corresponding probabilities for each ground file
+    probabilities = [0.82, 0.02, 0.02, 0.02, 0.02, 0.02, 0.03, 0.03, 0.02]
+    for i in range(WIDTH // GROUND_SIZE):
+        for j in range(HEIGHT // GROUND_SIZE):
+            FREE_GROUND_MAP[i][j] = pygame.transform.scale(
+                pygame.image.load(
+                    os.path.join(
+                        "Assets/ground/free_ground_versions",
+                        f"free_ground{random.choices(range(9), probabilities)[0]}.png",
+                    )
+                ),
+                (GROUND_SIZE, GROUND_SIZE),
+            )
+    return FREE_GROUND_MAP
 
-    FREE_GROUND_MAP = randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE)
 
-    TILLED_GROUND = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets/ground", "tilled_ground.png")),
-        (GROUND_SIZE, GROUND_SIZE),
-    )
+FREE_GROUND_MAP = randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE)
 
-    WATERED_GROUND = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets/ground", "watered_ground.png")),
-        (GROUND_SIZE, GROUND_SIZE),
-    )
+TILLED_GROUND = pygame.transform.scale(
+    pygame.image.load(os.path.join("Assets/ground", "tilled_ground.png")),
+    (GROUND_SIZE, GROUND_SIZE),
+)
+
+WATERED_GROUND = pygame.transform.scale(
+    pygame.image.load(os.path.join("Assets/ground", "watered_ground.png")),
+    (GROUND_SIZE, GROUND_SIZE),
+)
 
 # INVENTORY/ITEM SPRITES
 INVENTORY_SQUARE = pygame.transform.scale(
@@ -135,10 +135,6 @@ HOUSE_GROUND = pygame.transform.scale(
     pygame.image.load(os.path.join("Assets", "house_ground.PNG")),
     (GROUND_SIZE, GROUND_SIZE),
 )
-
-# farmer_image = FRONT_FARMER
-# type_ground = FREE_GROUND
-# plant_image = None
 
 
 class View:
@@ -215,7 +211,7 @@ class View:
         elif self.ground.is_tilled(self.ground.get_square(row, col)):
             self.type_ground = TILLED_GROUND
         else:
-            self.type_ground = self.FREE_GROUND_MAP[row][col]
+            self.type_ground = FREE_GROUND_MAP[row][col]
 
     def draw_inventory_items(self):
         """

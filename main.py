@@ -1,5 +1,4 @@
 import pygame
-
 import audio
 from ViewClass import View
 from Model import Model
