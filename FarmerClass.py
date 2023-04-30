@@ -1,14 +1,17 @@
 import pygame
-from ViewClass import View
+import ViewClass
 
 
 class Farmer:
-    FARMER_WIDTH = View.FARMER_WIDTH
-    FARMER_HEIGHT = View.FARMER_HEIGHT
+    FARMER_WIDTH = ViewClass.FARMER_WIDTH
+    FARMER_HEIGHT = ViewClass.FARMER_HEIGHT
     VEL = 5
-    WIDTH, HEIGHT = View.WIDTH, View.HEIGHT
-    SQUARE_SIZE = View.GROUND_SIZE
-    FARMER_WIDTH, FARMER_HEIGHT = View.FARMER_WIDTH, View.FARMER_HEIGHT
+    WIDTH, HEIGHT = ViewClass.WIDTH, ViewClass.HEIGHT
+    SQUARE_SIZE = ViewClass.GROUND_SIZE
+    FARMER_WIDTH, FARMER_HEIGHT = (
+        ViewClass.FARMER_WIDTH,
+        ViewClass.FARMER_HEIGHT,
+    )
 
     def __init__(self):
         self.start_square_x = 2

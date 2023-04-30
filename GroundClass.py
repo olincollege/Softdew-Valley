@@ -1,9 +1,9 @@
-from ViewClass import View
+import ViewClass
 from plants import Plants
 from audio import play_sound
 
-WIDTH, HEIGHT = View.WIDTH, View.HEIGHT
-SQUARE_SIZE = View.GROUND_SIZE
+WIDTH, HEIGHT = ViewClass.WIDTH, ViewClass.HEIGHT
+SQUARE_SIZE = ViewClass.GROUND_SIZE
 
 
 class Ground:
