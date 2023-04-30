@@ -1,11 +1,10 @@
 import pygame
 import os
-from ViewClass import View
-import random
+import ViewClass
 from audio import play_sound
 
 mixer_works = pygame.init()
-INVENTORY_ITEM_SIZE = View.INVENTORY_ITEM_SIZE
+INVENTORY_ITEM_SIZE = ViewClass.INVENTORY_ITEM_SIZE
 
 
 class Equipment:

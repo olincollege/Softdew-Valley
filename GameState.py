@@ -1,5 +1,5 @@
 from plants import Plants
-from ViewClass import View
+import ViewClass
 from audio import play_sound
 
 
@@ -33,16 +33,16 @@ class GameState:
             (
                 self.farmer.farmer_rect.x
                 + self.farmer.farmer_rect.width
-                + View.GROUND_SIZE // 2
+                + ViewClass.GROUND_SIZE // 2
             )
-            < View.WIDTH
+            < ViewClass.WIDTH
             and (
                 self.farmer.farmer_rect.y
                 + self.farmer.farmer_rect.height
-                + View.GROUND_SIZE // 2
+                + ViewClass.GROUND_SIZE // 2
             )
-            < View.HEIGHT
-            and not (self.farmer.farmer_rect.x < View.GROUND_SIZE)
+            < ViewClass.HEIGHT
+            and not (self.farmer.farmer_rect.x < ViewClass.GROUND_SIZE)
         )
 
     def till_ground(self):
