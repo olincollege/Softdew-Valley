@@ -84,6 +84,7 @@ class WateringCan(Equipment):
     """
 
     def __init__(self, gamestate):
+        """Initialize watering can"""
         super().__init__(gamestate)
         self.update_image(os.path.join("Assets/equipment", "watering_can.png"))
 
@@ -110,6 +111,7 @@ class Hoe(Equipment):
     """
 
     def __init__(self, gamestate):
+        """Initialize hoe"""
         super().__init__(gamestate)
         self.update_image(os.path.join("Assets/equipment", "hoe.png"))
 
@@ -138,6 +140,7 @@ class Seed(Equipment):
     """
 
     def __init__(self, gamestate, seed_type):
+        """Initialize seed"""
         super().__init__(gamestate)
         self.seed_type = seed_type
         self.update_image(

@@ -9,7 +9,14 @@ FPS = 60
 
 
 def main():
-    """Run the game by creating instances"""
+    """
+    Runs game by creating game instances, which include a Model, View, and
+    Controller instance; runs at 60 FPS as set by the clock and includes
+    logic for button controls such as the general action key, number keys
+    and mouse clicks for inventory slots, the harvesting key, and day
+    passing key; also passes keys pressed to farmer movement in control,
+    draws the window and quits the game
+    """  # edit day passing when house is done
     pygame.init()
     model = Model()
     display = View(model.farmer, model.ground, model.gamestate, model.inventory)

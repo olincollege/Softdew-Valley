@@ -1,10 +1,14 @@
 import pygame
 import os
+import random
 
 pygame.font.init()
 
 
 class View:
+    # initialize global variables
+    # global FARMER_WIDTH, FARMER_HEIGHT, GROUND_SIZE, WIDTH, HEIGHT
+    # global INVENTORY_ITEM_SIZE, INVENTORY_FONT
     FARMER_WIDTH = 50
     FARMER_HEIGHT = 100
     GROUND_SIZE = 50
@@ -97,18 +101,49 @@ class View:
     )
 
     # GROUND SPRITES
-    FREE_GROUND = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets/ground", "free_ground.jpg")),
-        (GROUND_SIZE, GROUND_SIZE),
-    )
+    def randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE):
+        """
+        Randomizes the free ground image to bring the spice of variety into the
+        farm
+
+        Args:
+            WIDTH: int value representing the game's pixel width
+            HEIGHT: int value representing the game's pixel height
+            GROUND_SIZE: int value representing each tile's pixel height/width
+
+        Returns:
+            FREE_GROUND_MAP: a two-dimensional list that is width of game in
+            tiles by height of game in tiles in dimension and consists only of
+            randomized pygame image pathways
+        """
+        FREE_GROUND_MAP = [
+            [None] * (HEIGHT // GROUND_SIZE)
+            for _ in range(WIDTH // GROUND_SIZE)
+        ]
+        # Define the corresponding probabilities for each ground file
+        probabilities = [0.82, 0.02, 0.02, 0.02, 0.02, 0.02, 0.03, 0.03, 0.02]
+        for i in range(WIDTH // GROUND_SIZE):
+            for j in range(HEIGHT // GROUND_SIZE):
+                FREE_GROUND_MAP[i][j] = pygame.transform.scale(
+                    pygame.image.load(
+                        os.path.join(
+                            "Assets/ground/free_ground_versions",
+                            f"free_ground{random.choices(range(9), probabilities)[0]}.png",
+                        )
+                    ),
+                    (GROUND_SIZE, GROUND_SIZE),
+                )
+        return FREE_GROUND_MAP
+
+    FREE_GROUND_MAP = randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE)
 
     TILLED_GROUND = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets/ground", "tilled_ground.jpg")),
+        pygame.image.load(os.path.join("Assets/ground", "tilled_ground.png")),
         (GROUND_SIZE, GROUND_SIZE),
     )
 
     WATERED_GROUND = pygame.transform.scale(
-        pygame.image.load(os.path.join("Assets/ground", "watered_ground.jpg")),
+        pygame.image.load(os.path.join("Assets/ground", "watered_ground.png")),
         (GROUND_SIZE, GROUND_SIZE),
     )
 
@@ -125,7 +160,9 @@ class View:
     )
 
     # farmer_image = FRONT_FARMER
-    type_ground = FREE_GROUND
+    type_ground = pygame.image.load(
+        os.path.join("Assets/ground/free_ground_versions", "free_ground0.png")
+    )
     plant_image = None
 
     def __init__(self, Farmer, Ground, Gamestate, Inventory):
@@ -178,7 +215,7 @@ class View:
         elif self.ground.is_tilled(self.ground.get_square(row, col)):
             self.type_ground = self.TILLED_GROUND
         else:
-            self.type_ground = self.FREE_GROUND
+            self.type_ground = self.FREE_GROUND_MAP[row][col]
 
     def draw_inventory_items(self):
         """
