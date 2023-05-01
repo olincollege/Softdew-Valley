@@ -98,15 +98,12 @@ def randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE):
     probabilities = [0.82, 0.02, 0.02, 0.02, 0.02, 0.02, 0.03, 0.03, 0.02]
     for i in range(WIDTH // GROUND_SIZE):
         for j in range(HEIGHT // GROUND_SIZE):
-            FREE_GROUND_MAP[i][j] = pygame.transform.scale(
-                pygame.image.load(
-                    os.path.join(
-                        "Assets/ground/free_ground_versions",
-                        f"free_ground{random.choices(range(9), probabilities)[0]}.png",
-                    )
-                ),
-                (GROUND_SIZE, GROUND_SIZE),
-            ).convert()
+            FREE_GROUND_MAP[i][j] = pygameify_image(
+                "ground/free_ground_versions",
+                f"free_ground{random.choices(range(9), probabilities)[0]}.png",
+                GROUND_SIZE,
+                GROUND_SIZE,
+            )
     return FREE_GROUND_MAP
 
 
