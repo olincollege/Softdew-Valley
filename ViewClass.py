@@ -10,10 +10,10 @@ GROUND_SIZE = 50
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 INVENTORY_ITEM_SIZE = 40
-INVENTORY_FONT = pygame.font.SysFont("comicsans", 40)
+INVENTORY_FONT = pygame.font.Font("Assets/stardew_font.ttf", 16)
 
 WHITE = (255, 255, 255)
-RED = (255, 30, 0)
+FONT_COLOR = (0, 0, 0)
 SELECTION_BOX_COLOR = (244, 88, 66)
 
 INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
@@ -229,7 +229,7 @@ class View:
                 if item.num_item is not None:
                     pass  # draw number of item
                     num_text = str(item.num_item)
-                    draw_text = INVENTORY_FONT.render(num_text, 1, RED)
+                    draw_text = INVENTORY_FONT.render(num_text, 1, FONT_COLOR)
                     WIN.blit(
                         draw_text,
                         (
@@ -237,9 +237,9 @@ class View:
                                 INVENTORY_START_WIDTH
                                 + (idx * GROUND_SIZE)
                                 + INVENTORY_ITEM_SIZE
-                                - 5
+                                - 3
                             ),
-                            (INVENTORY_START_HEIGHT + INVENTORY_ITEM_SIZE - 5),
+                            (INVENTORY_START_HEIGHT + INVENTORY_ITEM_SIZE - 7),
                         ),
                     )
 
