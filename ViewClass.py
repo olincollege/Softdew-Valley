@@ -13,6 +13,7 @@ INVENTORY_ITEM_SIZE = 40
 INVENTORY_FONT = pygame.font.Font("Assets/stardew_font.ttf", 16)
 
 WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
 FONT_COLOR = (0, 0, 0)
 SELECTION_BOX_COLOR = (244, 88, 66)
 
@@ -77,6 +78,7 @@ TILL_LEFT_FARMER = pygame.transform.scale(
     (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
 )
 
+
 # GROUND SPRITES
 def randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE):
     """
@@ -104,7 +106,9 @@ def randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE):
                 pygame.image.load(
                     os.path.join(
                         "Assets/ground/free_ground_versions",
-                        f"free_ground{random.choices(range(9), probabilities)[0]}.png",
+                        (
+                            f"free_ground{random.choices(range(9), probabilities)[0]}.png"
+                        ),
                     )
                 ),
                 (GROUND_SIZE, GROUND_SIZE),
@@ -194,9 +198,7 @@ class View:
         tile_value = (
             "water"
             if self.gamestate.is_water
-            else "till"
-            if self.gamestate.is_till
-            else False
+            else "till" if self.gamestate.is_till else False
         )
 
         self.farmer_image = direction_map[(self.farmer.direction, tile_value)]
@@ -335,3 +337,9 @@ class View:
             pygame.time.delay(250)
             self.gamestate.stop_watering()
             self.gamestate.stop_tilling()
+
+    def day_change(self):
+        WIN.fill(BLACK)
+
+        pygame.display.update()
+        # print("called day change")

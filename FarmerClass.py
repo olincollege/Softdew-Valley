@@ -32,6 +32,17 @@ class Farmer:
     def set_direction(self, direction):
         self._direction = direction
 
+    def redraw_farmer(self):
+        self.farmer_rect = pygame.Rect(
+            self.start_square_x * self.SQUARE_SIZE,
+            self.start_square_y * self.SQUARE_SIZE,
+            self.FARMER_WIDTH,
+            self.FARMER_HEIGHT,
+        )
+        self._direction = "down"  # random direction to start
+        # position is the (x, y) or (row, col) position of the farmer on the map
+        self._position = (self.start_square_x, self.start_square_y)
+
     @property
     def direction(self):
         return self._direction

@@ -1,3 +1,4 @@
+import pygame
 from FarmerClass import Farmer
 from GroundClass import Ground
 from GameState import GameState
@@ -9,6 +10,8 @@ from EquipmentClass import (
 )
 from Inventory_Class import Inventory
 from plants import Plants
+from House_Class import House
+from ViewClass import View
 
 
 class Model:
@@ -26,6 +29,7 @@ class Model:
             self.parsnipseeds,
             self.cauliflowerseeds,
         )
+        self.house = House()
 
     def day_passes(self):
         rows = self.ground.num_rows
@@ -35,3 +39,5 @@ class Model:
                 if isinstance(self.ground.land[i][j], Plants):
                     self.ground.land[i][j].grow()
         self.ground.unwater_squares()
+        self.farmer.redraw_farmer()
+        # print("change to black")
