@@ -27,17 +27,22 @@ class Equipment:
         self._gamestate = gamestate
         self._num_item = None
 
-    def update_image(self, link):
+    def update_image(self, subfolder, image_name):
         """
         Generate the pygame image for an item
 
         Args:
-            link: A string representing the location of the item image
+            subfolder: A string representing the name of the subfolder of Assets
+            that the image is in
+            image_name: A string representing the name of the item image in the
+            Assets/{subfolder} folder
         """
         self._pg_image = pygame.transform.scale(
-            pygame.image.load(link),
+            pygame.image.load(
+                os.path.join(f"Assets/{subfolder}", f"{image_name}")
+            ),
             (INVENTORY_ITEM_SIZE, INVENTORY_ITEM_SIZE),
-        )
+        ).convert_alpha()
 
     def equip(self):
         """
@@ -85,7 +90,7 @@ class WateringCan(Equipment):
     def __init__(self, gamestate):
         """Initialize watering can"""
         super().__init__(gamestate)
-        self.update_image(os.path.join("Assets/equipment", "watering_can.png"))
+        self.update_image("equipment", "watering_can.png")
 
     def action(self):
         """
@@ -112,7 +117,7 @@ class Hoe(Equipment):
     def __init__(self, gamestate):
         """Initialize hoe"""
         super().__init__(gamestate)
-        self.update_image(os.path.join("Assets/equipment", "hoe.png"))
+        self.update_image("equipment", "hoe.png")
 
     def action(self):
         """
@@ -142,9 +147,7 @@ class Seed(Equipment):
         """Initialize seed"""
         super().__init__(gamestate)
         self.seed_type = seed_type
-        self.update_image(
-            os.path.join("Assets/seeds", f"{seed_type}_seeds.png")
-        )
+        self.update_image("seeds", f"{seed_type}_seeds.png")
 
     def action(self):
         """
@@ -208,7 +211,7 @@ class Crop(Equipment):
 
     def __init__(self, crop_type, price):
         super().__init__()
-        self.update_image(os.path.join("Assets/crops", f"{crop_type}.png"))
+        self.update_image("crops", f"{crop_type}.png")
         self.price = price
         self._num_item = 1
 

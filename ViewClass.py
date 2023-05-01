@@ -19,63 +19,61 @@ SELECTION_BOX_COLOR = (244, 88, 66)
 INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
 INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
 
+
+def pygameify_image(subfolder, image_name, width_scale, height_scale):
+    return pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets", subfolder, image_name)),
+        (width_scale, height_scale),
+    ).convert_alpha()
+
+
 # FARMER SPRITES
-FRONT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/idle_farmer", "facing_down.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT),
+FRONT_FARMER = pygameify_image(
+    "idle_farmer", "facing_down.png", FARMER_WIDTH, FARMER_HEIGHT
 )
-BACK_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/idle_farmer", "facing_up.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT),
+
+BACK_FARMER = pygameify_image(
+    "idle_farmer", "facing_up.png", FARMER_WIDTH, FARMER_HEIGHT
 )
-RIGHT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/idle_farmer", "facing_right.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT),
+
+RIGHT_FARMER = pygameify_image(
+    "idle_farmer", "facing_right.png", FARMER_WIDTH, FARMER_HEIGHT
 )
-LEFT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/idle_farmer", "facing_left.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT),
+
+LEFT_FARMER = pygameify_image(
+    "idle_farmer", "facing_left.png", FARMER_WIDTH, FARMER_HEIGHT
 )
 
 # FARMER WATERING SPRITES
-WATER_FRONT_FARMER = pygame.transform.scale(
-    pygame.image.load(
-        os.path.join("Assets/watering_farmer", "Front_Water.png")
-    ),
-    (FARMER_WIDTH, FARMER_HEIGHT),
-)
-WATER_BACK_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/watering_farmer", "Back_Water.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT * 1.25),
-)
-WATER_RIGHT_FARMER = pygame.transform.scale(
-    pygame.image.load(
-        os.path.join("Assets/watering_farmer", "Right_Water.png")
-    ),
-    (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
-)
-WATER_LEFT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/watering_farmer", "Left_Water.png")),
-    (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
+WATER_FRONT_FARMER = pygameify_image(
+    "watering_farmer", "Front_Water.png", FARMER_WIDTH, FARMER_HEIGHT
 )
 
+WATER_BACK_FARMER = pygameify_image(
+    "watering_farmer", "Back_Water.png", FARMER_WIDTH, FARMER_HEIGHT * 1.25
+)
+
+WATER_RIGHT_FARMER = pygameify_image(
+    "watering_farmer", "Right_Water.png", 2 * FARMER_WIDTH, FARMER_HEIGHT
+)  # x2 width to make room for tool
+
+WATER_LEFT_FARMER = pygameify_image(
+    "watering_farmer", "Left_Water.png", 2 * FARMER_WIDTH, FARMER_HEIGHT
+)  # x2 width to make room for tool
+
 # FARMER TILLING SPRITES
-TILL_FRONT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/tilling_farmer", "Front_Till.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT * 1.25),
+TILL_FRONT_FARMER = pygameify_image(
+    "tilling_farmer", "Front_Till.png", FARMER_WIDTH, FARMER_HEIGHT * 1.25
 )
-TILL_BACK_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/tilling_farmer", "Back_Till.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT * 1.25),
+TILL_BACK_FARMER = pygameify_image(
+    "tilling_farmer", "Back_Till.png", FARMER_WIDTH, FARMER_HEIGHT * 1.25
 )
-TILL_RIGHT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/tilling_farmer", "Right_Till.png")),
-    (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
-)
-TILL_LEFT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/tilling_farmer", "Left_Till.png")),
-    (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
-)
+TILL_RIGHT_FARMER = pygameify_image(
+    "tilling_farmer", "Right_Till.png", 2 * FARMER_WIDTH, FARMER_HEIGHT
+)  # x2 width to make room for tool
+TILL_LEFT_FARMER = pygameify_image(
+    "tilling_farmer", "Left_Till.png", 2 * FARMER_WIDTH, FARMER_HEIGHT
+)  # x2 width to make room for tool
 
 # GROUND SPRITES
 def randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE):
@@ -108,32 +106,28 @@ def randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE):
                     )
                 ),
                 (GROUND_SIZE, GROUND_SIZE),
-            )
+            ).convert()
     return FREE_GROUND_MAP
 
 
 FREE_GROUND_MAP = randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE)
 
-TILLED_GROUND = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/ground", "tilled_ground.png")),
-    (GROUND_SIZE, GROUND_SIZE),
+TILLED_GROUND = pygameify_image(
+    "ground", "tilled_ground.png", GROUND_SIZE, GROUND_SIZE
 )
 
-WATERED_GROUND = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/ground", "watered_ground.png")),
-    (GROUND_SIZE, GROUND_SIZE),
+WATERED_GROUND = pygameify_image(
+    "ground", "watered_ground.png", GROUND_SIZE, GROUND_SIZE
 )
 
 # INVENTORY/ITEM SPRITES
-INVENTORY_SQUARE = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets", "Inventory_Square.jpg")),
-    (GROUND_SIZE, GROUND_SIZE),
+INVENTORY_SQUARE = pygameify_image(
+    "", "Inventory_Square.jpg", GROUND_SIZE, GROUND_SIZE
 )
 
 # HOUSE SPRITE
-HOUSE_SPRITE = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets", "olin_farmhouse.png")),
-    (GROUND_SIZE * 8, GROUND_SIZE * 8),
+HOUSE_SPRITE = pygameify_image(
+    "", "olin_farmhouse.png", GROUND_SIZE * 8, GROUND_SIZE * 8
 )
 
 
