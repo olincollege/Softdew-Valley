@@ -7,7 +7,7 @@ pygame.font.init()
 FARMER_WIDTH = 50
 FARMER_HEIGHT = 100
 GROUND_SIZE = 50
-WIDTH, HEIGHT = 900, 500
+WIDTH, HEIGHT = 1000, 600
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 INVENTORY_ITEM_SIZE = 40
 INVENTORY_FONT = pygame.font.Font("Assets/stardew_font.ttf", 16)
@@ -131,9 +131,9 @@ INVENTORY_SQUARE = pygame.transform.scale(
 )
 
 # HOUSE SPRITE
-HOUSE_GROUND = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets", "house_ground.PNG")),
-    (GROUND_SIZE, GROUND_SIZE),
+HOUSE_SPRITE = pygame.transform.scale(
+    pygame.image.load(os.path.join("Assets", "olin_farmhouse.png")),
+    (GROUND_SIZE * 8, GROUND_SIZE * 8),
 )
 
 
@@ -283,11 +283,12 @@ class View:
                         ((i) * GROUND_SIZE, (j) * GROUND_SIZE),
                     )
         # draw house
-        num_house_rows = 5
-        num_house_cols = 4
-        for k in range(num_house_rows):  # change so not hard coded number
-            for j in range(num_house_cols):
-                WIN.blit(HOUSE_GROUND, (WIDTH - 50 * k, 50 * j))
+        WIN.blit(HOUSE_SPRITE, (WIDTH - 400, 0))
+        # num_house_rows = 5
+        # num_house_cols = 4
+        # for k in range(num_house_rows):  # change so not hard coded number
+        #     for j in range(num_house_cols):
+        #         WIN.blit(HOUSE_GROUND, (WIDTH - 50 * k, 50 * j))
 
         # draw farmer
         self.farmer_direction()
