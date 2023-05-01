@@ -1,13 +1,13 @@
-from FarmerClass import Farmer
-from GroundClass import Ground
-from GameState import GameState
-from EquipmentClass import (
+from farmerclass import Farmer
+from groundclass import Ground
+from gamestate import GameState
+from equipmentclass import (
     WateringCan,
     Hoe,
     ParsnipSeeds,
     CauliflowerSeeds,
 )
-from Inventory_Class import Inventory
+from inventoryclass import Inventory
 
 farmer = Farmer()
 ground = Ground()

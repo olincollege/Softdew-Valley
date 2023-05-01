@@ -1,8 +1,8 @@
 import pygame
 import audio
 from ViewClass import View
-from Model import model_dict
-from Controller import Controller
+from model import model_dict
+from controller import Controller
 
 FPS = 60
 

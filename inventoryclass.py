@@ -53,7 +53,12 @@ class Inventory:
                     return idx
 
     def get_item(self, slot):
-        """Get an item at the specified inventory slot"""
+        """
+        Get an item at the specified inventory slot
+        
+        Args: 
+            slot: int representing an inventory slot
+        """
         return self.inventory[slot]
 
     def add_item(self, slot, item):

@@ -3,7 +3,7 @@ House Class
 """
 import pygame
 from ViewClass import View
-from FarmerClass import Farmer
+from farmerclass import Farmer
 
 
 class House:
