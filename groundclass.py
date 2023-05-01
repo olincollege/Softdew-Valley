@@ -11,10 +11,9 @@ class Ground:
     A class that represents the map of the game
 
     Attributes:
-        free_land: A string representing a free space of land
-        tilled_land: A string representing a tilled space of land
-        watered_land: A string representing a space of land that is watered
-        land: a nested list that represents all the spaces of land on the map
+        _free_land: A string representing a free space of land
+        _tilled_land: A string representing a tilled space of land
+        _watered_land: A string representing a space of land that is watered
     """
 
     _free_land = ""
@@ -25,6 +24,12 @@ class Ground:
     num_cols = HEIGHT // SQUARE_SIZE
 
     def __init__(self):
+        """
+        Initializes land
+
+        Attributes:
+            land: a nested list that represents all the spaces of land on the map
+        """
         self.land = [
             [self._free_land for j in range(self.num_cols)]
             for i in range(self.num_rows)

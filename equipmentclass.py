@@ -222,14 +222,14 @@ class Crop(Equipment):
         self._num_item += 1
 
 
-class Parsnip_Crop(Crop):
+class ParsnipCrop(Crop):
     """Class representing sellable parsnip inventory item"""
 
     def __init__(self):
         super().__init__("parsnip", 35)
 
 
-class Cauliflower_Crop(Crop):
+class CauliflowerCrop(Crop):
     """Class representing sellable parsnip inventory item"""
 
     def __init__(self):

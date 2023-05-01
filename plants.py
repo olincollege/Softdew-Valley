@@ -1,5 +1,5 @@
 import pygame
-from EquipmentClass import Parsnip_Crop, Cauliflower_Crop
+from equipmentclass import ParsnipCrop, CauliflowerCrop
 
 
 
@@ -28,8 +28,8 @@ class Plants:
     """
     # Crop growth cycle dictionary
     plant_dictionary = {
-        "cauliflower": ([0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5], Cauliflower_Crop()),
-        "parsnip" : ([0, 1, 2, 3, 4], Parsnip_Crop())
+        "cauliflower": ([0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5], CauliflowerCrop()),
+        "parsnip" : ([0, 1, 2, 3, 4], ParsnipCrop())
     }
 
 

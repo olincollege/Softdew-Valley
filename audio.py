@@ -48,7 +48,8 @@ def play_sound(sound_name, num_vers=0):
         without the ending index number
         num_vers: an int representing the largest index number of any file
         in sound_bites with sound_name (for example, harvest3.wav means
-        num_vers should be 3)
+        num_vers should be 3); default value is 0 for having only one version
+        of a file
 
     Returns:
         None

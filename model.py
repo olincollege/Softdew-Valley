@@ -8,7 +8,6 @@ from EquipmentClass import (
     CauliflowerSeeds,
 )
 from Inventory_Class import Inventory
-from plants import Plants
 
 farmer = Farmer()
 ground = Ground()
