@@ -1,19 +1,24 @@
 import pygame
 import os
-from ViewClass import View
-import random
+import ViewClass
+from audio import play_sound
 
 mixer_works = pygame.init()
-INVENTORY_ITEM_SIZE = View.INVENTORY_ITEM_SIZE
+INVENTORY_ITEM_SIZE = ViewClass.INVENTORY_ITEM_SIZE
 
-# LOOK INTO WHETHER WE SHOULD ACTUALLY BE ASSIGNING SLOT HERE
+
 class Equipment:
     """
     Class that represents an item that can be equipped from the inventory
 
     Attributes:
-        inventory_slot: an int that represents the inventory location
         equipped: a boolean that shows whether the item is equipped or not
+        pg_image: the pygame image that represents the image displayed for
+            an item in the inventory
+        gamestate: an instance of the gamestate class, allows the class
+            to interact with the gamestate when displaying equipment actions
+        num_item: an int representing the number of items of that instance
+            (ex. holding ten parsnips)
     """
 
     def __init__(self, gamestate=None):
@@ -24,7 +29,7 @@ class Equipment:
 
     def update_image(self, link):
         """
-        Generate the image for an item
+        Generate the pygame image for an item
 
         Args:
             link: A string representing the location of the item image
@@ -70,16 +75,24 @@ class WateringCan(Equipment):
     Class that represents the watering can item
 
     Attributes:
-        inventory_slot: an int that represents the inventory location
+        equipped: a boolean that shows whether the item is equipped or not
+        pg_image: the pygame image that represents the image displayed for
+            an item in the inventory
+        gamestate: an instance of the gamestate class, allows the class
+            to interact with the gamestate when displaying equipment actions
     """
 
     def __init__(self, gamestate):
+        """Initialize watering can"""
         super().__init__(gamestate)
         self.update_image(os.path.join("Assets/equipment", "watering_can.png"))
 
     def action(self):
         """
         Water the ground
+
+        Calls the gamestate function water_ground, which updates the ground
+        and/or plant class, updates the action occurring in the view class
         """
         self._gamestate.water_ground()
 
@@ -89,24 +102,26 @@ class Hoe(Equipment):
     Class that represents the watering can item
 
     Attributes:
-        inventory_slot: an int that represents the inventory location
+        equipped: a boolean that shows whether the item is equipped or not
+        pg_image: the pygame image that represents the image displayed for
+            an item in the inventory
+        gamestate: an instance of the gamestate class, allows the class
+            to interact with the gamestate when displaying equipment actions
     """
 
     def __init__(self, gamestate):
+        """Initialize hoe"""
         super().__init__(gamestate)
         self.update_image(os.path.join("Assets/equipment", "hoe.png"))
 
     def action(self):
         """
         Till the ground
+
+        Calls the gamestate function till_ground, which updates the ground
+        class, updates the action occurring in the view class
         """
         self._gamestate.till_ground()
-        if mixer_works is not None:
-            pygame.mixer.Sound.play(
-                pygame.mixer.Sound(
-                    os.path.join("Assets/sound_bites/hoeing_sound.wav")
-                )
-            )
 
 
 class Seed(Equipment):
@@ -114,34 +129,64 @@ class Seed(Equipment):
     Class that represents the seeds item
 
     Attributes:
-        inventory_slot: an int that represents the inventory location
+        equipped: a boolean that shows whether the item is equipped or not
+        pg_image: the pygame image that represents the image displayed for
+            an item in the inventory
+        gamestate: an instance of the gamestate class, allows the class
+            to interact with the gamestate when displaying equipment actions
+        seed_type: a string representing what kind of plant is being planted
+            by the seed
     """
 
     def __init__(self, gamestate, seed_type):
+        """Initialize seed"""
         super().__init__(gamestate)
         self.seed_type = seed_type
         self.update_image(
             os.path.join("Assets/seeds", f"{seed_type}_seeds.png")
         )
-        # self._num_item = 1
 
     def action(self):
         """
         Plant a seed
+
+        Calls the gamestate function plant, which updates the ground class and
+        initializes a plant class. The plant depends on the seed_type
         """
-        # self._gamestate.harvest_crop()
         self._gamestate.plant_seed(self.seed_type)
 
 
 class ParsnipSeeds(Seed):
-    """Class representing parsnip seeds"""
+    """
+    A subclass of the Seeds class which represents parsnip seeds
+
+    Attributes:
+        equipped: a boolean that shows whether the item is equipped or not
+        pg_image: the pygame image that represents the image displayed for
+            an item in the inventory
+        gamestate: an instance of the gamestate class, allows the class
+            to interact with the gamestate when displaying equipment actions
+        seed_type: a string representing what kind of plant is being planted
+            by the seed
+    """
 
     def __init__(self, gamestate):
         super().__init__(gamestate, "parsnip")
 
 
 class CauliflowerSeeds(Seed):
-    """Class representing cauliflower seeds"""
+    """
+    A subclass of the Seeds class which represents cauliflower seeds
+
+    Attributes:
+        equipped: a boolean that shows whether the item is equipped or not
+        pg_image: the pygame image that represents the image displayed for
+            an item in the inventory
+        gamestate: an instance of the gamestate class, allows the class
+            to interact with the gamestate when displaying equipment actions
+        seed_type: a string representing what kind of plant is being planted
+            by the seed
+    """
 
     def __init__(self, gamestate):
         super().__init__(gamestate, "cauliflower")
@@ -150,6 +195,15 @@ class CauliflowerSeeds(Seed):
 class Crop(Equipment):
     """
     Class representing the different crops a player can hold in their inventory
+
+    Attributes:
+        equipped: a boolean that shows whether the item is equipped or not
+        pg_image: the pygame image that represents the image displayed for
+            an item in the inventory
+        num_item: an int representing the number of items of that instance
+            (ex. holding ten parsnips)
+        crop_type: a string representing the name of the crop
+        price: an int representing how much the crop sells for
     """
 
     def __init__(self, crop_type, price):
@@ -159,6 +213,9 @@ class Crop(Equipment):
         self._num_item = 1
 
     def add_crop(self):
+        """
+        Adds one crop to num_item
+        """
         self._num_item += 1
 
 
@@ -167,7 +224,6 @@ class Parsnip_Crop(Crop):
 
     def __init__(self):
         super().__init__("parsnip", 35)
-        # self.num_item = 1
 
 
 class Cauliflower_Crop(Crop):
@@ -175,4 +231,3 @@ class Cauliflower_Crop(Crop):
 
     def __init__(self):
         super().__init__("cauliflower", 175)
-        # self.num_item = 1
