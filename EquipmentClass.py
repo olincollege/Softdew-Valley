@@ -11,7 +11,7 @@ class Equipment:
     """
     Class that represents an item that can be equipped from the inventory
 
-    Attributes:
+    Instance Attributes:
         equipped: a boolean that shows whether the item is equipped or not
         pg_image: the pygame image that represents the image displayed for
             an item in the inventory

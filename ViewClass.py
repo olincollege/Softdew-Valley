@@ -4,6 +4,7 @@ import random
 
 pygame.font.init()
 
+# Setting constants to be used throughout the file
 FARMER_WIDTH = 50
 FARMER_HEIGHT = 100
 GROUND_SIZE = 50
@@ -12,15 +13,29 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 INVENTORY_ITEM_SIZE = 40
 INVENTORY_FONT = pygame.font.Font("Assets/stardew_font.ttf", 16)
 
+# Setting color values
 WHITE = (255, 255, 255)
 FONT_COLOR = (0, 0, 0)
 SELECTION_BOX_COLOR = (244, 88, 66)
 
+# Setting inventory position values
 INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
 INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
 
 
 def pygameify_image(subfolder, image_name, width_scale, height_scale):
+    """
+    Transforms and loads an image from a joined image pathway
+
+    ARGS:
+        subfolder: a string representing the name of a subfolder of the Assets
+        folder
+        image_name: a string representing the name of the desired image file
+        width_scale: a float or int representing how much an image should be
+        scaled horizontally
+        height_scale: a float or int representing how much an image should be
+        scaled vertically
+    """
     return pygame.transform.scale(
         pygame.image.load(os.path.join("Assets", subfolder, image_name)),
         (width_scale, height_scale),
@@ -194,8 +209,12 @@ class View:
 
     def ground_type(self, row, col):
         """
-        Get the type of square from the Ground class adn display the matching
+        Get the type of square from the Ground class and display the matching
         square image
+
+        ARGS:
+            row: the int row index of a game tile
+            col: the int column index of a game tile
         """
         if self.ground.is_watered(self.ground.get_square(row, col)):
             self.type_ground = WATERED_GROUND
@@ -246,6 +265,10 @@ class View:
             pygame.draw.rect(WIN, SELECTION_BOX_COLOR, rect, 3, border_radius=1)
 
     def draw_window(self):
+        """
+        Draws the entire pygame window every time it is called
+        (ground, plants, house, farmer, inventory, and inventory text)
+        """
         WIN.fill(WHITE)
 
         # draw ground and plants
@@ -275,11 +298,6 @@ class View:
                     )
         # draw house
         WIN.blit(HOUSE_SPRITE, (WIDTH - 400, 0))
-        # num_house_rows = 5
-        # num_house_cols = 4
-        # for k in range(num_house_rows):  # change so not hard coded number
-        #     for j in range(num_house_cols):
-        #         WIN.blit(HOUSE_GROUND, (WIDTH - 50 * k, 50 * j))
 
         # draw farmer
         self.farmer_direction()
