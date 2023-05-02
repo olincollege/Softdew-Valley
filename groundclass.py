@@ -1,3 +1,7 @@
+"""
+A file containing the Ground class and all related methods
+"""
+
 import ViewClass
 from plants import Plants
 from audio import play_sound
@@ -11,36 +15,33 @@ class Ground:
     A class that represents the map of the game
 
     Attributes:
-        _free_land: A string representing a free space of land
-        _tilled_land: A string representing a tilled space of land
-        _watered_land: A string representing a space of land that is watered
+        free_land: A string representing a free space of land
+        tilled_land: A string representing a tilled space of land
+        watered_land: A string representing a space of land that is watered
+        num_rows: An int representing how many rows there are in the map
+        num_cols: An int representing how many columns there are in the map
+        land: a nested list that represents all the spaces of land on the map
     """
 
     _free_land = ""
     _tilled_land = "T"
     _watered_land = "W"
 
-    num_rows = WIDTH // SQUARE_SIZE
-    num_cols = HEIGHT // SQUARE_SIZE
+    _num_rows = WIDTH // SQUARE_SIZE
+    _num_cols = HEIGHT // SQUARE_SIZE
 
     def __init__(self):
-        """
-        Initializes land
-
-        Attributes:
-            land: a nested list that represents all the spaces of land on the map
-        """
         self.land = [
-            [self._free_land for j in range(self.num_cols)]
-            for i in range(self.num_rows)
+            [self._free_land for j in range(self._num_cols)]
+            for i in range(self._num_rows)
         ]
 
     def day_passes(self):
         """
         Grows any watered plants and sets them back to unwatered when called
         """
-        rows = self.num_rows
-        cols = self.num_cols
+        rows = self._num_rows
+        cols = self._num_cols
         for j in range(cols):
             for i in range(rows):
                 if isinstance(self.land[i][j], Plants):
@@ -51,7 +52,7 @@ class Ground:
         """
         Returns a square in the land attribute
 
-        ARGS:
+        Args:
             row: an int representing the row index of the square in the array
             self.land
             col: an int representing the column index of the square in the
@@ -63,7 +64,7 @@ class Ground:
         """
         Returns a bool that says whether a square is watered
 
-        ARGS:
+        Args:
             square: a string or instance of the class Plant representing the
             state of a particular tile of the game
             ("T" is tilled, "W" watered, a plant is an Plant instance)
@@ -76,7 +77,7 @@ class Ground:
         """
         Returns a bool that says whether a square is tilled
 
-        ARGS:
+        Args:
             square: a string or instance of the class Plant representing the
             state of a particular tile of the game
             ("T" is tilled, "W" watered, a plant is an Plant instance)
@@ -89,7 +90,7 @@ class Ground:
         """
         Returns a bool that says whether a square has a crop on it
 
-        ARGS:
+        Args:
             square: a string or instance of the class Plant representing the
             state of a particular tile of the game
             ("T" is tilled, "W" watered, a plant is an Plant instance)
@@ -100,7 +101,7 @@ class Ground:
         """
         Update land to have a watered square at the row/col
 
-        ARGS:
+        Args:
             row: an int representing the row index of the square in the array
             self.land being watered
             col: an int representing the column index of the square in the
@@ -116,8 +117,8 @@ class Ground:
         """
         Update watered crop land to revert the square back to tilled
         """
-        for i in range(self.num_rows):
-            for j in range(self.num_cols):
+        for i in range(self._num_rows):
+            for j in range(self._num_cols):
                 if isinstance(self.land[i][j], Plants):
                     self.land[i][j].water = False
 
@@ -125,7 +126,7 @@ class Ground:
         """
         Update land to have a tilled square at the row/col
 
-        ARGS:
+        Args:
             row: an int representing the row index of the square in the array
             self.land being tilled
             col: an int representing the column index of the square in the
@@ -137,7 +138,7 @@ class Ground:
         """
         Update land to have a crop at the row/col
 
-        ARGS:
+        Args:
             row: an int representing the row index of the square in the array
             self.land being planted on
             col: an int representing the column index of the square in the
@@ -152,7 +153,7 @@ class Ground:
         Convert a planted square back to its watered or tilled state and play
         a harvesting sound
 
-        ARGS:
+        Args:
             row: an int representing the row index of the square in the array
             self.land being harvested
             col: an int representing the column index of the square in the
