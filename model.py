@@ -1,6 +1,8 @@
 from farmerclass import Farmer
 from groundclass import Ground
 from gamestate import GameState
+from houseclass import House
+from plants import Plants
 from equipmentclass import (
     WateringCan,
     Hoe,
@@ -16,6 +18,7 @@ watering_can = WateringCan(gamestate)
 hoe = Hoe(gamestate)
 parsnipseeds = ParsnipSeeds(gamestate)
 cauliflowerseeds = CauliflowerSeeds(gamestate)
+house = House()
 inventory = Inventory(
     watering_can,
     hoe,
@@ -28,7 +31,25 @@ model_dict = {
     "ground": ground,
     "gamestate": gamestate,
     "inventory": inventory,
+    "house": house,
 }
+
+# I don't know where to put this rn:
+walls_dict = {}
+
+
+def day_passes():
+    """
+    Grows any watered plants and sets them back to unwatered when called
+    """
+    rows = ground.num_rows
+    cols = ground.num_cols
+    for j in range(cols):
+        for i in range(rows):
+            if isinstance(ground.land[i][j], Plants):
+                ground.land[i][j].grow()
+    ground.unwater_squares()
+    farmer.redraw_farmer()
 
 
 # class Model:

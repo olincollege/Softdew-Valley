@@ -1,16 +1,16 @@
 import pygame
-import ViewClass
+import viewclass
 
 
 class Farmer:
-    FARMER_WIDTH = ViewClass.FARMER_WIDTH
-    FARMER_HEIGHT = ViewClass.FARMER_HEIGHT
+    FARMER_WIDTH = viewclass.FARMER_WIDTH
+    FARMER_HEIGHT = viewclass.FARMER_HEIGHT
     VEL = 5
-    WIDTH, HEIGHT = ViewClass.WIDTH, ViewClass.HEIGHT
-    SQUARE_SIZE = ViewClass.GROUND_SIZE
+    WIDTH, HEIGHT = viewclass.WIDTH, viewclass.HEIGHT
+    SQUARE_SIZE = viewclass.GROUND_SIZE
     FARMER_WIDTH, FARMER_HEIGHT = (
-        ViewClass.FARMER_WIDTH,
-        ViewClass.FARMER_HEIGHT,
+        viewclass.FARMER_WIDTH,
+        viewclass.FARMER_HEIGHT,
     )
 
     def __init__(self):
@@ -31,6 +31,17 @@ class Farmer:
 
     def set_direction(self, direction):
         self._direction = direction
+
+    def redraw_farmer(self):
+        self.farmer_rect = pygame.Rect(
+            self.start_square_x * self.SQUARE_SIZE,
+            self.start_square_y * self.SQUARE_SIZE,
+            self.FARMER_WIDTH,
+            self.FARMER_HEIGHT,
+        )
+        self._direction = "down"  # random direction to start
+        # position is the (x, y) or (row, col) position of the farmer on the map
+        self._position = (self.start_square_x, self.start_square_y)
 
     @property
     def direction(self):

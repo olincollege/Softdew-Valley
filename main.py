@@ -1,8 +1,12 @@
 import pygame
 import audio
-from ViewClass import View
+import houseclass
+from viewclass import View
+
 from model import model_dict
+import model
 from controller import Controller
+
 
 FPS = 60
 
@@ -53,14 +57,17 @@ def main():
                         model_dict["inventory"]
                     )
                 # should be triggered by house interaction event
-                if event.key == pygame.K_p:
-                    model_dict["ground"].day_passes()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                control.click_inventory(mouse_pos)
+                # if event.key == pygame.K_p:
+                #     model_dict["ground"].day_passes()
+            if event.type == houseclass.ENTER_HOUSE:
+                model.day_passes()
+                display.day_change()
+                pygame.time.delay(300)
+                # print("Collision")
 
         keys_pressed = pygame.key.get_pressed()
         control.move_farmer(keys_pressed)
+        model_dict["house"].enter_house(model_dict["farmer"])
         display.draw_window()
     pygame.quit()
 

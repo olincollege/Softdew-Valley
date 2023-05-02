@@ -1,5 +1,5 @@
 import pygame
-import ViewClass
+import viewclass
 
 
 class Controller:
@@ -11,11 +11,11 @@ class Controller:
     def update_position(self):
         x = (
             self.farmer.farmer_rect.x + self.farmer.farmer_rect.width // 2
-        ) // ViewClass.GROUND_SIZE
+        ) // viewclass.GROUND_SIZE
         y = (
             self.farmer.farmer_rect.y
             + int(self.farmer.farmer_rect.height * 0.75)
-        ) // ViewClass.GROUND_SIZE
+        ) // viewclass.GROUND_SIZE
         self.farmer.set_position(x, y)
 
     def move_farmer(self, keys):
@@ -30,7 +30,7 @@ class Controller:
             - self.VEL
             + self.farmer.farmer_rect.width
             + 10
-            < ViewClass.WIDTH
+            < viewclass.WIDTH
         ):  # RIGHT
             self.farmer.farmer_rect.x += self.VEL
             self.farmer.set_direction("right")
@@ -42,7 +42,7 @@ class Controller:
             and self.farmer.farmer_rect.y
             + self.VEL
             + self.farmer.farmer_rect.height
-            < ViewClass.HEIGHT
+            < viewclass.HEIGHT
         ):  # DOWN
             self.farmer.farmer_rect.y += self.VEL
             self.farmer.set_direction("down")
@@ -57,10 +57,10 @@ class Controller:
         if mouse_pos is not None:
             mouse_posx = mouse_pos[0]
             for i in range(8):
-                if mouse_posx > ViewClass.INVENTORY_START_WIDTH + (
-                    i * ViewClass.GROUND_SIZE
-                ) and mouse_posx < ViewClass.INVENTORY_START_WIDTH + (
-                    (i + 1) * ViewClass.GROUND_SIZE
+                if mouse_posx > viewclass.INVENTORY_START_WIDTH + (
+                    i * viewclass.GROUND_SIZE
+                ) and mouse_posx < viewclass.INVENTORY_START_WIDTH + (
+                    (i + 1) * viewclass.GROUND_SIZE
                 ):
                     slot = i
 
@@ -68,13 +68,13 @@ class Controller:
 
     def click_inventory(self, mouse_pos):
         if (
-            mouse_pos[0] > ViewClass.INVENTORY_START_WIDTH
-            and mouse_pos[0] < ViewClass.INVENTORY_START_WIDTH + 7 * 50
+            mouse_pos[0] > viewclass.INVENTORY_START_WIDTH
+            and mouse_pos[0] < viewclass.INVENTORY_START_WIDTH + 7 * 50
         ):
             if (
-                mouse_pos[1] > ViewClass.INVENTORY_START_HEIGHT
+                mouse_pos[1] > viewclass.INVENTORY_START_HEIGHT
                 and mouse_pos[1]
-                < ViewClass.INVENTORY_START_HEIGHT + ViewClass.GROUND_SIZE
+                < viewclass.INVENTORY_START_HEIGHT + viewclass.GROUND_SIZE
             ):
                 self.select_inventory(mouse_pos)
 

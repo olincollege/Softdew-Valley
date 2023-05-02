@@ -1,9 +1,9 @@
-import ViewClass
+import viewclass
 from plants import Plants
 from audio import play_sound
 
-WIDTH, HEIGHT = ViewClass.WIDTH, ViewClass.HEIGHT
-SQUARE_SIZE = ViewClass.GROUND_SIZE
+WIDTH, HEIGHT = viewclass.WIDTH, viewclass.HEIGHT
+SQUARE_SIZE = viewclass.GROUND_SIZE
 
 
 class Ground:
@@ -34,18 +34,6 @@ class Ground:
             [self._free_land for j in range(self.num_cols)]
             for i in range(self.num_rows)
         ]
-
-    def day_passes(self):
-        """
-        Grows any watered plants and sets them back to unwatered when called
-        """
-        rows = self.num_rows
-        cols = self.num_cols
-        for j in range(cols):
-            for i in range(rows):
-                if isinstance(self.land[i][j], Plants):
-                    self.land[i][j].grow()
-        self.unwater_squares()
 
     def get_square(self, row, col):
         """
