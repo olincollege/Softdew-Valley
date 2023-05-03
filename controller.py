@@ -108,6 +108,7 @@ class Controller:
                         (i + 1) * viewclass.GROUND_SIZE
                     ):
                         slot = i
+                        print(f"Selected slot {i}")
 
         self.inventory.equip_item(slot)
 

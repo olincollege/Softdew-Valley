@@ -26,8 +26,8 @@ class Farmer:
     """
 
     def __init__(self):
-        self.start_square_x = 2
-        self.start_square_y = 2
+        self.start_square_x = 16
+        self.start_square_y = 8
         self.farmer_rect = pygame.Rect(
             self.start_square_x * SQUARE_SIZE,
             self.start_square_y * SQUARE_SIZE,
@@ -57,16 +57,16 @@ class Farmer:
         """
         self._direction = direction
 
-    def redraw_farmer(self):
+    def respawn_farmer(self):
         self.farmer_rect = pygame.Rect(
             self.start_square_x * SQUARE_SIZE,
             self.start_square_y * SQUARE_SIZE,
             FARMER_WIDTH,
             FARMER_HEIGHT,
-        )  # it would be cool if the farmer respawned next to the bed instead
-        self._direction = "down"  # random direction to start
+        )
         # position is the (x, y) or (row, col) position of the farmer on the map
         self._position = (self.start_square_x, self.start_square_y)
+        self._direction = "down"
 
     @property
     def direction(self):

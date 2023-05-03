@@ -10,6 +10,7 @@ from equipmentclass import (
     CauliflowerSeeds,
 )
 from inventoryclass import Inventory
+import pygame
 
 farmer = Farmer()
 ground = Ground()
@@ -41,7 +42,8 @@ def day_passes():
             if isinstance(ground.land[i][j], Plants):
                 ground.land[i][j].grow()
     ground.unwater_squares()
-    farmer.redraw_farmer()
+    farmer.respawn_farmer()
+    farmer.set_direction("down")
 
 
 # class Model:
