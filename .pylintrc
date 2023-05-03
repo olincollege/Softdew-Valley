@@ -1,0 +1,5 @@
+.pylintrc
+
+[FORMAT]
+
+max-line-length=80
