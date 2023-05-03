@@ -143,6 +143,8 @@ class GameState:
                 play_sound("watering", 2)
                 square.plant_water()
 
+    # These are for display purposes, it tells the view class to pause while
+    # the action is occurring
     def stop_watering(self):
         """Sets _is_water to False"""
         self._is_water = False
@@ -151,8 +153,6 @@ class GameState:
         """Sets _is_till to False"""
         self._is_till = False
 
-    # These are for display purposes, it tells the view class to pause while
-    # the action is occurring
     @property
     def is_water(self):
         """Returns the value of the boolean _is_water"""

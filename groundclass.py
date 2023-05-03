@@ -97,7 +97,8 @@ class Ground:
         """
         if isinstance(self.land[row][col], str):
             if not self.is_watered(self.land[row][col]):
-                self.land[row][col] += self._watered_land
+                if self.is_tilled(self.land[row][col]):
+                    self.land[row][col] += self._watered_land
         else:
             self.land[row][col].plant_water()
 
