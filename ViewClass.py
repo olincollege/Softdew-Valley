@@ -4,79 +4,92 @@ import random
 
 pygame.font.init()
 
+# Setting constants to be used throughout the file
 FARMER_WIDTH = 50
 FARMER_HEIGHT = 100
 GROUND_SIZE = 50
-WIDTH, HEIGHT = 900, 500
+WIDTH, HEIGHT = 1000, 600
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 INVENTORY_ITEM_SIZE = 40
 INVENTORY_FONT = pygame.font.Font("Assets/stardew_font.ttf", 16)
 
+# Setting color values
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 FONT_COLOR = (0, 0, 0)
 SELECTION_BOX_COLOR = (244, 88, 66)
 
+# Setting inventory position values
 INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
 INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
 
+
+def pygameify_image(subfolder, image_name, width_scale, height_scale):
+    """
+    Transforms and loads an image from a joined image pathway
+
+    ARGS:
+        subfolder: a string representing the name of a subfolder of the Assets
+        folder
+        image_name: a string representing the name of the desired image file
+        width_scale: a float or int representing how much an image should be
+        scaled horizontally
+        height_scale: a float or int representing how much an image should be
+        scaled vertically
+    """
+    return pygame.transform.scale(
+        pygame.image.load(os.path.join("Assets", subfolder, image_name)),
+        (width_scale, height_scale),
+    ).convert_alpha()
+
+
 # FARMER SPRITES
-FRONT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/idle_farmer", "facing_down.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT),
+FRONT_FARMER = pygameify_image(
+    "idle_farmer", "facing_down.png", FARMER_WIDTH, FARMER_HEIGHT
 )
-BACK_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/idle_farmer", "facing_up.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT),
+
+BACK_FARMER = pygameify_image(
+    "idle_farmer", "facing_up.png", FARMER_WIDTH, FARMER_HEIGHT
 )
-RIGHT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/idle_farmer", "facing_right.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT),
+
+RIGHT_FARMER = pygameify_image(
+    "idle_farmer", "facing_right.png", FARMER_WIDTH, FARMER_HEIGHT
 )
-LEFT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/idle_farmer", "facing_left.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT),
+
+LEFT_FARMER = pygameify_image(
+    "idle_farmer", "facing_left.png", FARMER_WIDTH, FARMER_HEIGHT
 )
 
 # FARMER WATERING SPRITES
-WATER_FRONT_FARMER = pygame.transform.scale(
-    pygame.image.load(
-        os.path.join("Assets/watering_farmer", "Front_Water.png")
-    ),
-    (FARMER_WIDTH, FARMER_HEIGHT),
-)
-WATER_BACK_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/watering_farmer", "Back_Water.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT * 1.25),
-)
-WATER_RIGHT_FARMER = pygame.transform.scale(
-    pygame.image.load(
-        os.path.join("Assets/watering_farmer", "Right_Water.png")
-    ),
-    (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
-)
-WATER_LEFT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/watering_farmer", "Left_Water.png")),
-    (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
+WATER_FRONT_FARMER = pygameify_image(
+    "watering_farmer", "Front_Water.png", FARMER_WIDTH, FARMER_HEIGHT
 )
 
+WATER_BACK_FARMER = pygameify_image(
+    "watering_farmer", "Back_Water.png", FARMER_WIDTH, FARMER_HEIGHT * 1.25
+)
+
+WATER_RIGHT_FARMER = pygameify_image(
+    "watering_farmer", "Right_Water.png", 2 * FARMER_WIDTH, FARMER_HEIGHT
+)  # x2 width to make room for tool
+
+WATER_LEFT_FARMER = pygameify_image(
+    "watering_farmer", "Left_Water.png", 2 * FARMER_WIDTH, FARMER_HEIGHT
+)  # x2 width to make room for tool
+
 # FARMER TILLING SPRITES
-TILL_FRONT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/tilling_farmer", "Front_Till.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT * 1.25),
+TILL_FRONT_FARMER = pygameify_image(
+    "tilling_farmer", "Front_Till.png", FARMER_WIDTH, FARMER_HEIGHT * 1.25
 )
-TILL_BACK_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/tilling_farmer", "Back_Till.png")),
-    (FARMER_WIDTH, FARMER_HEIGHT * 1.25),
+TILL_BACK_FARMER = pygameify_image(
+    "tilling_farmer", "Back_Till.png", FARMER_WIDTH, FARMER_HEIGHT * 1.25
 )
-TILL_RIGHT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/tilling_farmer", "Right_Till.png")),
-    (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
-)
-TILL_LEFT_FARMER = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/tilling_farmer", "Left_Till.png")),
-    (2 * FARMER_WIDTH, FARMER_HEIGHT),  # x2 width to make room for tool
-)
+TILL_RIGHT_FARMER = pygameify_image(
+    "tilling_farmer", "Right_Till.png", 2 * FARMER_WIDTH, FARMER_HEIGHT
+)  # x2 width to make room for tool
+TILL_LEFT_FARMER = pygameify_image(
+    "tilling_farmer", "Left_Till.png", 2 * FARMER_WIDTH, FARMER_HEIGHT
+)  # x2 width to make room for tool
 
 
 # GROUND SPRITES
@@ -102,42 +115,33 @@ def randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE):
     probabilities = [0.82, 0.02, 0.02, 0.02, 0.02, 0.02, 0.03, 0.03, 0.02]
     for i in range(WIDTH // GROUND_SIZE):
         for j in range(HEIGHT // GROUND_SIZE):
-            FREE_GROUND_MAP[i][j] = pygame.transform.scale(
-                pygame.image.load(
-                    os.path.join(
-                        "Assets/ground/free_ground_versions",
-                        (
-                            f"free_ground{random.choices(range(9), probabilities)[0]}.png"
-                        ),
-                    )
-                ),
-                (GROUND_SIZE, GROUND_SIZE),
+            FREE_GROUND_MAP[i][j] = pygameify_image(
+                "ground/free_ground_versions",
+                f"free_ground{random.choices(range(9), probabilities)[0]}.png",
+                GROUND_SIZE,
+                GROUND_SIZE,
             )
     return FREE_GROUND_MAP
 
 
 FREE_GROUND_MAP = randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE)
 
-TILLED_GROUND = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/ground", "tilled_ground.png")),
-    (GROUND_SIZE, GROUND_SIZE),
+TILLED_GROUND = pygameify_image(
+    "ground", "tilled_ground.png", GROUND_SIZE, GROUND_SIZE
 )
 
-WATERED_GROUND = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets/ground", "watered_ground.png")),
-    (GROUND_SIZE, GROUND_SIZE),
+WATERED_GROUND = pygameify_image(
+    "ground", "watered_ground.png", GROUND_SIZE, GROUND_SIZE
 )
 
 # INVENTORY/ITEM SPRITES
-INVENTORY_SQUARE = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets", "Inventory_Square.jpg")),
-    (GROUND_SIZE, GROUND_SIZE),
+INVENTORY_SQUARE = pygameify_image(
+    "", "Inventory_Square.jpg", GROUND_SIZE, GROUND_SIZE
 )
 
 # HOUSE SPRITE
-HOUSE_GROUND = pygame.transform.scale(
-    pygame.image.load(os.path.join("Assets", "house_ground.PNG")),
-    (GROUND_SIZE, GROUND_SIZE),
+HOUSE_SPRITE = pygameify_image(
+    "", "olin_farmhouse.png", GROUND_SIZE * 8, GROUND_SIZE * 8
 )
 
 
@@ -205,8 +209,12 @@ class View:
 
     def ground_type(self, row, col):
         """
-        Get the type of square from the Ground class adn display the matching
+        Get the type of square from the Ground class and display the matching
         square image
+
+        ARGS:
+            row: the int row index of a game tile
+            col: the int column index of a game tile
         """
         if self.ground.is_watered(self.ground.get_square(row, col)):
             self.type_ground = WATERED_GROUND
@@ -257,6 +265,10 @@ class View:
             pygame.draw.rect(WIN, SELECTION_BOX_COLOR, rect, 3, border_radius=1)
 
     def draw_window(self):
+        """
+        Draws the entire pygame window every time it is called
+        (ground, plants, house, farmer, inventory, and inventory text)
+        """
         WIN.fill(WHITE)
 
         # draw ground and plants
@@ -285,11 +297,7 @@ class View:
                         ((i) * GROUND_SIZE, (j) * GROUND_SIZE),
                     )
         # draw house
-        num_house_rows = 5
-        num_house_cols = 4
-        for k in range(num_house_rows):  # change so not hard coded number
-            for j in range(num_house_cols):
-                WIN.blit(HOUSE_GROUND, (WIDTH - 50 * k, 50 * j))
+        WIN.blit(HOUSE_SPRITE, (WIDTH - 400, 0))
 
         # draw farmer
         self.farmer_direction()

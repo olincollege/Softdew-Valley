@@ -1,7 +1,7 @@
 """
 Crop_Class
 """
-import Inventory_Class
+import inventoryclass
 
 
 class Crop:

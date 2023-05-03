@@ -1,7 +1,6 @@
 """
 Inventory_Class
 """
-import ViewClass
 import pygame
 from audio import play_sound
 
@@ -13,8 +12,6 @@ class Inventory:
     Class that creates the inventory for the game.
 
     Attributes:
-        _inventory: list of strings representing the current state of the
-        inventory
         empty_slot: a String that represents an empty inventory slot
     """
 
@@ -56,7 +53,12 @@ class Inventory:
                     return idx
 
     def get_item(self, slot):
-        """Get an item at the specified inventory slot"""
+        """
+        Get an item at the specified inventory slot
+        
+        Args: 
+            slot: int representing an inventory slot
+        """
         return self.inventory[slot]
 
     def add_item(self, slot, item):

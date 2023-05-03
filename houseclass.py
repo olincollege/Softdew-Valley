@@ -2,9 +2,8 @@
 House Class
 """
 import pygame
-import ViewClass
-
-ENTER_HOUSE = pygame.USEREVENT + 2
+from ViewClass import View
+from farmerclass import Farmer
 
 
 class House:
@@ -17,10 +16,10 @@ class House:
 
     """
 
-    # ENTER_HOUSE = pygame.USEREVENT + 2
-    WIDTH, HEIGHT = ViewClass.WIDTH, ViewClass.HEIGHT
+    ENTER_HOUSE = pygame.USEREVENT + 2
+    WIDTH, HEIGHT = View.WIDTH, View.HEIGHT
     house_start_square_x = WIDTH - 250
-    house_start_square_y = 0
+    house_start_square_y = 200
     house_rect = pygame.Rect(
         house_start_square_x, house_start_square_y, 250, 200
     )
@@ -32,14 +31,14 @@ class House:
 
         self._house = ["H", "H", "H"]  # don't think this is right
 
-    def enter_house(self, farmer):
+    def enter_house(self):
         """
         When the player steps on one of the house squares they "enter" the
         house and that triggers the player to sleep and start a new day.
         """
-        # print("calling")
-        collide = pygame.Rect.colliderect(self.house_rect, farmer.farmer_rect)
+        print("calling")
+        collide = pygame.Rect.colliderect(self.house_rect, Farmer.farmer_rect)
         if collide:
-            pygame.event.post(pygame.event.Event(ENTER_HOUSE))
-            # print("They've collided")
+            pygame.event.post(pygame.event.Event(self.ENTER_HOUSE))
+            print("They've collided")
             # self._day_number = self._day_number + 1

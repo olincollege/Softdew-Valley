@@ -1,5 +1,5 @@
 import pygame
-from EquipmentClass import Parsnip_Crop, Cauliflower_Crop
+from equipmentclass import ParsnipCrop, CauliflowerCrop
 
 
 
@@ -7,24 +7,35 @@ class Plants:
     """
     This parent class is responsible for keeping track of the state of any
     given crop from a seed.
+
+    Class Attributes:
+        plant_dictionary: a dictionary mapping a string representing a crop
+        type to a tuple with a growth cycle list and the associated crop class
+
+    Instance Attributes:
+        _growth_stage: an int representing the stage of growth that a given plant
+        instance is in
+        _growth_days: an int representing the number of days that a given plant
+        has been growing
+        _species: A string representing the species of crop (i.e. "parsnip")
+        row: An int row value of the square the plant instance is on
+        col: An int column value of the square the plant instance is on
+        water: A bool representing whether a crop is watered (watered is True)
+        _harvestable: A bool representing whether a crop can be harvested
+        _crop: An instance of a child class of the Crop class corresponding to
+        the value of _species
+        
     """
     # Crop growth cycle dictionary
     plant_dictionary = {
-        "cauliflower": ([0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5], Cauliflower_Crop()),
-        "parsnip" : ([0, 1, 2, 3, 4], Parsnip_Crop())
+        "cauliflower": ([0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5], CauliflowerCrop()),
+        "parsnip" : ([0, 1, 2, 3, 4], ParsnipCrop())
     }
 
 
     def __init__(self, row, col, water, species):
         """
         Initializes instance attributes and creates a plant instance
-
-        Args:
-            row: An int row value of a given square plot
-            col: An int column value of a given square plot
-            water: A bool representing whether a crop is watered or not 
-            (watered is True)
-            species: A string representing the species of crop (i.e. "parsnip")
         """
         self._growth_stage = 0
         self._growth_days = 0
@@ -88,7 +99,9 @@ class Plants:
     
     @property
     def crop(self):
-        """"""
+        """
+        Returns the instance of the class associated with the crop species
+        """
         return self._crop
             
         
