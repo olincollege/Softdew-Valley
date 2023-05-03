@@ -5,13 +5,14 @@ import random
 pygame.font.init()
 
 # Setting constants to be used throughout the file
-FARMER_WIDTH = 50
-FARMER_HEIGHT = 100
+FARMER_WIDTH = 45
+FARMER_HEIGHT = 90
 GROUND_SIZE = 50
 WIDTH, HEIGHT = 1000, 600
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 INVENTORY_ITEM_SIZE = 40
 INVENTORY_FONT = pygame.font.Font("Assets/stardew_font.ttf", 16)
+HOUSE_SIZE = GROUND_SIZE * 8
 
 # Setting color values
 WHITE = (255, 255, 255)
@@ -140,9 +141,7 @@ INVENTORY_SQUARE = pygameify_image(
 )
 
 # HOUSE SPRITE
-HOUSE_SPRITE = pygameify_image(
-    "", "olin_farmhouse.png", GROUND_SIZE * 8, GROUND_SIZE * 8
-)
+HOUSE_SPRITE = pygameify_image("", "olin_farmhouse.png", HOUSE_SIZE, HOUSE_SIZE)
 
 
 class View:
@@ -297,7 +296,7 @@ class View:
                         ((i) * GROUND_SIZE, (j) * GROUND_SIZE),
                     )
         # draw house
-        WIN.blit(HOUSE_SPRITE, (WIDTH - 400, 0))
+        WIN.blit(HOUSE_SPRITE, (WIDTH - HOUSE_SIZE, 0))
 
         # draw farmer
         self.farmer_direction()
