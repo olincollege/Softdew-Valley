@@ -59,15 +59,18 @@ def main():
                 # should be triggered by house interaction event
                 # if event.key == pygame.K_p:
                 #     model_dict["ground"].day_passes()
+            if event.type == houseclass.HIT_WALL:
+                print("that was a wall")
+                # prevent farmer position from increasing towards wall?
             if event.type == houseclass.ENTER_BED:
                 model.day_passes()
                 display.day_change()
                 pygame.time.delay(300)
-                # print("Collision")
 
         keys_pressed = pygame.key.get_pressed()
         control.move_farmer(keys_pressed)
         model_dict["house"].enter_bed(model_dict["farmer"])
+        model_dict["house"].hit_wall(model_dict["farmer"])
         display.draw_window()
     pygame.quit()
 

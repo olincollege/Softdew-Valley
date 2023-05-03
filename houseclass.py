@@ -6,7 +6,8 @@ import viewclass
 from farmerclass import Farmer
 
 ENTER_HOUSE = pygame.USEREVENT + 2
-ENTER_BED = pygame.USEREVENT + 3 # put in main.py as an event
+ENTER_BED = pygame.USEREVENT + 3
+HIT_WALL = pygame.USEREVENT + 4
 HOUSE_SIZE = viewclass.HOUSE_SIZE
 
 class House:
@@ -27,16 +28,16 @@ class House:
     )
 
     # HOUSE WALLS
-    # left_wall = pygame.Rect(
-    #     house_start_x, house_start_y, HOUSE_SIZE // 16, HOUSE_SIZE
-    # )
-    # right_wall = pygame.Rect(
-    #     house_start_x + 15 * HOUSE_SIZE // 16, house_start_y, 
-    #     HOUSE_SIZE // 16, HOUSE_SIZE
-    # )
-    # top_wall = pygame.Rect(
-    #     house_start_x, house_start_y, HOUSE_SIZE, HOUSE_SIZE // 16
-    # )
+    left_wall = pygame.Rect(
+        house_start_x, house_start_y, HOUSE_SIZE // 16, HOUSE_SIZE
+    )
+    right_wall = pygame.Rect(
+        house_start_x + 15 * HOUSE_SIZE // 16, house_start_y, 
+        HOUSE_SIZE // 16, HOUSE_SIZE
+    )
+    top_wall = pygame.Rect(
+        house_start_x, house_start_y, HOUSE_SIZE, HOUSE_SIZE // 16
+    )
     # bottom_wall_left = pygame.Rect(
     #     house_start_x, house_start_y - HOUSE_SIZE // 16, 
     #     # FILL IN, HOUSE_SIZE // 16
@@ -49,10 +50,10 @@ class House:
     #     # FILL IN, house_start_y - HOUSE_SIZE // 16,
     #     # FILL IN, HOUSE_SIZE // 16
     # )
+    house_walls = [left_wall, right_wall, top_wall]
 
-    bed_x = house_start_x + 6 * HOUSE_SIZE // 8
+    bed_x = house_start_x + 3 * HOUSE_SIZE // 4
     bed_y = house_start_y + 5 * HOUSE_SIZE // 8
-    # WIDTH - 5 * HOUSE_SIZE // 16, 5 * HOUSE_SIZE // 8
     bed_rect = pygame.Rect(bed_x, bed_y, HOUSE_SIZE // 4, 5 * HOUSE_SIZE // 16)
 
     def __init__(self):
@@ -81,7 +82,18 @@ class House:
         collide = pygame.Rect.colliderect(self.bed_rect, farmer.farmer_rect)
         if collide:
             pygame.event.post(pygame.event.Event(ENTER_BED))
-            print("They've collided")
+            print("You slept")
             # self._day_number = self._day_number + 1
+
+    def hit_wall(self, farmer):
+        """
+        Disallow player movement through walls
+        """
+        for rect in self.house_walls:
+            collide = pygame.Rect.colliderect(rect, farmer.farmer_rect)
+            if collide:
+                pygame.event.post(pygame.event.Event(HIT_WALL))
+                print("You can't walk through walls")
+
 
         

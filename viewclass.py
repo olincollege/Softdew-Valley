@@ -272,8 +272,8 @@ class View:
         WIN.fill(WHITE)
 
         # draw ground and plants
-        rows = WIDTH // GROUND_SIZE
-        cols = HEIGHT // GROUND_SIZE
+        rows = self.ground.num_rows
+        cols = self.ground.num_cols
         for j in range(cols):
             for i in range(rows):
                 self.ground_type(i, j)
