@@ -1,7 +1,7 @@
 """
 Crop_Class
 """
-import inventoryclass
+# import inventoryclass
 
 
 class Crop:
@@ -22,6 +22,9 @@ class Crop:
         """
         self._parsnip = self._parsnip_symbol
 
-    @property
-    def crop_price(self):
-        return self.crop_price
+    # @property
+    # def crop_price(self):
+    #     """
+    #     Returns the price of the crop
+    #     """
+    #     return self.crop_price
