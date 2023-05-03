@@ -17,7 +17,6 @@ class House:
 
     """
 
-    # ENTER_HOUSE = pygame.USEREVENT + 2
     WIDTH, HEIGHT = viewclass.WIDTH, viewclass.HEIGHT
     house_start_square_x = WIDTH - 250
     house_start_square_y = 0

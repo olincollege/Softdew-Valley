@@ -1,7 +1,9 @@
-import pygame
+"""
+Holds all the different classes of items that can go in the inventory
+"""
 import os
+import pygame
 import viewclass
-from audio import play_sound
 
 mixer_works = pygame.init()
 INVENTORY_ITEM_SIZE = viewclass.INVENTORY_ITEM_SIZE
@@ -60,18 +62,26 @@ class Equipment:
         """
         Perform the action of an item
         """
-        pass
 
     @property
     def equipped(self):
+        """
+        Returns the value of the equipped attribute (boolean)
+        """
         return self._equipped
 
     @property
     def pg_image(self):
+        """
+        Returns the value of the pg_image attribute (pygame image)
+        """
         return self._pg_image
 
     @property
     def num_item(self):
+        """
+        Returns the value of the num_item attribute (int)
+        """
         return self._num_item
 
 
@@ -223,14 +233,20 @@ class Crop(Equipment):
 
 
 class ParsnipCrop(Crop):
-    """Class representing sellable parsnip inventory item"""
+    """
+    Class representing sellable parsnip inventory item
+    Has the same attributes as the parent Crop class
+    """
 
     def __init__(self):
         super().__init__("parsnip", 35)
 
 
 class CauliflowerCrop(Crop):
-    """Class representing sellable parsnip inventory item"""
+    """
+    Class representing sellable parsnip inventory item
+    Has the same attributes as the parent Crop class
+    """
 
     def __init__(self):
         super().__init__("cauliflower", 175)

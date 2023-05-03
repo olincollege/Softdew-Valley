@@ -1,10 +1,7 @@
 """
-Inventory_Class
+Class that keeps track of the player's inventory
 """
-import pygame
 from audio import play_sound
-
-mixer_works = pygame.mixer.get_init()
 
 
 class Inventory:
@@ -13,6 +10,8 @@ class Inventory:
 
     Attributes:
         empty_slot: a String that represents an empty inventory slot
+        inventory: a list that holds different instances from the Equipment
+        class for each item in the inventory
     """
 
     empty_slot = " "
@@ -32,6 +31,9 @@ class Inventory:
     def equip_item(self, slot):
         """
         Equip the item in the specified inventory slot
+
+        Args:
+            slot: An int representing the slot of the item being equipped
         """
         item = self._inventory[slot]
         if not isinstance(item, str):
@@ -39,24 +41,32 @@ class Inventory:
             play_sound("inventory_swap")
 
     def get_equipped_item(self):
-        """Return the equipped item of inventory"""
+        """
+        Return the equipped item in the inventory
+        If nothing is equipped return None
+        """
         for item in self.inventory:
             if not isinstance(item, str):
                 if item.equipped:
                     return item
+        return None
 
     def get_equipped_item_slot(self):
-        """Return the slot of the equipped item"""
+        """
+        Return the slot of the equipped item in the inventory
+        If nothing is equipped return None
+        """
         for idx, item in enumerate(self.inventory):
             if not isinstance(item, str):
                 if item.equipped:
                     return idx
+        return None
 
     def get_item(self, slot):
         """
         Get an item at the specified inventory slot
-        
-        Args: 
+
+        Args:
             slot: int representing an inventory slot
         """
         return self.inventory[slot]
@@ -68,8 +78,8 @@ class Inventory:
         Args:
             slot: integer representing what slot of the inventory to put the
             item in
-            item: ?class? representing the item to put in the specified
-            inventory spot
+            item: An instance of the Equipment class representing the item to
+            put in the specified inventory spot
         """
         self._inventory[slot] = item
 
@@ -83,28 +93,10 @@ class Inventory:
                 return idx
         return None
 
-    def __repr__(self):
-        """for debugging purposes"""
-        return f"{self._inventory}"
-
-        # def control_inventory(self, mouse_pos=None, num=None):
-        #     """click the thing and do the thing"""
-        #     current_item = self.get_equipped_item()
-        #     if current_item is not None:
-        #         current_item.unequip()
-        #     slot = num
-        #     if mouse_pos is not None:
-        #         mouse_posx = mouse_pos[0]
-        #         for i in range(8):
-        #             if mouse_posx > ViewClass.INVENTORY_START_WIDTH + (
-        #                 i * ViewClass.GROUND_SIZE
-        #             ) and mouse_posx < ViewClass.INVENTORY_START_WIDTH + (
-        #                 (i + 1) * ViewClass.GROUND_SIZE
-        #             ):
-        #                 slot = i
-
-        # self.equip_item(slot)
-
     @property
     def inventory(self):
+        """
+        Return the value of the inventory attribute (a list of Equipment
+        instances)
+        """
         return self._inventory
