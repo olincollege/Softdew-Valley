@@ -59,7 +59,7 @@ def main():
                 # should be triggered by house interaction event
                 # if event.key == pygame.K_p:
                 #     model_dict["ground"].day_passes()
-            if event.type == houseclass.ENTER_HOUSE:
+            if event.type == houseclass.ENTER_BED:
                 model.day_passes()
                 display.day_change()
                 pygame.time.delay(300)
@@ -67,7 +67,7 @@ def main():
 
         keys_pressed = pygame.key.get_pressed()
         control.move_farmer(keys_pressed)
-        model_dict["house"].enter_house(model_dict["farmer"])
+        model_dict["house"].enter_bed(model_dict["farmer"])
         display.draw_window()
     pygame.quit()
 
