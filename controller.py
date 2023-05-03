@@ -3,6 +3,7 @@ Contains the controller class and all related methods for user interaction
 """
 import pygame
 import viewclass
+from model import house
 
 VEL = 5  # farmer movement speed
 
@@ -45,7 +46,11 @@ class Controller:
             keys: The keys pressed by the user, created using pygame.key.
             get_pressed()
         """
-        if keys[pygame.K_a] and self.farmer.farmer_rect.x - VEL > 0:  # LEFT
+        if (
+            keys[pygame.K_a]
+            and self.farmer.farmer_rect.x - VEL > 0
+            # and house.collide_wall(self.farmer.farmer_rect.x - VEL) != "left"
+        ):  # LEFT
             self.farmer.farmer_rect.x -= VEL
             self.farmer.set_direction("left")
         if (
@@ -55,16 +60,22 @@ class Controller:
             + self.farmer.farmer_rect.width
             + 10
             < viewclass.WIDTH
+            # and house.collide_wall(self.farmer.farmer_rect.x + VEL) != "right"
         ):  # RIGHT
             self.farmer.farmer_rect.x += VEL
             self.farmer.set_direction("right")
-        if keys[pygame.K_w] and self.farmer.farmer_rect.y - VEL > 0:  # UP
+        if (
+            keys[pygame.K_w]
+            and self.farmer.farmer_rect.y - VEL > 0
+            # and house.collide_wall(self.farmer.farmer_rect.y - VEL) != "top"
+        ):  # UP
             self.farmer.farmer_rect.y -= VEL
             self.farmer.set_direction("up")
         if (
             keys[pygame.K_s]
             and self.farmer.farmer_rect.y + VEL + self.farmer.farmer_rect.height
             < viewclass.HEIGHT
+            # and house.collide_wall(self.farmer.farmer_rect.y + VEL) != "bottom"
         ):  # DOWN
             self.farmer.farmer_rect.y += VEL
             self.farmer.set_direction("down")

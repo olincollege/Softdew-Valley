@@ -26,14 +26,6 @@ inventory = Inventory(
     cauliflowerseeds,
 )
 
-model_dict = {
-    "farmer": farmer,
-    "ground": ground,
-    "gamestate": gamestate,
-    "inventory": inventory,
-    "house": house,
-}
-
 # I don't know where to put this rn:
 walls_dict = {}
 

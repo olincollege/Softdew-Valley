@@ -63,7 +63,7 @@ class Farmer:
             self.start_square_y * SQUARE_SIZE,
             FARMER_WIDTH,
             FARMER_HEIGHT,
-        )
+        )  # it would be cool if the farmer respawned next to the bed instead
         self._direction = "down"  # random direction to start
         # position is the (x, y) or (row, col) position of the farmer on the map
         self._position = (self.start_square_x, self.start_square_y)
