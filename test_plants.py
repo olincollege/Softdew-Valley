@@ -5,11 +5,6 @@ Test cases and implementation for the Plants class
 import pytest
 from plants import Plants
 
-# Check grow function adds days when plant is watered and doesn't otherwise
-# Check growth stage updates when appropriate
-# Check water is false after calling growth function
-# Check self_harvestable updates correctly
-
 watered_plant = Plants(1, 1, True, "parsnip")
 unwatered_plant = Plants(2, 2, False, "parsnip")
 stage_one_to_two = Plants(3, 3, True, "parsnip")

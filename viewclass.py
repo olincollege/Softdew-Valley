@@ -201,7 +201,9 @@ class View:
         tile_value = (
             "water"
             if self.gamestate.is_water
-            else "till" if self.gamestate.is_till else False
+            else "till"
+            if self.gamestate.is_till
+            else False
         )
 
         self.farmer_image = direction_map[(self.farmer.direction, tile_value)]
