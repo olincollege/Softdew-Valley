@@ -14,8 +14,10 @@ class GameState:
         Attributes:
             farmer: an instance of the Farmer class
             ground: an instance of the Ground class
-            _is_water: a boolean                                            DO DIS
-            _is_till: a boolean
+            _is_water: a boolean that represents if the watering action is
+                occurring
+            _is_till: a boolean that represents if the tilling action is
+                occuring
         """
         self.farmer = farmer
         self.ground = ground
@@ -102,11 +104,9 @@ class GameState:
         inventory either by increasing the quantity of that crop or adding it
         to a new slot depending on whether the crop is already in the inventory
 
-        inventory:
-
-
-
-        DO DIS
+        Args:
+            inventory: An instance of the inventory class, stores harvested
+                crops
 
         """
         action_pos = self.get_action_position()

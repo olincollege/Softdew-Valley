@@ -79,15 +79,3 @@ def day_passes():
 
 #     def __init__(self):
 #         pass
-
-# def day_passes(self):
-#     """
-#     Grows any watered plants and sets them back to unwatered when called
-#     """
-#     rows = self.ground.num_rows
-#     cols = self.ground.num_cols
-#     for j in range(cols):
-#         for i in range(rows):
-#             if isinstance(self.ground.land[i][j], Plants):
-#                 self.ground.land[i][j].grow()
-#     self.ground.unwater_squares()
