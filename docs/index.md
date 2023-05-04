@@ -11,9 +11,9 @@ There should be whitespace between paragraphs.
 
 There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
 
-# Header 1
+# Big Idea and Goal of Our Project 
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
+We love Stardew Valley and wanted to learn more about software structures, code efficiency and how things work together, so we chose to create a clone of the game. There’s a lot of moving parts, the project was scaleable to how much we wanted to work on it, and we knew we could learn a lot from it. Plus, it was a ton of fun!
 
 ## Header 2
 
