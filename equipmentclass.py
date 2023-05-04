@@ -54,10 +54,11 @@ class Equipment:
         """
         self._equipped = False
 
-    def action(self):
+    def decrease_item(self, num):
         """
-        Perform the action of an item
+        Reduce num_item by num amount
         """
+        self._num_item -= num
 
     @property
     def equipped(self):

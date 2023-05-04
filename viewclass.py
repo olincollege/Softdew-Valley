@@ -273,6 +273,17 @@ class View:
             rect = pygame.Rect(x_pos, y_pos, GROUND_SIZE, GROUND_SIZE)
             pygame.draw.rect(WIN, SELECTION_BOX_COLOR, rect, 3, border_radius=1)
 
+    def draw_wallet(self):
+        """
+        Display the farmer wallet
+        """
+        wallet_text = str(self.farmer.wallet)
+        draw_text = INVENTORY_FONT.render(wallet_text, 1, FONT_COLOR)
+        text_width = draw_text.get_width()
+        text_height = draw_text.get_height()
+        padding = 10
+        WIN.blit(draw_text, (padding, HEIGHT - text_height - padding))
+
     def draw_window(self):
         """
         Draws the entire pygame window every time it is called
@@ -346,6 +357,7 @@ class View:
             )
         self.draw_inventory_items()
         self.draw_equipped_square()
+        self.draw_wallet()
         pygame.display.update()
         if self.model.is_water or self.model.is_till:
             pygame.time.delay(250)

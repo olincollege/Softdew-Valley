@@ -9,7 +9,7 @@ import pygame
 # Need to be above import statements because that is where error is occurring
 pygame.init()
 pygame.display.set_mode((800, 600))
-from plants import Plants
+from plants import Plants  # pylint: disable=wrong-import-position
 
 watered_plant = Plants(True, "parsnip")
 unwatered_plant = Plants(False, "parsnip")

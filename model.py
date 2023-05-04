@@ -1,4 +1,6 @@
-import pygame
+"""
+Handles class interactions with other classes and general game mechanics
+"""
 from farmerclass import Farmer
 from groundclass import Ground
 from equipmentclass import (
@@ -7,6 +9,7 @@ from equipmentclass import (
     Seed,
     ParsnipSeeds,
     CauliflowerSeeds,
+    Crop,
 )
 from inventoryclass import Inventory
 from plants import Plants
@@ -15,8 +18,26 @@ import constants
 from audio import play_sound
 
 
-class Model:
-    """ """
+class Model:  # pylint: disable=too-many-instance-attributes
+    """
+    Handles class interactions with other classes and general game mechanics
+    Stores all class instances in the game except the view and controller
+    classes
+
+    Attributes:
+        farmer: instance of the Farmer class
+        ground: instance of the Ground class
+        watering_can: instance of the WateringCan class
+        hoe: instance of the Hoe class
+        parsnipseeds: instance of the ParsnipSeeds class
+        cauliflowerseeds: instance of CauliflowerSeeds class
+        inventory: instance of the Inventory class
+        house: instance of the House class
+        is_till: a boolean that represents if the player character is currently
+        tilling ground
+        is_water: a boolean that represents if the player character is currently
+        watering ground
+    """
 
     def __init__(self):
         self.farmer = Farmer()
@@ -92,6 +113,9 @@ class Model:
         )
 
     def action(self):
+        """
+        Looks at the equipped item and calls that proper action method
+        """
         equipped_item = self.inventory.get_equipped_item()
         if isinstance(equipped_item, WateringCan):
             self.water_ground()
@@ -99,6 +123,27 @@ class Model:
             self.till_ground()
         if isinstance(equipped_item, Seed):
             self.plant_seed(equipped_item.seed_type)
+        if isinstance(equipped_item, Crop):
+            self.sell_crop(equipped_item)
+
+    def sell_crop(self, crop):
+        """
+        Add funds from selling a crop and remove crop from inventory
+
+        Args:
+            crop: The crop instance being sold
+        """
+        # check that farmer is close enough to shipping bin
+        if (
+            self.farmer.position[0] <= constants.SHIPPING_BIN_SQUARES
+            and self.farmer.position[1] <= constants.SHIPPING_BIN_SQUARES
+        ):
+            if crop.num_item <= 1:
+                slot = self.inventory.get_equipped_item_slot()
+                self.inventory.remove_item(slot)
+            else:
+                crop.decrease_item(1)
+            self.farmer.add_funds(crop.price)
 
     def till_ground(self):
         """
@@ -115,7 +160,8 @@ class Model:
         """
         Call the plant_crop function if the action square is tilled or watered
 
-        species: a string representing the type of crop seed being planted
+        Args:
+            species: a string representing the type of crop seed being planted
         """
         if self.action_on_map():
             action_pos = self.get_action_position()
