@@ -26,6 +26,7 @@ We love Stardew Valley and wanted to learn more about software structures, code 
 - Music made by Stardew Valley’s creator, ConcernedApe, plays on shuffle in the background the entire time. 
 - A house with a bed in the corner; the bed passes the day when touched by the farmer. The house features a combination of the riverland farmhouse pixel art from the original game as well as original pixel art by Amanda Chang, including the Olin O, the campus map, and text on the TV screen.
 
+## Installation instructions (or link to the relevant portion of the README)
 
 
 ## Header 2
