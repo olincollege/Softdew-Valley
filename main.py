@@ -65,9 +65,6 @@ def main():
                     model.day_passes()
             if event.type == houseclass.ENTER_HOUSE:
                 print("you went inside")
-            if event.type == houseclass.HIT_WALL:
-                print("that was a wall")
-                # prevent farmer position from increasing towards wall?
             if event.type == houseclass.ENTER_BED:
                 model.day_passes()
                 display.day_change()
@@ -78,10 +75,6 @@ def main():
         keys_pressed = pygame.key.get_pressed()
         control.move_farmer(keys_pressed)
         model.house.enter_bed(model.farmer)
-        model.house.enter_bed(
-            model.farmer
-        )  # I now realize the dictionary is totally useless
-        model.house.hit_wall(model.farmer)
         display.draw_window()
 
     pygame.quit()
