@@ -94,9 +94,7 @@ class GameState:
                 self.ground.is_watered(square) or self.ground.is_tilled(square)
             ) and not isinstance(square, Plants):
                 ground_watered = self.ground.is_watered(square)
-                plant = Plants(
-                    action_pos[0], action_pos[1], ground_watered, species
-                )
+                plant = Plants(ground_watered, species)
                 print("Woo! You planted a seed <3")
                 play_sound("planting", 1)
                 self.ground.plant_crop(action_pos[0], action_pos[1], plant)

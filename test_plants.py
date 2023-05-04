@@ -5,15 +5,15 @@ Test cases and implementation for the Plants class
 import pytest
 from plants import Plants
 
-watered_plant = Plants(1, 1, True, "parsnip")
-unwatered_plant = Plants(2, 2, False, "parsnip")
-stage_one_to_two = Plants(3, 3, True, "parsnip")
+watered_plant = Plants(True, "parsnip")
+unwatered_plant = Plants(False, "parsnip")
+stage_one_to_two = Plants(True, "parsnip")
 stage_one_to_two._growth_days = 1  # pylint: disable=protected-access
-stage_three_to_harvest = Plants(4, 4, True, "parsnip")
+stage_three_to_harvest = Plants(True, "parsnip")
 stage_three_to_harvest._growth_days = 3  # pylint: disable=protected-access
-stage_two_to_three = Plants(5, 5, True, "cauliflower")
+stage_two_to_three = Plants(True, "cauliflower")
 stage_two_to_three._growth_days = 6  # pylint: disable=protected-access
-no_growth_stage_change = Plants(6, 6, True, "cauliflower")
+no_growth_stage_change = Plants(True, "cauliflower")
 no_growth_stage_change._growth_days = 5  # pylint: disable=protected-access
 
 grow_water_cases = [

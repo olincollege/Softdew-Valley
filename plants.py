@@ -19,8 +19,6 @@ class Plants:
         _growth_days: an int representing the number of days that a given plant
         has been growing
         _species: A string representing the species of crop (i.e. "parsnip")
-        row: An int row value of the square the plant instance is on
-        col: An int column value of the square the plant instance is on
         water: A bool representing whether a crop is watered (watered is True)
         _harvestable: A bool representing whether a crop can be harvested
         _crop: An instance of a child class of the Crop class corresponding to
@@ -37,15 +35,13 @@ class Plants:
         "parsnip": ([0, 1, 2, 3, 4], ParsnipCrop()),
     }
 
-    def __init__(self, row, col, water, species):
+    def __init__(self, water, species):
         """
         Initializes instance attributes and creates a plant instance
         """
         self._growth_stage = 0
         self._growth_days = 0
         self._species = species
-        self.row = row
-        self.col = col
         self.water = water
         self._harvestable = False
         self._crop = self.plant_dictionary[species][
