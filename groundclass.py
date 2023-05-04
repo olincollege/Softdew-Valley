@@ -4,7 +4,6 @@ A file containing the Ground class and all related methods
 import viewclass
 from plants import Plants
 from audio import play_sound
-import farmerclass
 
 WIDTH, HEIGHT = viewclass.WIDTH, viewclass.HEIGHT
 SQUARE_SIZE = viewclass.GROUND_SIZE

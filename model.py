@@ -1,3 +1,7 @@
+"""
+Instantiates all classes and handles game overview functions
+"""
+
 from farmerclass import Farmer
 from groundclass import Ground
 from gamestate import GameState
@@ -10,7 +14,6 @@ from equipmentclass import (
     CauliflowerSeeds,
 )
 from inventoryclass import Inventory
-import pygame
 
 farmer = Farmer()
 ground = Ground()

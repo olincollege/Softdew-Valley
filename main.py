@@ -1,3 +1,10 @@
+"""
+Runs the main game loop
+"""
+# No pygame module has its member
+# pylint: disable=no-member
+# A pygame game loop by nature requires a branch for every action
+# pylint: disable=too-many-branches
 import pygame
 import audio
 import houseclass

@@ -58,6 +58,9 @@ class Farmer:
         self._direction = direction
 
     def respawn_farmer(self):
+        """
+        Resets the farmer to starting position and direction when a day passes
+        """
         self.farmer_rect = pygame.Rect(
             self.start_square_x * SQUARE_SIZE,
             self.start_square_y * SQUARE_SIZE,

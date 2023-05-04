@@ -1,3 +1,7 @@
+"""
+Handles interactions between farmer and ground instances
+Checks that farming actions can occur
+"""
 from plants import Plants
 import viewclass
 from audio import play_sound
