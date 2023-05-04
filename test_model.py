@@ -9,7 +9,7 @@ import pygame
 # Need to be above import statements because that is where error is occurring
 pygame.init()
 pygame.display.set_mode((800, 600))
-from Model import Model
+from model import Model
 from plants import Plants
 from equipmentclass import Crop
 
