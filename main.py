@@ -11,7 +11,7 @@ import houseclass
 from viewclass import View
 
 # import model
-from Model import Model
+from model import Model
 from controller import Controller
 
 
