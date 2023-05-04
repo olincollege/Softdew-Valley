@@ -37,6 +37,7 @@ class Farmer:
         self._direction = "down"  # random direction to start
         # position is the (x, y) or (row, col) position of the farmer on the map
         self._position = (self.start_square_x, self.start_square_y)
+        self.wallet = 0
 
     def set_position(self, x_val, y_val):
         """
@@ -89,7 +90,11 @@ class Farmer:
     def add_funds(self, amount):
         """
         Add amount funds to the wallet attribute
+
+        Args:
+            amount: an int representing the amount of money added to the wallet
         """
+        self.wallet += amount
 
     def spend_funds(self, amount):
         """

@@ -9,6 +9,7 @@ from equipmentclass import (
     Seed,
     ParsnipSeeds,
     CauliflowerSeeds,
+    Crop,
 )
 from inventoryclass import Inventory
 from plants import Plants
@@ -122,6 +123,26 @@ class Model:  # pylint: disable=too-many-instance-attributes
             self.till_ground()
         if isinstance(equipped_item, Seed):
             self.plant_seed(equipped_item.seed_type)
+        if isinstance(equipped_item, Crop):
+            self.sell_crop(equipped_item)
+
+    def sell_crop(self, crop):
+        """
+        Add funds from selling a crop and remove crop from inventory
+
+        Args:
+            crop: The crop instance being sold
+        """
+        # look at num crops
+        # if num crops is one, destroy item in inventory
+        if crop.num_item <= 1:
+            slot = self.inventory.get_equipped_item_slot()
+            self.inventory.remove_item(slot)
+        # else subtract one from num_crops
+        else:
+            crop.decrease_item(1)
+        # add money to wallet
+        self.farmer.add_funds(crop.price)
 
     def till_ground(self):
         """
@@ -138,7 +159,8 @@ class Model:  # pylint: disable=too-many-instance-attributes
         """
         Call the plant_crop function if the action square is tilled or watered
 
-        species: a string representing the type of crop seed being planted
+        Args:
+            species: a string representing the type of crop seed being planted
         """
         if self.action_on_map():
             action_pos = self.get_action_position()

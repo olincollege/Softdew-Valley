@@ -83,6 +83,15 @@ class Inventory:
         """
         self._inventory[slot] = item
 
+    def remove_item(self, slot):
+        """
+        Function used to empty an inventory slot
+
+        Args:
+            slot: int representing the slot that will be empty
+        """
+        self._inventory[slot] = self.empty_slot
+
     def first_empty_slot(self):
         """
         Returns the index of the first empty slot in the inventory
