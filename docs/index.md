@@ -41,6 +41,8 @@ ADD VIDEO DEMO HERE
 ![Image of our game](Stardew_Clone_Game_Photo.PNG)
 
 ## Credits 
+The people that worked on this project were Alex George, Amanda Chang, and 
+Meagan Lipsman. Our credits go to Eric Barone, the creator of Stardew Valley, and [VHV.RS](https://www.vhv.rs/viewpic/hoJTmbJ_stardew-valley-player-sprite-png-download-stardew-valley/) for our player sprite images.
 
 ## Meet Our Team!
 ![Team Photo](Team_Photo.JPG)
