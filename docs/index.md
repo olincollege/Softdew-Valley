@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+Testing Testing does this work?
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
@@ -10,9 +11,23 @@ There should be whitespace between paragraphs.
 
 There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
 
-# Header 1
+# Big Idea and Goal of Our Project 
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
+We love Stardew Valley and wanted to learn more about software structures, code efficiency and how things work together, so we chose to create a clone of the game. There’s a lot of moving parts, the project was scaleable to how much we wanted to work on it, and we knew we could learn a lot from it. Plus, it was a ton of fun!
+
+# Unique Features of our Game 
+- We implemented lots of features from the original game – for example, the abilities to plant, water, harvest, and hold crops. 
+- We retained two of the original tools, the watering can and hoe, with full functionality. Both tools have their associated action animations from any of the four directions a player can be facing.
+- The inventory holds both tools, both seeds, and open slots for harvested crops. Tools and seeds can be actuated with the space bar, which is the general action key. Different items in the inventory can be selected by clicking on the desired tool or by pressing the inventory slot’s associated number key.
+- Parsnip and cauliflower crops retain their original growth cycles and can be harvested with the h key.
+- The original sound effects for tilling, watering, sowing, and harvesting.
+- The farmer is controlled with WASD and has an image for each direction the player may be facing. 
+- The images of free ground are randomly selected for each tile each time the game is run. 
+- Music made by Stardew Valley’s creator, ConcernedApe, plays on shuffle in the background the entire time. 
+- A house with a bed in the corner; the bed passes the day when touched by the farmer. The house features a combination of the riverland farmhouse pixel art from the original game as well as original pixel art by Amanda Chang, including the Olin O, the campus map, and text on the TV screen.
+
+## Installation instructions (or link to the relevant portion of the README)
+
 
 ## Header 2
 

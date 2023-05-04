@@ -16,7 +16,7 @@ discography = [
 
 MUSIC_END = pygame.USEREVENT + 1  # pylint: disable=no-member
 
-
+# Plays Music
 def play_music():
     """
     Shuffles the list representation (discography) of the some of the mp3s
@@ -42,6 +42,7 @@ def play_music():
         pass
 
 
+# Plays sound effects
 def play_sound(sound_name, num_vers=0):
     """
     Plays a sound from Assets/sound_bites based off of a provided sound name
