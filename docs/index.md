@@ -36,6 +36,9 @@ python3 -m pip install -U pygame --user
 
 The instructions for Installation are also included in our [README.md] (https://github.com/olincollege/Stardew_Clone/blob/main/README.md) file 
 
+## Relevant links!
+Our [Github Page] (https://github.com/olincollege/Stardew_Clone): Here you can find our [README.md] (https://github.com/olincollege/) and by clicking the green *code* button you can find a downloadable zip file.
+
 
 ## Header 2
 
