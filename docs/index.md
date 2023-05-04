@@ -38,3 +38,4 @@ ADD VIDEO DEMO HERE
 ## Image of our game 
 ![Image of our game](Stardew_Clone_Game_Photo.PNG)
 
+## Credits 
