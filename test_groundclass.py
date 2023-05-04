@@ -1,3 +1,6 @@
+"""
+Test cases and implementation for the Ground class
+"""
 import pytest
 from groundclass import Ground
 from plants import Plants
@@ -89,18 +92,45 @@ unwater_squares_cases = [
 # TEST CHECK METHODS
 @pytest.mark.parametrize("position,bool_val", is_watered_cases)
 def test_is_watered(position, bool_val):
+    """
+    Check that the is_watered function returns correctly
+    Should return True for watered ground squares and watered plants
+
+    Args:
+        position: a tuple of two ints representing the x, y square position
+        bool_val: a boolean that is True if the square should be watered, False
+        otherwise
+    """
     square = ground_test.get_square(position[0], position[1])
     assert ground_test.is_watered(square) == bool_val
 
 
 @pytest.mark.parametrize("position,bool_val", is_tilled_cases)
 def test_is_tilled(position, bool_val):
+    """
+    Check that the is_tilled function returns correctly
+    Should return True for tilled ground squares and plants
+
+    Args:
+        position: a tuple of two ints representing the x, y square position
+        bool_val: a boolean that is True if the square should be tilled, False
+        otherwise
+    """
     square = ground_test.get_square(position[0], position[1])
     assert ground_test.is_tilled(square) == bool_val
 
 
 @pytest.mark.parametrize("position,bool_val", has_crop_cases)
 def test_has_crop(position, bool_val):
+    """
+    Check that the has_crop function returns correctly
+    Should return True if there is a plant on the square
+
+    Args:
+        position: a tuple of two ints representing the x, y square position
+        bool_val: a boolean that is True if the square should have a crop,
+        False otherwise
+    """
     square = ground_test.get_square(position[0], position[1])
     assert ground_test.has_crop(square) == bool_val
 
@@ -109,6 +139,16 @@ def test_has_crop(position, bool_val):
 # Can use check methods here because previous tests have established they work
 @pytest.mark.parametrize("position,bool_val", till_square_cases)
 def test_till_square(position, bool_val):
+    """
+    Checks that till_square method is being performed accurately
+    Nothing should prevent ground from being tilled
+    If the ground is tilled, it should destroy a plant
+
+    Args:
+        position: a tuple of two ints representing the x, y square
+        bool_val: a boolean that is True if the ground should be watered, False
+        otherwise
+    """
     ground_test.till_square(position[0], position[1])
     # Check truth through hard code
     assert (ground_test.land[position[0]][position[1]] == "T") == bool_val
@@ -123,6 +163,15 @@ def test_till_square(position, bool_val):
 
 @pytest.mark.parametrize("position,bool_val", water_square_cases)
 def test_water_square(position, bool_val):
+    """
+    Checks that water_ground method is being performed accurately
+    The ground should not be watered if it is not tilled
+
+    Args:
+        position: a tuple of two ints representing the x, y square position
+        bool_val: a boolean that is True if the ground should be watered, False
+        otherwise
+    """
     ground_test.water_square(position[0], position[1])
     # Check plant with hard code
     if isinstance(ground_test.land[position[0]][position[1]], Plants):
@@ -137,6 +186,15 @@ def test_water_square(position, bool_val):
 
 @pytest.mark.parametrize("position,bool_val", unwater_squares_cases)
 def test_unwater_squares(position, bool_val):
+    """
+    Checks that the unwater_squares method makes the water attribute of all
+    Plant instances on the map False
+
+    Args:
+        position: a tuple of two ints representing the x, y square position
+        bool_val: a boolean that is True if the ground should remain watered
+        False otherwise
+    """
     ground_test.unwater_squares()
     square = ground_test.get_square(position[0], position[1])
     print(square)
