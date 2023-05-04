@@ -3,3 +3,11 @@ description: By Alex George, Amanda Chang, Meagan Lipsman
 show_downloads: true
 google_analytics:
 theme: jekyll-theme-cayman
+
+colors:
+    gradient_left: "#f90"
+    gradient_right: "#a61717"
+    header: "#fff"
+    android_theme: "#000" # this default to gradient_color
+    link: "#1e6bb8" # this default to gradient_color
+    section_title: "#155799" # this default to gradient_color
