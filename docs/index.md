@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+# Stardew Valley Clone
 
 # Big Idea and Goal of Our Project 
 
