@@ -1,9 +1,14 @@
+"""
+Runs the main game loop
+"""
+# No pygame module has its member
+# pylint: disable=no-member
+# A pygame game loop by nature requires a branch for every action
+# pylint: disable=too-many-branches
 import pygame
 import audio
 import houseclass
 from viewclass import View
-
-from model import model_dict
 import model
 from controller import Controller
 
@@ -29,12 +34,12 @@ def main():
     pygame.init()
     # model = Model()
     display = View(
-        model_dict["farmer"],
-        model_dict["ground"],
-        model_dict["gamestate"],
-        model_dict["inventory"],
+        model.farmer,
+        model.ground,
+        model.gamestate,
+        model.inventory,
     )
-    control = Controller(model_dict["farmer"], model_dict["inventory"])
+    control = Controller(model.farmer, model.inventory)
     clock = pygame.time.Clock()
     game_running = True
     audio.play_music()
@@ -53,12 +58,13 @@ def main():
                     if event.key == getattr(pygame, f"K_{i}"):
                         control.select_inventory(num=i - 1)
                 if event.key == pygame.K_h:
-                    model_dict["gamestate"].harvest_crop(
-                        model_dict["inventory"]
-                    )
+                    model.gamestate.harvest_crop(model.inventory)
                 # should be triggered by house interaction event
-                # if event.key == pygame.K_p:
-                #     model_dict["ground"].day_passes()
+                # brought back for testing purposes (DELETE LATER)
+                if event.key == pygame.K_p:
+                    model.day_passes()
+            if event.type == houseclass.ENTER_HOUSE:
+                print("you went inside")
             if event.type == houseclass.HIT_WALL:
                 print("that was a wall")
                 # prevent farmer position from increasing towards wall?
@@ -66,11 +72,16 @@ def main():
                 model.day_passes()
                 display.day_change()
                 pygame.time.delay(300)
-
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                control.click_inventory(mouse_pos)
         keys_pressed = pygame.key.get_pressed()
         control.move_farmer(keys_pressed)
-        model_dict["house"].enter_bed(model_dict["farmer"])
-        model_dict["house"].hit_wall(model_dict["farmer"])
+        model.house.enter_bed(model.farmer)
+        model.house.enter_bed(
+            model.farmer
+        )  # I now realize the dictionary is totally useless
+        model.house.hit_wall(model.farmer)
         display.draw_window()
 
     pygame.quit()

@@ -1,6 +1,9 @@
-import pygame
+"""
+Handles all in-game views/displays
+"""
 import os
 import random
+import pygame
 
 pygame.font.init()
 
@@ -94,7 +97,7 @@ TILL_LEFT_FARMER = pygameify_image(
 
 
 # GROUND SPRITES
-def randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE):
+def randomize_free_ground():
     """
     Randomizes the free ground image to bring the spice of variety into the
     farm
@@ -109,23 +112,23 @@ def randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE):
         tiles by height of game in tiles in dimension and consists only of
         randomized pygame image pathways
     """
-    FREE_GROUND_MAP = [
+    free_ground_map = [
         [None] * (HEIGHT // GROUND_SIZE) for _ in range(WIDTH // GROUND_SIZE)
     ]
     # Define the corresponding probabilities for each ground file
     probabilities = [0.82, 0.02, 0.02, 0.02, 0.02, 0.02, 0.03, 0.03, 0.02]
     for i in range(WIDTH // GROUND_SIZE):
         for j in range(HEIGHT // GROUND_SIZE):
-            FREE_GROUND_MAP[i][j] = pygameify_image(
+            free_ground_map[i][j] = pygameify_image(
                 "ground/free_ground_versions",
                 f"free_ground{random.choices(range(9), probabilities)[0]}.png",
                 GROUND_SIZE,
                 GROUND_SIZE,
             )
-    return FREE_GROUND_MAP
+    return free_ground_map
 
 
-FREE_GROUND_MAP = randomize_free_ground(WIDTH, HEIGHT, GROUND_SIZE)
+ground_map = randomize_free_ground()
 
 TILLED_GROUND = pygameify_image(
     "ground", "tilled_ground.png", GROUND_SIZE, GROUND_SIZE
@@ -149,30 +152,23 @@ class View:
     Class that handles displaying the game
 
     Attributes:
-        FARMER_WIDTH: An int representing the width of the farmer in pixels
-        FARMER_HEIGHT: An int representing the height of the farmer in pixels
-        GROUND_SIZE: An int representing the width/height of a ground square
-            in pixels
-        WIDTH: An int representing the width of the window in pixels
-        HEIGHT An int representing the height of the window in pixels
-        WIN: A pygame object that is the window the game is played on
-        INVENTORY_ITEM_SIZE: An int representing the width/height of an item in
-            the inventory in pixels
-        INVENTORY_FONT: The font of the numbers displayed in the inventory
-
-        WHITE: A tuple representing the RGB values for white
-        RED: A tuple representing the RGB values for red
-        SELECTION_BOX_COLOR: A tuple representing the RGB values for the color
-            of the box drawn around an equipped item in the inventory
-
-
+        farmer: the Farmer instance being displayed
+        ground: the Ground instance being displayed
+        gamestate: the gamestate of the game
+        inventory: the inventory of the player being displayed
+        farmer_image: the sprite of the farmer being displayed
+        type_ground: the image of the ground square being displayed
+        plant_image: the sprite of the plant being displayed
     """
 
-    def __init__(self, Farmer, Ground, Gamestate, Inventory):
-        self.farmer = Farmer
-        self.ground = Ground
-        self.gamestate = Gamestate
-        self.inventory = Inventory
+    def __init__(self, farmer, ground, gamestate, inventory):
+        self.farmer = farmer
+        self.ground = ground
+        self.gamestate = gamestate
+        self.inventory = inventory
+        self.farmer_image = None
+        self.type_ground = None
+        self.plant_image = None
 
     def farmer_direction(self):
         """
@@ -201,7 +197,9 @@ class View:
         tile_value = (
             "water"
             if self.gamestate.is_water
-            else "till" if self.gamestate.is_till else False
+            else "till"
+            if self.gamestate.is_till
+            else False
         )
 
         self.farmer_image = direction_map[(self.farmer.direction, tile_value)]
@@ -220,7 +218,7 @@ class View:
         elif self.ground.is_tilled(self.ground.get_square(row, col)):
             self.type_ground = TILLED_GROUND
         else:
-            self.type_ground = FREE_GROUND_MAP[row][col]
+            self.type_ground = ground_map[row][col]
 
     def draw_inventory_items(self):
         """
@@ -236,7 +234,6 @@ class View:
                     ),
                 )
                 if item.num_item is not None:
-                    pass  # draw number of item
                     num_text = str(item.num_item)
                     draw_text = INVENTORY_FONT.render(num_text, 1, FONT_COLOR)
                     WIN.blit(
@@ -300,10 +297,7 @@ class View:
 
         # draw farmer
         self.farmer_direction()
-        if (
-            self.farmer_image == WATER_LEFT_FARMER
-            or self.farmer_image == TILL_LEFT_FARMER
-        ):
+        if self.farmer_image in (WATER_LEFT_FARMER, TILL_LEFT_FARMER):
             WIN.blit(
                 self.farmer_image,
                 (
@@ -311,10 +305,7 @@ class View:
                     self.farmer.farmer_rect.y,
                 ),
             )
-        elif (
-            self.farmer_image == TILL_BACK_FARMER
-            or self.farmer_image == WATER_FRONT_FARMER
-        ):
+        elif self.farmer_image in (TILL_BACK_FARMER, WATER_FRONT_FARMER):
             WIN.blit(
                 self.farmer_image,
                 (
@@ -346,6 +337,9 @@ class View:
             self.gamestate.stop_tilling()
 
     def day_change(self):
+        """
+        Fill the screen with black when a day passes
+        """
         WIN.fill(BLACK)
 
         pygame.display.update()

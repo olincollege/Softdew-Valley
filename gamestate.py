@@ -1,3 +1,7 @@
+"""
+Handles interactions between farmer and ground instances
+Checks that farming actions can occur
+"""
 from plants import Plants
 import viewclass
 from audio import play_sound
@@ -14,8 +18,10 @@ class GameState:
         Attributes:
             farmer: an instance of the Farmer class
             ground: an instance of the Ground class
-            _is_water: a boolean                                            DO DIS
-            _is_till: a boolean
+            _is_water: a boolean that represents if the watering action is
+                occurring
+            _is_till: a boolean that represents if the tilling action is
+                occuring
         """
         self.farmer = farmer
         self.ground = ground
@@ -88,9 +94,7 @@ class GameState:
                 self.ground.is_watered(square) or self.ground.is_tilled(square)
             ) and not isinstance(square, Plants):
                 ground_watered = self.ground.is_watered(square)
-                plant = Plants(
-                    action_pos[0], action_pos[1], ground_watered, species
-                )
+                plant = Plants(ground_watered, species)
                 print("Woo! You planted a seed <3")
                 play_sound("planting", 1)
                 self.ground.plant_crop(action_pos[0], action_pos[1], plant)
@@ -102,11 +106,9 @@ class GameState:
         inventory either by increasing the quantity of that crop or adding it
         to a new slot depending on whether the crop is already in the inventory
 
-        inventory:
-
-
-
-        DO DIS
+        Args:
+            inventory: An instance of the inventory class, stores harvested
+                crops
 
         """
         action_pos = self.get_action_position()
@@ -143,6 +145,8 @@ class GameState:
                 play_sound("watering", 2)
                 square.plant_water()
 
+    # These are for display purposes, it tells the view class to pause while
+    # the action is occurring
     def stop_watering(self):
         """Sets _is_water to False"""
         self._is_water = False
@@ -151,8 +155,6 @@ class GameState:
         """Sets _is_till to False"""
         self._is_till = False
 
-    # These are for display purposes, it tells the view class to pause while
-    # the action is occurring
     @property
     def is_water(self):
         """Returns the value of the boolean _is_water"""

@@ -1,3 +1,7 @@
+"""
+Handle playing game audio (music and sound effects)
+"""
+
 import random
 import pygame
 
@@ -10,7 +14,7 @@ discography = [
     "Wild Horseradish Jam",
 ]
 
-MUSIC_END = pygame.USEREVENT + 1
+MUSIC_END = pygame.USEREVENT + 1  # pylint: disable=no-member
 
 
 def play_music():
@@ -34,7 +38,7 @@ def play_music():
         print(f"playing '{song}' ...")
         # wait until the song completes
         pygame.mixer.music.set_endevent(MUSIC_END)
-    except pygame.error:
+    except pygame.error:  # pylint: disable=no-member
         pass
 
 
@@ -63,5 +67,5 @@ def play_sound(sound_name, num_vers=0):
                 f"Assets/sound_bites/{sound_name}{random.randint(0, num_vers)}.wav"
             )
         )
-    except pygame.error:
+    except pygame.error:  # pylint: disable=no-member
         pass

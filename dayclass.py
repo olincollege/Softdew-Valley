@@ -1,7 +1,6 @@
 """
-Day_Class
+Updates the in-game day
 """
-from plants import Plants
 
 
 class Day:

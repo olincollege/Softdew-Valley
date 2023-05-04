@@ -4,7 +4,6 @@ A file containing the Ground class and all related methods
 import viewclass
 from plants import Plants
 from audio import play_sound
-import farmerclass
 
 WIDTH, HEIGHT = viewclass.WIDTH, viewclass.HEIGHT
 SQUARE_SIZE = viewclass.GROUND_SIZE
@@ -97,7 +96,8 @@ class Ground:
         """
         if isinstance(self.land[row][col], str):
             if not self.is_watered(self.land[row][col]):
-                self.land[row][col] += self._watered_land
+                if self.is_tilled(self.land[row][col]):
+                    self.land[row][col] += self._watered_land
         else:
             self.land[row][col].plant_water()
 

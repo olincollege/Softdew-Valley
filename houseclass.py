@@ -51,6 +51,8 @@ class House:
     #     # FILL IN, HOUSE_SIZE // 16
     # )
     house_walls = [left_wall, right_wall, top_wall]
+    # inner_collision_dict = {(left_wall), "left", (right_wall): "right", (top_wall): "top"} ARGHH UNHASHABLE
+    # outer_collision_dict = {left_wall: "right", right_wall: "left", top_wall: "bottom"}
 
     bed_x = house_start_x + 3 * HOUSE_SIZE // 4
     bed_y = house_start_y + 5 * HOUSE_SIZE // 8
@@ -95,5 +97,16 @@ class House:
                 pygame.event.post(pygame.event.Event(HIT_WALL))
                 print("You can't walk through walls")
 
-
+    # def collide_wall(self, farmer_movement_rect):
+    #     """
+    #     Detects if a player has hit a wall and returns a string representing 
+    #     what direction of movement should be disallowed
+    #     """
+    #     for rect in self.house_walls:
+    #         collide = pygame.Rect.colliderect(rect, farmer_movement_rect)
+    #         if collide:
+    #             if self.enter_house(self, farmer_movement_rect):
+    #                 return self.inner_collision_dict[rect]
+    #             else:
+    #                 return self.outer_collision_dict[rect]
         

@@ -45,26 +45,36 @@ class Controller:
             keys: The keys pressed by the user, created using pygame.key.
             get_pressed()
         """
-        if keys[pygame.K_a] and self.farmer.farmer_rect.x - VEL > 0:  # LEFT
+        if (
+            keys[pygame.K_a]  # pylint: disable=no-member
+            and self.farmer.farmer_rect.x - VEL > 0
+            # and house.collide_wall(self.farmer.farmer_rect.x - VEL) != "left"
+        ):  # LEFT
             self.farmer.farmer_rect.x -= VEL
             self.farmer.set_direction("left")
         if (
-            keys[pygame.K_d]
+            keys[pygame.K_d]  # pylint: disable=no-member
             and self.farmer.farmer_rect.x
             - VEL
             + self.farmer.farmer_rect.width
             + 10
             < viewclass.WIDTH
+            # and house.collide_wall(self.farmer.farmer_rect.x + VEL) != "right"
         ):  # RIGHT
             self.farmer.farmer_rect.x += VEL
             self.farmer.set_direction("right")
-        if keys[pygame.K_w] and self.farmer.farmer_rect.y - VEL > 0:  # UP
+        if (
+            keys[pygame.K_w]  # pylint: disable=no-member
+            and self.farmer.farmer_rect.y - VEL > 0
+            # and house.collide_wall(self.farmer.farmer_rect.y - VEL) != "top"
+        ):  # UP
             self.farmer.farmer_rect.y -= VEL
             self.farmer.set_direction("up")
         if (
-            keys[pygame.K_s]
+            keys[pygame.K_s]  # pylint: disable=no-member
             and self.farmer.farmer_rect.y + VEL + self.farmer.farmer_rect.height
             < viewclass.HEIGHT
+            # and house.collide_wall(self.farmer.farmer_rect.y + VEL) != "bottom"
         ):  # DOWN
             self.farmer.farmer_rect.y += VEL
             self.farmer.set_direction("down")
@@ -97,6 +107,7 @@ class Controller:
                         (i + 1) * viewclass.GROUND_SIZE
                     ):
                         slot = i
+                        print(f"Selected slot {i}")
 
         self.inventory.equip_item(slot)
 

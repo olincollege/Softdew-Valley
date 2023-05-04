@@ -5,7 +5,6 @@ import os
 import pygame
 import viewclass
 
-mixer_works = pygame.init()
 INVENTORY_ITEM_SIZE = viewclass.INVENTORY_ITEM_SIZE
 
 

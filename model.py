@@ -1,3 +1,7 @@
+"""
+Instantiates all classes and handles game overview functions
+"""
+
 from farmerclass import Farmer
 from groundclass import Ground
 from gamestate import GameState
@@ -26,14 +30,6 @@ inventory = Inventory(
     cauliflowerseeds,
 )
 
-model_dict = {
-    "farmer": farmer,
-    "ground": ground,
-    "gamestate": gamestate,
-    "inventory": inventory,
-    "house": house,
-}
-
 # I don't know where to put this rn:
 walls_dict = {}
 
@@ -49,7 +45,8 @@ def day_passes():
             if isinstance(ground.land[i][j], Plants):
                 ground.land[i][j].grow()
     ground.unwater_squares()
-    farmer.redraw_farmer()
+    farmer.respawn_farmer()
+    farmer.set_direction("down")
 
 
 # class Model:
@@ -85,15 +82,3 @@ def day_passes():
 
 #     def __init__(self):
 #         pass
-
-# def day_passes(self):
-#     """
-#     Grows any watered plants and sets them back to unwatered when called
-#     """
-#     rows = self.ground.num_rows
-#     cols = self.ground.num_cols
-#     for j in range(cols):
-#         for i in range(rows):
-#             if isinstance(self.ground.land[i][j], Plants):
-#                 self.ground.land[i][j].grow()
-#     self.ground.unwater_squares()
