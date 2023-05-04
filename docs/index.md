@@ -44,6 +44,9 @@ Our [Github Page] (https://github.com/olincollege/Stardew_Clone): Here you can f
 
 ADD VIDEO DEMO HERE 
 
+##
+![Image of our game](https://github.com/olincollege/Stardew_Clone/blob/main/Assets/Startdew%20Clone%20Game%20Photo.PNG)
+
 ### Header 3
 
 ```js
