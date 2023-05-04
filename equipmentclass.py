@@ -3,9 +3,9 @@ Holds all the different classes of items that can go in the inventory
 """
 import os
 import pygame
-import viewclass
+import constants
 
-INVENTORY_ITEM_SIZE = viewclass.INVENTORY_ITEM_SIZE
+INVENTORY_ITEM_SIZE = constants.INVENTORY_ITEM_SIZE
 
 
 class Equipment:

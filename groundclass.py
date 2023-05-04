@@ -1,12 +1,12 @@
 """
 A file containing the Ground class and all related methods
 """
-import viewclass
+import constants
 from plants import Plants
 from audio import play_sound
 
-WIDTH, HEIGHT = viewclass.WIDTH, viewclass.HEIGHT
-SQUARE_SIZE = viewclass.GROUND_SIZE
+WIDTH, HEIGHT = constants.WIDTH, constants.HEIGHT
+SQUARE_SIZE = constants.GROUND_SIZE
 
 
 class Ground:

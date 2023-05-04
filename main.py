@@ -28,7 +28,7 @@ def main():
         - number keys
         - mouse clicks for inventory slots
         - the harvesting key (h)
-        - day passing key (p)
+        - day passing key (p)gi
 
     Passes keys pressed to farmer movement in control
     Quits the game and calls draw_window in View class

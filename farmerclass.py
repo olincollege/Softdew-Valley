@@ -2,17 +2,17 @@
 File contains class and related methods for the farmer (player character)
 """
 import pygame
-import viewclass
+import constants
 
 # Sizing values come from viewclass file
-FARMER_WIDTH = viewclass.FARMER_WIDTH
-FARMER_HEIGHT = viewclass.FARMER_HEIGHT
+FARMER_WIDTH = constants.FARMER_WIDTH
+FARMER_HEIGHT = constants.FARMER_HEIGHT
 VEL = 5
-WIDTH, HEIGHT = viewclass.WIDTH, viewclass.HEIGHT
-SQUARE_SIZE = viewclass.GROUND_SIZE
+WIDTH, HEIGHT = constants.WIDTH, constants.HEIGHT
+SQUARE_SIZE = constants.GROUND_SIZE
 FARMER_WIDTH, FARMER_HEIGHT = (
-    viewclass.FARMER_WIDTH,
-    viewclass.FARMER_HEIGHT,
+    constants.FARMER_WIDTH,
+    constants.FARMER_HEIGHT,
 )
 
 
