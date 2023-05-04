@@ -21,12 +21,10 @@ We love Stardew Valley and wanted to learn more about software structures, code 
 - A house with a bed in the corner; the bed passes the day when touched by the farmer. The house features a combination of the riverland farmhouse pixel art from the original game as well as original pixel art by Amanda Chang, including the Olin O, the campus map, and text on the TV screen.
 
 ## Installation instructions
-The following [link](https://github.com/olincollege/Stardew_Clone) will direct you to our github repository. From here you can download our repository and running the *main.py* file to play our game. To play our game you will need to install the pygame and pytest libraries. You can use the package manager [pip](https://pip.pypa.io/en/stable/) to install these libraries. You also need to install pygame dependencies as well to ensure pygame works as intended. Running the following code in your terminal with install the needed libraries. 
+The following [link](https://github.com/olincollege/Stardew_Clone) will direct you to our github repository. From here you can download our repository and running the *main.py* file to play our game. You can use our *requirements.txt* file to install the required libraries needed to run our game. Running the following code in your terminal with install the needed libraries. 
 
 ```bash
-pip install -U pytest 
-python3 -m pip install -U pygame --user
-sudo apt install build-essential libsdl2-dev python3-pygame-sdl2
+pip install -r requirements.txt 
 ```
 
 The instructions for Installation are also included in our [README.md](https://github.com/olincollege/Stardew_Clone/blob/main/README.md) file 
