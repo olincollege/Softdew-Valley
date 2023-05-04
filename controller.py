@@ -2,7 +2,7 @@
 Contains the controller class and all related methods for user interaction
 """
 import pygame
-import viewclass
+import constants
 
 VEL = 5  # farmer movement speed
 
@@ -29,11 +29,11 @@ class Controller:
         """
         x_val = (
             self.farmer.farmer_rect.x + self.farmer.farmer_rect.width // 2
-        ) // viewclass.GROUND_SIZE
+        ) // constants.GROUND_SIZE
         y_val = (
             self.farmer.farmer_rect.y
             + int(self.farmer.farmer_rect.height * 0.75)
-        ) // viewclass.GROUND_SIZE
+        ) // constants.GROUND_SIZE
         self.farmer.set_position(x_val, y_val)
 
     def move_farmer(self, keys):
@@ -45,35 +45,44 @@ class Controller:
             keys: The keys pressed by the user, created using pygame.key.
             get_pressed()
         """
-        if (
-            keys[pygame.K_a]  # pylint: disable=no-member
-            and self.farmer.farmer_rect.x - VEL > 0
-            # and house.collide_wall(self.farmer.farmer_rect.x - VEL) != "left"
-        ):  # LEFT
-            self.farmer.farmer_rect.x -= VEL
-            self.farmer.set_direction("left")
+        if keys[pygame.K_a]:  # pylint: disable=no-member
+            # LEFT
+            if self.farmer.farmer_rect.y > constants.GROUND_SIZE:
+                if self.farmer.farmer_rect.x - VEL > 0:
+                    self.farmer.farmer_rect.x -= VEL
+                    self.farmer.set_direction("left")
+            else:
+                if (
+                    self.farmer.farmer_rect.x - VEL
+                    > constants.SHIPPING_BIN_WIDTH
+                ):
+                    self.farmer.farmer_rect.x -= VEL
+                    self.farmer.set_direction("left")
         if (
             keys[pygame.K_d]  # pylint: disable=no-member
             and self.farmer.farmer_rect.x
             - VEL
             + self.farmer.farmer_rect.width
             + 10
-            < viewclass.WIDTH
-            # and house.collide_wall(self.farmer.farmer_rect.x + VEL) != "right"
+            < constants.WIDTH
         ):  # RIGHT
             self.farmer.farmer_rect.x += VEL
             self.farmer.set_direction("right")
-        if (
-            keys[pygame.K_w]  # pylint: disable=no-member
-            and self.farmer.farmer_rect.y - VEL > 0
-            # and house.collide_wall(self.farmer.farmer_rect.y - VEL) != "top"
-        ):  # UP
-            self.farmer.farmer_rect.y -= VEL
-            self.farmer.set_direction("up")
+        if keys[pygame.K_w]:  # pylint: disable=no-member
+            # UP
+            if self.farmer.farmer_rect.x > constants.SHIPPING_BIN_WIDTH:
+                if self.farmer.farmer_rect.y - VEL > 0:
+                    self.farmer.farmer_rect.y -= VEL
+                    self.farmer.set_direction("up")
+            else:
+                if self.farmer.farmer_rect.y - VEL > constants.GROUND_SIZE:
+                    self.farmer.farmer_rect.y -= VEL
+                    self.farmer.set_direction("up")
+
         if (
             keys[pygame.K_s]  # pylint: disable=no-member
             and self.farmer.farmer_rect.y + VEL + self.farmer.farmer_rect.height
-            < viewclass.HEIGHT
+            < constants.HEIGHT
             # and house.collide_wall(self.farmer.farmer_rect.y + VEL) != "bottom"
         ):  # DOWN
             self.farmer.farmer_rect.y += VEL
@@ -100,11 +109,11 @@ class Controller:
         if mouse_pos is not None:
             mouse_posx = mouse_pos[0]
             for i in range(8):
-                if mouse_posx > viewclass.INVENTORY_START_WIDTH + (
-                    i * viewclass.GROUND_SIZE
+                if mouse_posx > constants.INVENTORY_START_WIDTH + (
+                    i * constants.GROUND_SIZE
                 ):
-                    if mouse_posx < viewclass.INVENTORY_START_WIDTH + (
-                        (i + 1) * viewclass.GROUND_SIZE
+                    if mouse_posx < constants.INVENTORY_START_WIDTH + (
+                        (i + 1) * constants.GROUND_SIZE
                     ):
                         slot = i
                         print(f"Selected slot {i}")
@@ -122,14 +131,14 @@ class Controller:
             mouse cursor on the window
         """
         if (
-            mouse_pos[0] > viewclass.INVENTORY_START_WIDTH
+            mouse_pos[0] > constants.INVENTORY_START_WIDTH
             and mouse_pos[0]
-            < viewclass.INVENTORY_START_WIDTH + 7 * viewclass.GROUND_SIZE
+            < constants.INVENTORY_START_WIDTH + 7 * constants.GROUND_SIZE
         ):
             if (
-                mouse_pos[1] > viewclass.INVENTORY_START_HEIGHT
+                mouse_pos[1] > constants.INVENTORY_START_HEIGHT
                 and mouse_pos[1]
-                < viewclass.INVENTORY_START_HEIGHT + viewclass.GROUND_SIZE
+                < constants.INVENTORY_START_HEIGHT + constants.GROUND_SIZE
             ):
                 self.select_inventory(mouse_pos)
 

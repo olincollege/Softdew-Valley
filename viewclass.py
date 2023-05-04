@@ -155,9 +155,12 @@ INVENTORY_SQUARE = pygameify_image(
 # HOUSE SPRITE
 HOUSE_SPRITE = pygameify_image("", "olin_farmhouse.png", HOUSE_SIZE, HOUSE_SIZE)
 
-# SHIPPING BIN SPRITE
-SHIPPING_BIN = pygameify_image(
-    "", "Shipping_Bin.png", SHIPPING_BIN_WIDTH, SHIPPING_BIN_HEIGHT
+# SHIPPING BIN SPRITES
+CLOSED_SHIPPING_BIN = pygameify_image(
+    "", "Closed_Shipping_Bin.png", SHIPPING_BIN_WIDTH, SHIPPING_BIN_HEIGHT
+)
+OPEN_SHIPPING_BIN = pygameify_image(
+    "", "Open_Shipping_Bin.png", SHIPPING_BIN_WIDTH, SHIPPING_BIN_HEIGHT
 )
 
 
@@ -284,6 +287,18 @@ class View:
         padding = 10
         WIN.blit(draw_text, (padding, HEIGHT - text_height - padding))
 
+    def draw_shipping_bin(self):
+        if (
+            self.farmer.position[0] <= constants.SHIPPING_BIN_SQUARES
+            and self.farmer.position[1] <= constants.SHIPPING_BIN_SQUARES
+        ):
+            bin_sprite = OPEN_SHIPPING_BIN
+        else:
+            bin_sprite = CLOSED_SHIPPING_BIN
+
+        # draw shipping bin
+        WIN.blit(bin_sprite, (BIN_START_W, BIN_START_H))
+
     def draw_window(self):
         """
         Draws the entire pygame window every time it is called
@@ -320,7 +335,7 @@ class View:
         WIN.blit(HOUSE_SPRITE, (WIDTH - HOUSE_SIZE, 0))
 
         # draw shipping bin
-        WIN.blit(SHIPPING_BIN, (BIN_START_W, BIN_START_H))
+        self.draw_shipping_bin()
 
         # draw farmer
         self.farmer_direction()
