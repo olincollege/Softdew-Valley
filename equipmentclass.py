@@ -16,16 +16,13 @@ class Equipment:
         equipped: a boolean that shows whether the item is equipped or not
         pg_image: the pygame image that represents the image displayed for
             an item in the inventory
-        gamestate: an instance of the gamestate class, allows the class
-            to interact with the gamestate when displaying equipment actions
         num_item: an int representing the number of items of that instance
             (ex. holding ten parsnips)
     """
 
-    def __init__(self, gamestate=None):
+    def __init__(self):
         self._equipped = False
         self._pg_image = None
-        self._gamestate = gamestate
         self._num_item = None
 
     def update_image(self, subfolder, image_name):
@@ -92,23 +89,12 @@ class WateringCan(Equipment):
         equipped: a boolean that shows whether the item is equipped or not
         pg_image: the pygame image that represents the image displayed for
             an item in the inventory
-        gamestate: an instance of the gamestate class, allows the class
-            to interact with the gamestate when displaying equipment actions
     """
 
-    def __init__(self, gamestate):
+    def __init__(self):
         """Initialize watering can"""
-        super().__init__(gamestate)
+        super().__init__()
         self.update_image("equipment", "watering_can.png")
-
-    def action(self):
-        """
-        Water the ground
-
-        Calls the gamestate function water_ground, which updates the ground
-        and/or plant class, updates the action occurring in the view class
-        """
-        self._gamestate.water_ground()
 
 
 class Hoe(Equipment):
@@ -119,23 +105,12 @@ class Hoe(Equipment):
         equipped: a boolean that shows whether the item is equipped or not
         pg_image: the pygame image that represents the image displayed for
             an item in the inventory
-        gamestate: an instance of the gamestate class, allows the class
-            to interact with the gamestate when displaying equipment actions
     """
 
-    def __init__(self, gamestate):
+    def __init__(self):
         """Initialize hoe"""
-        super().__init__(gamestate)
+        super().__init__()
         self.update_image("equipment", "hoe.png")
-
-    def action(self):
-        """
-        Till the ground
-
-        Calls the gamestate function till_ground, which updates the ground
-        class, updates the action occurring in the view class
-        """
-        self._gamestate.till_ground()
 
 
 class Seed(Equipment):
@@ -146,26 +121,15 @@ class Seed(Equipment):
         equipped: a boolean that shows whether the item is equipped or not
         pg_image: the pygame image that represents the image displayed for
             an item in the inventory
-        gamestate: an instance of the gamestate class, allows the class
-            to interact with the gamestate when displaying equipment actions
         seed_type: a string representing what kind of plant is being planted
             by the seed
     """
 
-    def __init__(self, gamestate, seed_type):
+    def __init__(self, seed_type):
         """Initialize seed"""
-        super().__init__(gamestate)
+        super().__init__()
         self.seed_type = seed_type
         self.update_image("seeds", f"{seed_type}_seeds.png")
-
-    def action(self):
-        """
-        Plant a seed
-
-        Calls the gamestate function plant, which updates the ground class and
-        initializes a plant class. The plant depends on the seed_type
-        """
-        self._gamestate.plant_seed(self.seed_type)
 
 
 class ParsnipSeeds(Seed):
@@ -176,14 +140,12 @@ class ParsnipSeeds(Seed):
         equipped: a boolean that shows whether the item is equipped or not
         pg_image: the pygame image that represents the image displayed for
             an item in the inventory
-        gamestate: an instance of the gamestate class, allows the class
-            to interact with the gamestate when displaying equipment actions
         seed_type: a string representing what kind of plant is being planted
             by the seed
     """
 
-    def __init__(self, gamestate):
-        super().__init__(gamestate, "parsnip")
+    def __init__(self):
+        super().__init__("parsnip")
 
 
 class CauliflowerSeeds(Seed):
@@ -194,14 +156,12 @@ class CauliflowerSeeds(Seed):
         equipped: a boolean that shows whether the item is equipped or not
         pg_image: the pygame image that represents the image displayed for
             an item in the inventory
-        gamestate: an instance of the gamestate class, allows the class
-            to interact with the gamestate when displaying equipment actions
         seed_type: a string representing what kind of plant is being planted
             by the seed
     """
 
-    def __init__(self, gamestate):
-        super().__init__(gamestate, "cauliflower")
+    def __init__(self):
+        super().__init__("cauliflower")
 
 
 class Crop(Equipment):

@@ -9,7 +9,9 @@ import pygame
 import audio
 import houseclass
 from viewclass import View
-import model
+
+# import model
+from Model import Model
 from controller import Controller
 
 
@@ -32,13 +34,8 @@ def main():
     Quits the game and calls draw_window in View class
     """  # edit day passing when house is done
     pygame.init()
-    # model = Model()
-    display = View(
-        model.farmer,
-        model.ground,
-        model.gamestate,
-        model.inventory,
-    )
+    model = Model()
+    display = View(model)
     control = Controller(model.farmer, model.inventory)
     clock = pygame.time.Clock()
     game_running = True
@@ -53,12 +50,12 @@ def main():
                 audio.play_music()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    control.perform_action()
+                    model.action()
                 for i in range(1, 9):
                     if event.key == getattr(pygame, f"K_{i}"):
                         control.select_inventory(num=i - 1)
                 if event.key == pygame.K_h:
-                    model.gamestate.harvest_crop(model.inventory)
+                    model.harvest_crop()
                 # should be triggered by house interaction event
                 # brought back for testing purposes (DELETE LATER)
                 if event.key == pygame.K_p:
