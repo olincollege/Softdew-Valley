@@ -6,8 +6,8 @@ import pygame
 
 # Needs these two lines to not return a pygame error about display modes
 # Need to be above import statements because that is where error is occurring
-pygame.init()
-pygame.display.set_mode((800, 600))
+pygame.init()  # pylint: disable=wrong-import-position
+pygame.display.set_mode((800, 600))  # pylint: disable=wrong-import-position
 from inventoryclass import Inventory
 from equipmentclass import (
     WateringCan,

@@ -6,11 +6,11 @@ import pygame
 
 # Needs these two lines to not return a pygame error about display modes
 # Need to be above import statements because that is where error is occurring
-pygame.init()
+pygame.init()  # pylint: disable=no-member
 pygame.display.set_mode((800, 600))
 
-from groundclass import Ground
-from plants import Plants
+from groundclass import Ground  # pylint: disable=wrong-import-position
+from plants import Plants  # pylint: disable=wrong-import-position
 
 # Set up ground class
 ground_test = Ground()
