@@ -40,11 +40,9 @@ The instructions for Installation are also included in our [README.md](https://g
 Our [Github Page] (https://github.com/olincollege/Stardew_Clone): Here you can find our [README.md](https://github.com/olincollege/) and by clicking the green *code* button you can find a downloadable zip file.
 
 
-## Header 2
+## Video Demo 
 
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
+ADD VIDEO DEMO HERE 
 
 ### Header 3
 
