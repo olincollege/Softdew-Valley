@@ -1,22 +1,15 @@
 """
-Test cases and implementation for the Gamestate class
+Test cases and implementation for the Model class
 """
 
 import pytest
-from gamestate import GameState
-from groundclass import Ground
-from farmerclass import Farmer
+from Model import Model
 from plants import Plants
-from inventoryclass import Inventory
-from equipmentclass import (
-    WateringCan,
-    Hoe,
-    ParsnipSeeds,
-    CauliflowerSeeds,
-    Crop,
-)
+from equipmentclass import Crop
 
-test_ground = Ground()
+test_model = Model()
+test_ground = test_model.ground
+test_farmer = test_model.farmer
 # till arbitrary squares
 test_ground.land[3][4] = "T"
 test_ground.land[4][5] = "T"
@@ -26,32 +19,26 @@ test_ground.land[6][2] = "TW"
 test_ground.land[6][3] = "TW"
 test_ground.land[6][4] = "TW"
 # create plant instances and plant in arbitrary squares
-test_unwatered_plant = Plants(1, 2, False, "parsnip")
+test_unwatered_plant = Plants(False, "parsnip")
 test_ground.land[1][2] = test_unwatered_plant
-test_watered_plant = Plants(5, 6, True, "parsnip")
+test_watered_plant = Plants(True, "parsnip")
 test_ground.land[5][6] = test_watered_plant
-second_watered_plant = Plants(5, 5, True, "parsnip")
+second_watered_plant = Plants(True, "parsnip")
 test_ground.land[5][5] = second_watered_plant
-test_farmer = Farmer()
-test_gamestate = GameState(test_farmer, test_ground)
-test_inventory = Inventory(
-    WateringCan(test_gamestate),
-    Hoe(test_gamestate),
-    ParsnipSeeds(test_gamestate),
-    CauliflowerSeeds(test_gamestate),
-)
+
+test_inventory = test_model.inventory
 
 # create plants at different growth stages
-stage_one_plant = Plants(1, 2, True, "parsnip")
+stage_one_plant = Plants(True, "parsnip")
 stage_one_plant._growth_days = 0  # pylint: disable=protected-access
 stage_one_plant.grow()
-stage_three_plant = Plants(1, 2, True, "parsnip")
+stage_three_plant = Plants(True, "parsnip")
 stage_three_plant._growth_days = 2  # pylint: disable=protected-access
 stage_three_plant.grow()
-harvestable_parsnip = Plants(1, 2, True, "parsnip")
+harvestable_parsnip = Plants(True, "parsnip")
 harvestable_parsnip._growth_days = 3  # pylint: disable=protected-access
 harvestable_parsnip.grow()
-harvestable_cauliflower = Plants(1, 2, True, "cauliflower")
+harvestable_cauliflower = Plants(True, "cauliflower")
 harvestable_cauliflower._growth_days = 11  # pylint: disable=protected-access
 harvestable_cauliflower.grow()
 test_ground.land[7][7] = stage_one_plant
@@ -130,7 +117,7 @@ def test_get_action_position(farmer_pos, farmer_dir, action_pos):
     """
     test_farmer.set_position(farmer_pos[0], farmer_pos[1])
     test_farmer.set_direction(farmer_dir)
-    return test_gamestate.get_action_position() == action_pos
+    return test_model.get_action_position() == action_pos
 
 
 @pytest.mark.parametrize("position,bool_val", till_ground_cases)
@@ -148,7 +135,7 @@ def test_till_ground(position, bool_val):
     """
     test_farmer.set_direction("down")
     test_farmer.set_position(position[0], position[1] - 1)
-    test_gamestate.till_ground()
+    test_model.till_ground()
     # Check truth with check methods
     square = test_ground.get_square(position[0], position[1])
     assert test_ground.is_tilled(square) == bool_val
@@ -172,7 +159,7 @@ def test_water_ground(position, bool_val):
     """
     test_farmer.set_direction("down")
     test_farmer.set_position(position[0], position[1] - 1)
-    test_gamestate.water_ground()
+    test_model.water_ground()
     # Check with check methods
     square = test_ground.get_square(position[0], position[1])
     assert test_ground.is_watered(square) == bool_val
@@ -196,7 +183,7 @@ def test_plant_seed(position, bool_val):
     )
     test_farmer.set_direction("down")
     test_farmer.set_position(position[0], position[1] - 1)
-    test_gamestate.plant_seed("cauliflower")
+    test_model.plant_seed("cauliflower")
     # Check with check methods
     square = test_ground.get_square(position[0], position[1])
     assert test_ground.has_crop(square) == bool_val
@@ -226,7 +213,7 @@ def test_harvest_crop(position, bool_val):
     """
     test_farmer.set_direction("down")
     test_farmer.set_position(position[0], position[1] - 1)
-    test_gamestate.harvest_crop(test_inventory)
+    test_model.harvest_crop()
     # Check with check methods
     square = test_ground.get_square(position[0], position[1])
     # if harvested, ground square should be a string

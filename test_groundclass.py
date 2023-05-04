@@ -16,11 +16,11 @@ ground_test.land[6][2] = "TW"
 ground_test.land[6][3] = "TW"
 ground_test.land[6][4] = "TW"
 # create plant instances and plant in arbitrary squares
-test_unwatered_plant = Plants(1, 2, False, "parsnip")
+test_unwatered_plant = Plants(False, "parsnip")
 ground_test.land[1][2] = test_unwatered_plant
-test_watered_plant = Plants(5, 6, True, "parsnip")
+test_watered_plant = Plants(True, "parsnip")
 ground_test.land[5][6] = test_watered_plant
-second_watered_plant = Plants(5, 5, True, "parsnip")
+second_watered_plant = Plants(True, "parsnip")
 ground_test.land[5][5] = second_watered_plant
 
 is_watered_cases = [

@@ -5,17 +5,23 @@ import os
 import random
 import pygame
 
+import constants
+
 pygame.font.init()
 
 # Setting constants to be used throughout the file
-FARMER_WIDTH = 45
-FARMER_HEIGHT = 90
-GROUND_SIZE = 50
-WIDTH, HEIGHT = 1000, 600
+FARMER_WIDTH = constants.FARMER_WIDTH
+FARMER_HEIGHT = constants.FARMER_HEIGHT
+GROUND_SIZE = constants.GROUND_SIZE
+WIDTH, HEIGHT = constants.WIDTH, constants.HEIGHT
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-INVENTORY_ITEM_SIZE = 40
+INVENTORY_ITEM_SIZE = constants.INVENTORY_ITEM_SIZE
 INVENTORY_FONT = pygame.font.Font("Assets/stardew_font.ttf", 16)
-HOUSE_SIZE = GROUND_SIZE * 8
+HOUSE_SIZE = constants.HOUSE_SIZE
+SHIPPING_BIN_WIDTH, SHIPPING_BIN_HEIGHT = (
+    constants.SHIPPING_BIN_WIDTH,
+    constants.SHIPPING_BIN_HEIGHT,
+)
 
 # Setting color values
 WHITE = (255, 255, 255)
@@ -24,8 +30,11 @@ FONT_COLOR = (0, 0, 0)
 SELECTION_BOX_COLOR = (244, 88, 66)
 
 # Setting inventory position values
-INVENTORY_START_WIDTH = WIDTH // 2 - GROUND_SIZE * 4
-INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
+INVENTORY_START_WIDTH = constants.INVENTORY_START_WIDTH
+INVENTORY_START_HEIGHT = constants.INVENTORY_START_HEIGHT
+
+# Setting shipping bin starting positions
+BIN_START_W, BIN_START_H = constants.BIN_START_W, constants.BIN_START_H
 
 
 def pygameify_image(subfolder, image_name, width_scale, height_scale):
@@ -146,6 +155,11 @@ INVENTORY_SQUARE = pygameify_image(
 # HOUSE SPRITE
 HOUSE_SPRITE = pygameify_image("", "olin_farmhouse.png", HOUSE_SIZE, HOUSE_SIZE)
 
+# SHIPPING BIN SPRITE
+SHIPPING_BIN = pygameify_image(
+    "", "Shipping_Bin.png", SHIPPING_BIN_WIDTH, SHIPPING_BIN_HEIGHT
+)
+
 
 class View:
     """
@@ -154,18 +168,17 @@ class View:
     Attributes:
         farmer: the Farmer instance being displayed
         ground: the Ground instance being displayed
-        gamestate: the gamestate of the game
         inventory: the inventory of the player being displayed
         farmer_image: the sprite of the farmer being displayed
         type_ground: the image of the ground square being displayed
         plant_image: the sprite of the plant being displayed
     """
 
-    def __init__(self, farmer, ground, gamestate, inventory):
-        self.farmer = farmer
-        self.ground = ground
-        self.gamestate = gamestate
-        self.inventory = inventory
+    def __init__(self, model):
+        self.model = model
+        self.farmer = self.model.farmer
+        self.ground = self.model.ground
+        self.inventory = self.model.inventory
         self.farmer_image = None
         self.type_ground = None
         self.plant_image = None
@@ -196,9 +209,9 @@ class View:
 
         tile_value = (
             "water"
-            if self.gamestate.is_water
+            if self.model.is_water
             else "till"
-            if self.gamestate.is_till
+            if self.model.is_till
             else False
         )
 
@@ -295,6 +308,9 @@ class View:
         # draw house
         WIN.blit(HOUSE_SPRITE, (WIDTH - HOUSE_SIZE, 0))
 
+        # draw shipping bin
+        WIN.blit(SHIPPING_BIN, (BIN_START_W, BIN_START_H))
+
         # draw farmer
         self.farmer_direction()
         if self.farmer_image in (WATER_LEFT_FARMER, TILL_LEFT_FARMER):
@@ -331,10 +347,10 @@ class View:
         self.draw_inventory_items()
         self.draw_equipped_square()
         pygame.display.update()
-        if self.gamestate.is_water or self.gamestate.is_till:
+        if self.model.is_water or self.model.is_till:
             pygame.time.delay(250)
-            self.gamestate.stop_watering()
-            self.gamestate.stop_tilling()
+            self.model.stop_watering()
+            self.model.stop_tilling()
 
     def day_change(self):
         """

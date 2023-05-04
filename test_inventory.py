@@ -12,15 +12,13 @@ from equipmentclass import (
 )
 from farmerclass import Farmer
 from groundclass import Ground
-from gamestate import GameState
 
 test_farmer = Farmer()
 test_ground = Ground()
-test_gamestate = GameState(test_farmer, test_ground)
-test_watering_can = WateringCan(test_gamestate)
-test_hoe = Hoe(test_gamestate)
-test_par_seeds = ParsnipSeeds(test_gamestate)
-test_caul_seeds = CauliflowerSeeds(test_gamestate)
+test_watering_can = WateringCan()
+test_hoe = Hoe()
+test_par_seeds = ParsnipSeeds()
+test_caul_seeds = CauliflowerSeeds()
 test_inventory = Inventory(
     test_watering_can, test_hoe, test_par_seeds, test_caul_seeds
 )
@@ -167,10 +165,10 @@ def test_first_empty_slot(iterations, slot, bool_val):
         bool_val: A boolean representing whether or not slot should be what is
         returns
     """
-    watering_can = WateringCan(test_gamestate)
-    hoe = Hoe(test_gamestate)
-    par_seeds = ParsnipSeeds(test_gamestate)
-    caul_seeds = CauliflowerSeeds(test_gamestate)
+    watering_can = WateringCan()
+    hoe = Hoe()
+    par_seeds = ParsnipSeeds()
+    caul_seeds = CauliflowerSeeds()
     inventory = Inventory(watering_can, hoe, par_seeds, caul_seeds)
     for i in range(iterations):
         inventory.add_item(i + 4, ParsnipCrop())
