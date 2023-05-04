@@ -20,9 +20,10 @@ The game can be run by running the main.py file.
 
 The user can control their character using WASD keys to move up, left, down, 
 and right respectively. The number keys can be used select a slot in the 
-inventory and once the user has an item selected (hoe, watering can, seed) the 
-space bar can be used to use the item. Different plants have different amounts 
-of days they take to grow and must be watered everyday to grow. The user can 
+inventory, and once the user has an item selected (hoe, watering can, seed), the 
+space bar can be used to use the item. Inventory slots can also be selected
+by clicking on the desired item. Different plants have different numbers 
+of days they take to grow and must be watered every day to grow. The user can 
 sleep by entering the house and walking to the bed and can harvest plants by 
 pressing H.
 
