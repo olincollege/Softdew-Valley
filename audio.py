@@ -3,8 +3,8 @@ Handle playing game audio (music and sound effects)
 """
 
 import random
-import pygame
 import os
+import pygame
 
 discography = [
     "Cloud Country",
@@ -35,7 +35,7 @@ def play_music():
         # play the songs in the list one by one
         for song in discography:
             pygame.mixer.music.load(
-                os.path.join(f"Assets", "music", f"{song}.mp3")
+                os.path.join("Assets", "music", f"{song}.mp3")
             )
         pygame.mixer.music.play()
         print(f"playing '{song}' ...")

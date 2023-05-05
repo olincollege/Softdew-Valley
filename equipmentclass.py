@@ -40,7 +40,7 @@ class Equipment:
         """
         self._pg_image = pygame.transform.scale(
             pygame.image.load(
-                os.path.join(f"Assets", f"{subfolder}", f"{image_name}")
+                os.path.join("Assets", f"{subfolder}", f"{image_name}")
             ),
             (INVENTORY_ITEM_SIZE, INVENTORY_ITEM_SIZE),
         ).convert_alpha()
