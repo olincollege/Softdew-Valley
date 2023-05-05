@@ -47,7 +47,6 @@ class House:
         collide = pygame.Rect.colliderect(self.house_rect, farmer.farmer_rect)
         if collide:
             pygame.event.post(pygame.event.Event(ENTER_HOUSE))
-            print("They've collided")
             # self._day_number = self._day_number + 1
 
     def enter_bed(self, farmer):
@@ -58,5 +57,4 @@ class House:
         collide = pygame.Rect.colliderect(self.bed_rect, farmer.farmer_rect)
         if collide:
             pygame.event.post(pygame.event.Event(ENTER_BED))
-            print("You slept")
             # self._day_number = self._day_number + 1

@@ -61,7 +61,7 @@ def main():
                 if event.key == pygame.K_p:
                     model.day_passes()
             if event.type == houseclass.ENTER_HOUSE:
-                print("you went inside")
+                pass
             if event.type == houseclass.ENTER_BED:
                 model.day_passes()
                 display.day_change()

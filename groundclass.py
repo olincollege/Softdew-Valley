@@ -152,8 +152,3 @@ class Ground:
             self.land[row][col] = "W"
         else:
             self.till_square(row, col)
-
-        if isinstance(self.land[row][col], type):
-            print("uh oh, harvest in groundclass says this square is a class")
-        if isinstance(self.land[row][col], Plants):
-            print("for some reason, this square is still a plant.")

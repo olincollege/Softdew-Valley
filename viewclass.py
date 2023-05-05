@@ -386,4 +386,3 @@ class View:
         WIN.fill(BLACK)
 
         pygame.display.update()
-        # print("called day change")
