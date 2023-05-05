@@ -1,7 +1,7 @@
 """
 Handles the different plants in the game
 """
-from equipmentclass import ParsnipCrop, CauliflowerCrop
+from equipmentclass import ParsnipCrop, CauliflowerCrop, PotatoCrop
 
 
 class Plants:
@@ -33,6 +33,7 @@ class Plants:
             CauliflowerCrop(),
         ),
         "parsnip": ([0, 1, 2, 3, 4], ParsnipCrop()),
+        "potato": ([0, 1, 2, 3, 3, 4, 5], PotatoCrop()),
     }
 
     def __init__(self, water, species):

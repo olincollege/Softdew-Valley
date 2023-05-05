@@ -19,3 +19,6 @@ BIN_START_W, BIN_START_H = 20, 10
 
 # Setting the size of control screen
 CONTROL_WIDTH, CONTROL_HEIGHT = 768, 435
+
+# Setting the size of coin image
+COIN_SIZE = 30

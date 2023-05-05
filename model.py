@@ -9,6 +9,7 @@ from equipmentclass import (
     Seed,
     ParsnipSeeds,
     CauliflowerSeeds,
+    PotatoSeeds,
     Crop,
 )
 from inventoryclass import Inventory
@@ -46,16 +47,19 @@ class Model:  # pylint: disable=too-many-instance-attributes
         self.hoe = Hoe()
         self.parsnipseeds = ParsnipSeeds()
         self.cauliflowerseeds = CauliflowerSeeds()
+        self.potatoseeds = PotatoSeeds()
         self.inventory = Inventory(
             self.watering_can,
             self.hoe,
             self.parsnipseeds,
             self.cauliflowerseeds,
+            self.potatoseeds,
         )
         self.house = House()
         self._is_till = False
         self._is_water = False
         self._selling_crop = False
+        self._display_crop = None
 
     def day_passes(self):
         """
@@ -139,13 +143,14 @@ class Model:  # pylint: disable=too-many-instance-attributes
             self.farmer.position[0] <= constants.SHIPPING_BIN_SQUARES
             and self.farmer.position[1] <= constants.SHIPPING_BIN_SQUARES
         ):
+            self._selling_crop = True
+            self._display_crop = crop
             if crop.num_item <= 1:
                 slot = self.inventory.get_equipped_item_slot()
                 self.inventory.remove_item(slot)
             else:
                 crop.decrease_item(1)
             self.farmer.add_funds(crop.price)
-            self._selling_crop = True
 
     def till_ground(self):
         """
@@ -247,8 +252,13 @@ class Model:  # pylint: disable=too-many-instance-attributes
     def is_till(self):
         """Returns the value of the boolean _is_till"""
         return self._is_till
-    
+
     @property
     def selling_crop(self):
         """Returns the value of the boolean _selling_crop"""
         return self._selling_crop
+
+    @property
+    def display_crop(self):
+        """Return that crop that should be displayed"""
+        return self._display_crop
