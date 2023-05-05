@@ -11,7 +11,11 @@ pygame.init()
 pygame.display.set_mode((800, 600))
 from model import Model  # pylint: disable=wrong-import-position
 from plants import Plants  # pylint: disable=wrong-import-position
-from equipmentclass import Crop  # pylint: disable=wrong-import-position
+from equipmentclass import (
+    Crop,
+    ParsnipCrop,
+    CauliflowerCrop,
+)  # pylint: disable=wrong-import-position
 
 test_model = Model()
 test_ground = test_model.ground
@@ -51,6 +55,13 @@ test_ground.land[7][7] = stage_one_plant
 test_ground.land[8][8] = stage_three_plant
 test_ground.land[9][9] = harvestable_parsnip
 test_ground.land[10][10] = harvestable_cauliflower
+
+# Create crops with different num_item values
+parsnip_crop = ParsnipCrop()
+caul_crop = CauliflowerCrop()
+one_crop = ParsnipCrop()
+two_crops = ParsnipCrop()
+two_crops.add_crop()
 
 get_action_position_cases = [
     # returns correct action square when farmer is facing down
@@ -103,6 +114,27 @@ harvest_crop_cases = [
     ([9, 9], True),
     # Check that a cauliflower is harvestable once fully grown
     ([10, 10], True),
+]
+
+sell_crop_wallet_cases = [
+    # Check that a parsnip crop adds correct funds
+    (parsnip_crop, 35),
+    # Check that a cauliflower crop adds correct funds
+    (caul_crop, 175),
+]
+
+sell_crop_inventory_cases = [
+    # Check that num_items go down when there are multiple crops
+    (one_crop, True, 0),  # True that slot is empty
+    # Check that inventory slot is cleared when only one item
+    (two_crops, False, 1),  # False that slot is empty
+]
+
+sell_crop_position_cases = [
+    # When farmer is in correct position, wallet updates
+    (2, 2, 35),
+    # When farmer is not in correct position, wallet doesn't update
+    (5, 5, 35),
 ]
 
 
@@ -226,3 +258,58 @@ def test_harvest_crop(position, bool_val):
     assert isinstance(square, str) == bool_val
     # if harvested slot four in inventory should be a crop instance
     assert isinstance(test_inventory.inventory[4], Crop) == bool_val
+
+
+@pytest.mark.parametrize("crop,wallet_val", sell_crop_wallet_cases)
+def test_sell_crop_wallet(crop, wallet_val):
+    """
+    Checks that the wallet updates correctly when a crop is sold
+
+    Args:
+        crop: An instance of the crop class that represents the crop being sold
+        wallet_val: an int representing what we expect the wallet value to be
+    """
+    test_farmer.set_position(2, 2)
+    test_inventory.add_item(4, crop)
+    crop.equip()
+    test_model.sell_crop(crop)
+    assert test_farmer.wallet == wallet_val
+    test_farmer.wallet = 0  # reset val
+
+
+@pytest.mark.parametrize("crop,bool_val,num_items", sell_crop_inventory_cases)
+def test_sell_crop_inventory(crop, bool_val, num_items):
+    """
+    Checks that an item is correctly removed from the inventory or num_items
+    updates correctly
+
+    Args:
+        crop: An instance of the crop class that represents the crop being sold
+        wallet_val: an int representing what we expect the wallet value to be
+    """
+    test_farmer.set_position(2, 2)
+    test_inventory.add_item(4, crop)
+    crop.equip()
+    test_model.sell_crop(crop)
+    assert (test_inventory.get_item(4) == " ") == bool_val
+    if not bool_val:
+        assert crop.num_item == num_items
+    test_farmer.wallet = 0  # reset val
+
+
+@pytest.mark.parametrize("posx,posy,wallet_val", sell_crop_position_cases)
+def test_sell_crop_position(posx, posy, wallet_val):
+    """
+    Checks that a crop isn't sold unless the farmer is close to the shipping bin
+
+    Args:
+        posx: int representing the farmer's x square
+        posy: int representing the farmer's y square
+        wallet_val: int representing what the wallet_val should be
+    """
+    test_farmer.set_position(posx, posy)
+    test_inventory.add_item(4, parsnip_crop)
+    parsnip_crop.equip()
+    test_model.sell_crop(parsnip_crop)
+    assert test_farmer.wallet == wallet_val
+    test_farmer.wallet = 0  # reset val
