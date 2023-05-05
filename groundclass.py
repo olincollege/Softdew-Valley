@@ -30,6 +30,9 @@ class Ground:
     num_cols = HEIGHT // SQUARE_SIZE
 
     def __init__(self):
+        """
+        Initialize land.
+        """
         self.land = [
             [self._free_land for _ in range(self.num_cols)]
             for _ in range(self.num_rows)

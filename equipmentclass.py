@@ -21,6 +21,9 @@ class Equipment:
     """
 
     def __init__(self):
+        """
+        Initialize Equipped to be false, and pg_image and num_item to be none.
+        """
         self._equipped = False
         self._pg_image = None
         self._num_item = None
@@ -146,6 +149,9 @@ class ParsnipSeeds(Seed):
     """
 
     def __init__(self):
+        """
+        Initialize parsnip seed
+        """
         super().__init__("parsnip")
 
 
@@ -162,6 +168,9 @@ class CauliflowerSeeds(Seed):
     """
 
     def __init__(self):
+        """
+        Initialize cauliflower
+        """
         super().__init__("cauliflower")
 
 
@@ -180,6 +189,9 @@ class Crop(Equipment):
     """
 
     def __init__(self, crop_type, price):
+        """
+        Initialize image of respective crop, price, and _num_item to be 1.
+        """
         super().__init__()
         self.update_image("crops", f"{crop_type}.png")
         self.price = price
@@ -199,6 +211,9 @@ class ParsnipCrop(Crop):
     """
 
     def __init__(self):
+        """
+        Initialize Parsnip Crop
+        """
         super().__init__("parsnip", 35)
 
 
@@ -209,4 +224,7 @@ class CauliflowerCrop(Crop):
     """
 
     def __init__(self):
+        """
+        Initialize cauliflower crop
+        """
         super().__init__("cauliflower", 175)
