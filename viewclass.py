@@ -404,7 +404,6 @@ class View:
 
         # draw control screen
         if control_screen:
-            print("it's true")
             WIN.blit(
                 CONTROL_SCREEN,
                 (

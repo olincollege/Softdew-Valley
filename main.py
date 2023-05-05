@@ -28,7 +28,7 @@ def main():
         - number keys
         - mouse clicks for inventory slots
         - the harvesting key (h)
-        - day passing key (p)gi
+        - day passing key (p)
 
     Passes keys pressed to farmer movement in control
     Quits the game and calls draw_window in View class
@@ -50,10 +50,11 @@ def main():
             if event.type == audio.MUSIC_END:
                 audio.play_music()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_r:
-                    print("you hit ?")
+                if (
+                    pygame.key.get_pressed()[pygame.K_SLASH]
+                    and pygame.key.get_mods() & pygame.KMOD_SHIFT
+                ):
                     control_screen = not control_screen
-                    print(control_screen)
                 if event.key == pygame.K_SPACE:
                     model.action()
                 for i in range(1, 9):
