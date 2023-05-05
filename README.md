@@ -37,4 +37,6 @@ is fully grown.
 
 ## Credits
 The people that worked on this project were Alex George, Amanda Chang, and 
-Meagan Lipsman.
+Meagan Lipsman. Creative credit goes to ConcernedApe, art credit goes to 
+ConcernedApe, vhv (https://www.vhv.rs/viewpic/hoJTmbJ_stardew-valley-player-sprite-png-download-stardew-valley/)
+and Amanda Chang.

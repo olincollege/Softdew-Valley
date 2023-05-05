@@ -204,5 +204,4 @@ def test_unwater_squares(position, bool_val):
     """
     ground_test.unwater_squares()
     square = ground_test.get_square(position[0], position[1])
-    print(square)
     assert ground_test.is_watered(square) == bool_val

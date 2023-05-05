@@ -75,7 +75,6 @@ class Plants:
             except IndexError:
                 self._growth_stage = self.plant_dictionary[self._species][0][-1]
         if self._growth_stage == self.plant_dictionary[self._species][0][-1]:
-            print("grow has set harvestable to true")
             self._harvestable = True
 
     @property

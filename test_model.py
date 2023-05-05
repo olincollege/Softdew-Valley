@@ -134,7 +134,7 @@ sell_crop_position_cases = [
     # When farmer is in correct position, wallet updates
     (2, 2, 35),
     # When farmer is not in correct position, wallet doesn't update
-    (5, 5, 35),
+    (5, 5, 0),
 ]
 
 
