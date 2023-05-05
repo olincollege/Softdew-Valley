@@ -380,5 +380,4 @@ def test_buy_item_inventory():
     par_seeds = SellingParsnipSeeds()
     second_test_model.farmer.add_funds(100)
     second_test_model.buy_item(par_seeds)
-    print(second_test_model.farmer.wallet)
     assert second_test_inventory.get_item(2).num_item == 16
