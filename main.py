@@ -9,6 +9,7 @@ import pygame
 import audio
 import houseclass
 from viewclass import View
+from plants import Plants
 
 # import model
 from model import Model
@@ -65,7 +66,12 @@ def main():
                 # should be triggered by house interaction event
                 # brought back for testing purposes (DELETE LATER)
                 if event.key == pygame.K_p:
-                    model.day_passes()
+                    for i in range(20):
+                        model.day_passes()
+                        for i in range(model.ground.num_rows):
+                            for j in range(model.ground.num_cols):
+                                if isinstance(model.ground.land[i][j], Plants):
+                                    model.ground.land[i][j].water = True
             if event.type == houseclass.ENTER_HOUSE:
                 pass
             if event.type == houseclass.ENTER_BED:

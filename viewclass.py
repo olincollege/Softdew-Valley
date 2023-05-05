@@ -17,6 +17,7 @@ WIDTH, HEIGHT = constants.WIDTH, constants.HEIGHT
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 INVENTORY_ITEM_SIZE = constants.INVENTORY_ITEM_SIZE
 INVENTORY_FONT = pygame.font.Font("Assets/stardew_font.ttf", 16)
+WALLET_FONT = pygame.font.Font("Assets/stardew_font.ttf", 24)
 HOUSE_SIZE = constants.HOUSE_SIZE
 SHIPPING_BIN_WIDTH, SHIPPING_BIN_HEIGHT = (
     constants.SHIPPING_BIN_WIDTH,
@@ -24,6 +25,8 @@ SHIPPING_BIN_WIDTH, SHIPPING_BIN_HEIGHT = (
 )
 CONTROL_WIDTH = constants.CONTROL_WIDTH
 CONTROL_HEIGHT = constants.CONTROL_HEIGHT
+
+COIN_SIZE = constants.COIN_SIZE
 
 # Setting color values
 WHITE = (255, 255, 255)
@@ -170,6 +173,9 @@ OPEN_SHIPPING_BIN = pygameify_image(
     "", "Open_Shipping_Bin.png", SHIPPING_BIN_WIDTH, SHIPPING_BIN_HEIGHT
 )
 
+# COIN IMAGE
+COIN = pygameify_image("", "olin_coin.png", COIN_SIZE, COIN_SIZE)
+
 
 class View:
     """
@@ -288,11 +294,14 @@ class View:
         Display the farmer wallet
         """
         wallet_text = str(self.farmer.wallet)
-        draw_text = INVENTORY_FONT.render(wallet_text, 1, FONT_COLOR)
+        draw_text = WALLET_FONT.render(wallet_text, 1, FONT_COLOR)
         text_width = draw_text.get_width()
         text_height = draw_text.get_height()
-        padding = 10
-        WIN.blit(draw_text, (padding, HEIGHT - text_height - padding))
+        coin_padding = 10
+        text_padding = 50
+        padding = 13
+        WIN.blit(draw_text, (text_padding, HEIGHT - text_height - padding))
+        WIN.blit(COIN, (padding, HEIGHT - coin_padding - COIN_SIZE))
 
     def draw_shipping_bin(self):
         if (
@@ -307,10 +316,19 @@ class View:
         WIN.blit(bin_sprite, (BIN_START_W, BIN_START_H))
 
     def draw_selling_crop(self):
-        crop = self.inventory.get_equipped_item()
-        WIN.blit(crop.pg_image, (BIN_START_W, BIN_START_H))
-        pygame.time.delay(250)
-        self.model.stop_selling()
+        crop = self.model.display_crop
+        padding = 20
+        if crop is not None:
+            WIN.blit(
+                crop.pg_image,
+                (
+                    BIN_START_W + SHIPPING_BIN_WIDTH // 2 - padding,
+                    BIN_START_H + padding,
+                ),
+            )
+            pygame.display.update()
+            pygame.time.delay(250)
+            self.model.stop_selling()
 
     def draw_ground_plants(self):
         rows = self.ground.num_rows
@@ -318,7 +336,6 @@ class View:
         for j in range(cols):
             for i in range(rows):
                 self.ground_type(i, j)
-                # self.plant_appearance(i, j)
                 WIN.blit(
                     self.type_ground,
                     ((i) * GROUND_SIZE, (j) * GROUND_SIZE),
@@ -382,10 +399,6 @@ class View:
         # draw shipping bin
         self.draw_shipping_bin()
 
-        # draw crop when sold
-        if self.model.selling_crop:
-            self.draw_selling_crop()
-
         # draw farmer
         self.draw_farmer()
 
@@ -401,7 +414,10 @@ class View:
         self.draw_inventory_items()
         self.draw_equipped_square()
         self.draw_wallet()
-
+        # draw crop when sold
+        if self.model.selling_crop:
+            self.draw_selling_crop()
+            pygame.time.delay(250)
         # draw control screen
         if control_screen:
             WIN.blit(
@@ -411,12 +427,14 @@ class View:
                     HEIGHT // 2 - CONTROL_HEIGHT // 2,
                 ),
             )
+
         pygame.display.update()
 
-        if self.model.is_water or self.model.is_till:
+        if self.model.is_water or self.model.is_till or self.model.selling_crop:
             pygame.time.delay(250)
             self.model.stop_watering()
             self.model.stop_tilling()
+            self.model.stop_selling()
 
     def day_change(self):
         """
