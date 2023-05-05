@@ -254,12 +254,14 @@ class View:
         Draw items into the inventory
         """
         for idx, item in enumerate(self.inventory.inventory):
+            paddingx = 3
+            paddingy = 5
             if not isinstance(item, str):  # item type is not a string:
                 WIN.blit(
                     item.pg_image,
                     (
-                        INVENTORY_START_WIDTH + (idx * GROUND_SIZE) + 5,
-                        INVENTORY_START_HEIGHT + 5,
+                        INVENTORY_START_WIDTH + (idx * GROUND_SIZE) + paddingx,
+                        INVENTORY_START_HEIGHT + paddingy,
                     ),
                 )
                 if item.num_item is not None:
