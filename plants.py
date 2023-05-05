@@ -14,8 +14,8 @@ class Plants:
         type to a tuple with a growth cycle list and the associated crop class
 
     Instance Attributes:
-        _growth_stage: an int representing the stage of growth that a given plant
-        instance is in
+        _growth_stage: an int representing the stage of growth that a given
+        plant instance is in
         _growth_days: an int representing the number of days that a given plant
         has been growing
         _species: A string representing the species of crop (i.e. "parsnip")

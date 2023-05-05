@@ -1,8 +1,7 @@
 """
 House Class
 """
-# No pygame module has its member
-# pylint: disable=no-member
+
 import pygame
 import viewclass
 

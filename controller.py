@@ -97,7 +97,6 @@ class Controller:
             + self.farmer.vel
             + self.farmer.farmer_rect.height
             < constants.HEIGHT
-            # and house.collide_wall(self.farmer.farmer_rect.y + VEL) != "bottom"
         ):  # DOWN
             self.farmer.farmer_rect.y += self.farmer.vel
             self.farmer.set_direction("down")

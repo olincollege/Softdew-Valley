@@ -1,16 +1,11 @@
 """
 Runs the main game loop
 """
-# No pygame module has its member
-# pylint: disable=no-member
-# A pygame game loop by nature requires a branch for every action
-# pylint: disable=too-many-branches
-# pylint: disable=too-many-nested-blocks
+
 import pygame
 import audio
 import houseclass
 from viewclass import View
-from plants import Plants
 
 # import model
 from model import Model
