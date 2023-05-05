@@ -4,6 +4,7 @@ Handle playing game audio (music and sound effects)
 
 import random
 import pygame
+import os
 
 discography = [
     "Cloud Country",
@@ -33,7 +34,9 @@ def play_music():
         random.shuffle(discography)
         # play the songs in the list one by one
         for song in discography:
-            pygame.mixer.music.load(f"Assets/music/{song}.mp3")
+            pygame.mixer.music.load(
+                os.path.join(f"Assets", "music", f"{song}.mp3")
+            )
         pygame.mixer.music.play()
         print(f"playing '{song}' ...")
         # wait until the song completes
@@ -65,7 +68,11 @@ def play_sound(sound_name, num_vers=0):
     try:
         pygame.mixer.Sound.play(
             pygame.mixer.Sound(
-                f"Assets/sound_bites/{sound_name}{random.randint(0, num_vers)}.wav"
+                os.path.join(
+                    "Assets",
+                    "sound_bites",
+                    f"{sound_name}{random.randint(0, num_vers)}.wav",
+                )
             )
         )
     except pygame.error:  # pylint: disable=no-member

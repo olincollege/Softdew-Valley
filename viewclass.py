@@ -152,7 +152,7 @@ def randomize_free_ground():
     for i in range(WIDTH // GROUND_SIZE):
         for j in range(HEIGHT // GROUND_SIZE):
             free_ground_map[i][j] = pygameify_image(
-                "ground/free_ground_versions",
+                os.path.join("ground", "free_ground_versions"),
                 f"free_ground{random.choices(range(9), probabilities)[0]}.png",
                 GROUND_SIZE,
                 GROUND_SIZE,
@@ -423,7 +423,8 @@ class View:  # pylint: disable=too-many-instance-attributes
                         plant_index = plant.growth_stage
                         self.plant_image = pygame.image.load(
                             os.path.join(
-                                f"Assets/{plant.species}",
+                                "Assets",
+                                f"{plant.species}",
                                 f"{plant.species}{plant_index}.png",
                             )
                         )
