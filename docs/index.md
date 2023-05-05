@@ -19,6 +19,8 @@ We love Stardew Valley and wanted to learn more about software structures, code 
 - The images of free ground are randomly selected for each tile each time the game is run. 
 - Music made by Stardew Valley’s creator, ConcernedApe, plays on shuffle in the background the entire time. 
 - The farmer character "sleeps" and a day passes when the farmer collides with the bed. The house art is a combination of the Riverland Farmhouse pixel art from the original game as well as original pixel art by Amanda Chang, including the Olin O, the campus map, and text on the TV screen.
+- The farmer can interact with the shipping bin (which opens when they are close enough to interact with), to sell crops that they harvest.
+- The farmer can interact with the store by pressing E when near it to buy more seeds.
 
 ## Installation instructions
 The following [link](https://github.com/olincollege/Softdew-Valley) will direct you to our github repository. From here you can download our repository and running the *main.py* file to play our game. You can use our *requirements.txt* file to install the required libraries needed to run our game. Running the following code in your terminal will install the needed libraries. 
