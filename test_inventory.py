@@ -182,3 +182,22 @@ def test_first_empty_slot(iterations, slot, bool_val):
         assert (inventory.first_empty_slot() == slot) == bool_val
     else:
         assert (inventory.first_empty_slot() is slot) == bool_val
+
+
+def test_remove_item():
+    """
+    Check that remove_item makes the specified inventory slot empty
+    """
+    watering_can = WateringCan()
+    hoe = Hoe()
+    par_seeds = ParsnipSeeds()
+    caul_seeds = CauliflowerSeeds()
+    inventory = Inventory(watering_can, hoe, par_seeds, caul_seeds)
+    inventory.remove_item(0)
+    assert inventory.inventory[0] == " "
+    inventory.remove_item(1)
+    assert inventory.inventory[1] == " "
+    inventory.remove_item(2)
+    assert inventory.inventory[2] == " "
+    inventory.remove_item(3)
+    assert inventory.inventory[3] == " "
