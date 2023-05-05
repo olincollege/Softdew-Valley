@@ -27,13 +27,15 @@ The game can be run by running the main.py file.
 
 The user can control their character using WASD keys to move up, left, down, 
 and right respectively. The number keys can be used select a slot in the 
-inventory, and once the user has an item selected (hoe, watering can, seed), 
+inventory, and once the user has an item selected (hoe, watering can, seed, crop), 
 the space bar can be used to use the item. Inventory slots can also be selected
 by clicking on the desired item. Different plants have different numbers 
 of days they take to grow and must be watered every day to grow. A plant will 
 not grow if it is not watered. The user can sleep by entering the house and 
 walking to the bed and can harvest plants by pressing the H key once that plant
-is fully grown.
+is fully grown. If the farmer is close enough to the shipping bin (which opens once 
+they near it), they can sell a crop by hitting the space bar. If the farmer is at the shop, 
+they can hit the E key to enter the shop and purchase seeds.
 
 ## Credits
 The people that worked on this project were Alex George, Amanda Chang, and 
