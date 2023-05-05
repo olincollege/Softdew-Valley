@@ -17,6 +17,9 @@ class Controller:
     """
 
     def __init__(self, farmer, inventory):
+        """
+        Initialize farmer and inventory.
+        """
         self.farmer = farmer
         self.inventory = inventory
 

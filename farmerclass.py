@@ -30,6 +30,9 @@ class Farmer:
     """
 
     def __init__(self):
+        """
+        Initialize start_square_x, start_square_y, farmer_rect, _direction, _position, and initialize wallet to be 0.
+        """
         self.start_square_x = 16
         self.start_square_y = 8
         self.farmer_rect = pygame.Rect(

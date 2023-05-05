@@ -42,6 +42,9 @@ class Model:  # pylint: disable=too-many-instance-attributes
     """
 
     def __init__(self):
+        """
+        Initialize farmer, ground, watering_can, hoe, parsnipseeds, cauliflowerseeds, potatoseeds, inventory, and house. Also initialize _is_till, _is_water, _is_selling_crop to False and _display_crop to None
+        """
         self.farmer = Farmer()
         self.ground = Ground()
         self.watering_can = WateringCan()
