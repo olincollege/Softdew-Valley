@@ -299,6 +299,12 @@ class View:
         # draw shipping bin
         WIN.blit(bin_sprite, (BIN_START_W, BIN_START_H))
 
+    def draw_selling_crop(self):
+        crop = self.inventory.get_equipped_item()
+        WIN.blit(crop.pg_image, (BIN_START_W, BIN_START_H))
+        pygame.time.delay(250)
+        self.model.stop_selling()
+
     def draw_window(self):
         """
         Draws the entire pygame window every time it is called
@@ -336,6 +342,10 @@ class View:
 
         # draw shipping bin
         self.draw_shipping_bin()
+
+        # draw crop when sold
+        if self.model.selling_crop:
+            self.draw_selling_crop()
 
         # draw farmer
         self.farmer_direction()
