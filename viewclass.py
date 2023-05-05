@@ -312,18 +312,7 @@ class View:
         pygame.time.delay(250)
         self.model.stop_selling()
 
-    def draw_window(self, control_screen):
-        """
-        Draws the entire pygame window every time it is called
-        (ground, plants, house, farmer, inventory, and inventory text)
-
-        Args:
-            control_screen: A boolean that determines whether the control
-            screen graphic should be blitted or not
-        """
-        WIN.fill(WHITE)
-
-        # draw ground and plants
+    def draw_ground_plants(self):
         rows = self.ground.num_rows
         cols = self.ground.num_cols
         for j in range(cols):
@@ -348,17 +337,8 @@ class View:
                         self.plant_image,
                         ((i) * GROUND_SIZE, (j) * GROUND_SIZE),
                     )
-        # draw house
-        WIN.blit(HOUSE_SPRITE, (WIDTH - HOUSE_SIZE, 0))
 
-        # draw shipping bin
-        self.draw_shipping_bin()
-
-        # draw crop when sold
-        if self.model.selling_crop:
-            self.draw_selling_crop()
-
-        # draw farmer
+    def draw_farmer(self):
         self.farmer_direction()
         if self.farmer_image in (WATER_LEFT_FARMER, TILL_LEFT_FARMER):
             WIN.blit(
@@ -382,6 +362,33 @@ class View:
                 (self.farmer.farmer_rect.x, self.farmer.farmer_rect.y),
             )
 
+    def draw_window(self, control_screen):
+        """
+        Draws the entire pygame window every time it is called
+        (ground, plants, house, farmer, inventory, and inventory text)
+
+        Args:
+            control_screen: A boolean that determines whether the control
+            screen graphic should be blitted or not
+        """
+        WIN.fill(WHITE)
+
+        # draw ground and plants
+        self.draw_ground_plants()
+
+        # draw house
+        WIN.blit(HOUSE_SPRITE, (WIDTH - HOUSE_SIZE, 0))
+
+        # draw shipping bin
+        self.draw_shipping_bin()
+
+        # draw crop when sold
+        if self.model.selling_crop:
+            self.draw_selling_crop()
+
+        # draw farmer
+        self.draw_farmer()
+
         # draw inventory
         for i in range(len(self.inventory.inventory)):
             WIN.blit(
@@ -394,11 +401,6 @@ class View:
         self.draw_inventory_items()
         self.draw_equipped_square()
         self.draw_wallet()
-        pygame.display.update()
-        if self.model.is_water or self.model.is_till:
-            pygame.time.delay(250)
-            self.model.stop_watering()
-            self.model.stop_tilling()
 
         # draw control screen
         if control_screen:
@@ -410,6 +412,12 @@ class View:
                     HEIGHT // 2 - CONTROL_HEIGHT // 2,
                 ),
             )
+        pygame.display.update()
+
+        if self.model.is_water or self.model.is_till:
+            pygame.time.delay(250)
+            self.model.stop_watering()
+            self.model.stop_tilling()
 
     def day_change(self):
         """
