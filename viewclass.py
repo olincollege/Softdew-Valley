@@ -418,14 +418,3 @@ class View:
         WIN.fill(BLACK)
 
         pygame.display.update()
-
-    def control_screen(self):
-        """
-        Blit the control screen when triggered
-        """
-        WIN.fill(WHITE)
-        WIN.blit(
-            CONTROL_SCREEN,
-            (WIDTH // 2 - CONTROL_WIDTH // 2, HEIGHT // 2 - CONTROL_HEIGHT / 2),
-        )
-        print("it's too fast")
