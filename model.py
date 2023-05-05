@@ -146,7 +146,6 @@ class Model:  # pylint: disable=too-many-instance-attributes
             plant_success = self.plant_seed(equipped_item.seed_type)
             # if a plant is successfully planted decrease the seed count
             if plant_success:
-                equipped_item.decrease_item(1)
                 # if there are no seeds left remove them from inventory
                 if equipped_item.num_item <= 1:
                     slot = self.inventory.get_equipped_item_slot()
