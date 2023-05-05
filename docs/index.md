@@ -7,18 +7,18 @@ layout: default
 
 # Big Idea and Goal of Our Project 
 
-We love Stardew Valley and wanted to learn more about software structures, code efficiency and how things work together, so we chose to create a clone of the game. There’s a lot of moving parts, the project was scaleable to how much we wanted to work on it, and we knew we could learn a lot from it. Plus, it was a ton of fun!
+We love Stardew Valley and wanted to learn more about software structures, code efficiency and integrating classes together, so we chose to create a clone of the game. This means that we made a simple farming sim where you can play as a farmer to raise and sell your crops. This was a scalable project with a lot of moving parts that we learned a lot from. Plus, it was a ton of fun!
 
 # Unique Features of our Game 
 - We implemented lots of features from the original game – for example, the abilities to plant, water, harvest, and hold crops. 
 - We retained two of the original tools, the watering can and hoe, with full functionality. Both tools have their associated action animations from any of the four directions a player can be facing.
-- The inventory holds both tools, both seeds, and open slots for harvested crops. Tools and seeds can be used by pressing the space bar, which is the general action key. Different items in the inventory can be selected by clicking on the desired tool or by pressing the inventory slot’s associated number key.
+- The inventory holds both tools, two seeds, and open slots for harvested crops. Tools and seeds can be used by pressing the space bar, which is the general action key. Different items in the inventory can be selected by clicking on the desired tool or by pressing the inventory slot’s associated number key.
 - Parsnip and cauliflower crops retain their original growth cycles and can be harvested with the h key.
-- The original sound effects for tilling, watering, sowing, and harvesting.
+- There are sound effects for tilling, watering, sowing, and harvesting actions.
 - The farmer is controlled with WASD and has an image for each direction the player may be facing. 
 - The images of free ground are randomly selected for each tile each time the game is run. 
 - Music made by Stardew Valley’s creator, ConcernedApe, plays on shuffle in the background the entire time. 
-- A house with a bed in the corner; the bed passes the day when touched by the farmer. The house features a combination of the riverland farmhouse pixel art from the original game as well as original pixel art by Amanda Chang, including the Olin O, the campus map, and text on the TV screen.
+- The farmer character "sleeps" and a day passes when the farmer collides with the bed. The house art is a combination of the Riverland Farmhouse pixel art from the original game as well as original pixel art by Amanda Chang, including the Olin O, the campus map, and text on the TV screen.
 
 ## Installation instructions
 The following [link](https://github.com/olincollege/Softdew-Valley) will direct you to our github repository. From here you can download our repository and running the *main.py* file to play our game. You can use our *requirements.txt* file to install the required libraries needed to run our game. Running the following code in your terminal will install the needed libraries. 
