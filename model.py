@@ -130,7 +130,7 @@ class Model:  # pylint: disable=too-many-instance-attributes
                 + constants.GROUND_SIZE // 2
             )
             < constants.HEIGHT
-            and not (self.farmer.farmer_rect.x < constants.GROUND_SIZE)
+            and (self.farmer.farmer_rect.x >= constants.GROUND_SIZE)
         )
 
     def action(self):

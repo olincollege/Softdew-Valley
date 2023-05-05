@@ -340,7 +340,8 @@ def test_sell_crop_position(posx, posy, wallet_val):
 @pytest.mark.parametrize("farmer_pos,in_store", enter_store_cases)
 def test_enter_store(farmer_pos, in_store):
     """
-    This function checks whether the farmer can enter the store at a certain position
+    This function checks whether the farmer can enter the store at a certain
+    position
 
     Args:
         farmer_pos: a tuple of two ints representing the x, y square position
@@ -358,7 +359,8 @@ def test_buy_item_wallet(item, funds):
     Check that when buying an item that farmer wallet updates correctly
 
     Args:
-        item: An instance of the StandItem Class that represents the item being bough
+        item: An instance of the StandItem Class that represents the item
+        being bought
         funds: An int representing what the farmer wallet should
     """
     test_model._in_store = True  # pylint: disable=protected-access
