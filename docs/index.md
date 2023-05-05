@@ -35,12 +35,12 @@ Our [Github Page](https://github.com/olincollege/Softdew-Valley): Here you can f
 
 ## Video Demo 
 
-ADD VIDEO DEMO HERE 
+[Our Video!](https://youtu.be/FxuAW6qw4oE)
 
 
 ## Credits 
 The people that worked on this project were Alex George, Amanda Chang, and 
-Meagan Lipsman. Our credits go to Eric Barone, the creator of Stardew Valley, and [VHV.RS](https://www.vhv.rs/viewpic/hoJTmbJ_stardew-valley-player-sprite-png-download-stardew-valley/) for our player sprite images.
+Meagan Lipsman. Our credits go to ConcernedApe(Eric Barone), the creator of Stardew Valley, and [VHV.RS](https://www.vhv.rs/viewpic/hoJTmbJ_stardew-valley-player-sprite-png-download-stardew-valley/) for our player sprite images.
 
 ## Meet Our Team!
 ![Team Photo](Team_Photo.JPG)
