@@ -187,16 +187,16 @@ OPEN_SHIPPING_BIN = pygameify_image(
 COIN = pygameify_image("", "olin_coin.png", COIN_SIZE, COIN_SIZE)
 
 # SHOP IMAGE
-STAND = pygameify_image("", "shop.png", STAND_WIDTH, STAND_HEIGHT)
+STAND = pygameify_image("stand", "shop.png", STAND_WIDTH, STAND_HEIGHT)
 
 PARSNIP_RECT = pygameify_image(
-    "", "parsniprectangle.png", STORE_RECT_WIDTH, STORE_RECT_HEIGHT
+    "stand", "parsniprectangle.png", STORE_RECT_WIDTH, STORE_RECT_HEIGHT
 )
 CAULIFLOWER_RECT = pygameify_image(
-    "", "cauliflowerrectangle.png", STORE_RECT_WIDTH, STORE_RECT_HEIGHT
+    "stand", "cauliflowerrectangle.png", STORE_RECT_WIDTH, STORE_RECT_HEIGHT
 )
 POTATO_RECT = pygameify_image(
-    "", "potatorectangle.png", STORE_RECT_WIDTH, STORE_RECT_HEIGHT
+    "stand", "potatorectangle.png", STORE_RECT_WIDTH, STORE_RECT_HEIGHT
 )
 
 STORE_ITEMS = [PARSNIP_RECT, CAULIFLOWER_RECT, POTATO_RECT]

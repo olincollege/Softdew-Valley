@@ -3,6 +3,7 @@ File contains class and related methods for the farmer (player character)
 """
 import pygame
 import constants
+from audio import play_sound
 
 # Sizing values come from viewclass file
 FARMER_WIDTH = constants.FARMER_WIDTH
@@ -106,7 +107,7 @@ class Farmer:
 
     def spend_funds(self, amount):
         """
-        Subtract amount funds to the wallet attribute
+        Subtract amount funds to the wallet attribute and play the buying sounds
 
         Args:
             amount: an int representing the amount of money subtracted from the
@@ -118,5 +119,6 @@ class Farmer:
         """
         if self.wallet - amount >= 0:
             self.wallet -= amount
+            play_sound("buying", 1)
             return True
         return False
