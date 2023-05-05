@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-# Softdew Valley
+# SoftDew Valley
 
 ![Image of our game](Stardew_Clone_Game_Photo.PNG)
 
