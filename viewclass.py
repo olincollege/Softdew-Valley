@@ -16,8 +16,11 @@ GROUND_SIZE = constants.GROUND_SIZE
 WIDTH, HEIGHT = constants.WIDTH, constants.HEIGHT
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 INVENTORY_ITEM_SIZE = constants.INVENTORY_ITEM_SIZE
-INVENTORY_FONT = pygame.font.Font("Assets/stardew_font.ttf", 16)
-WALLET_FONT = pygame.font.Font("Assets/stardew_font.ttf", 24)
+INVENTORY_FONT = pygame.font.Font(
+    os.path.join("Assets", "stardew_font.ttf"), 16
+)
+WALLET_FONT = pygame.font.Font(os.path.join("Assets", "stardew_font.ttf"), 24)
+INFO_FONT = pygame.font.Font(os.path.join("Assets", "stardew_font.ttf"), 24)
 HOUSE_SIZE = constants.HOUSE_SIZE
 SHIPPING_BIN_WIDTH, SHIPPING_BIN_HEIGHT = (
     constants.SHIPPING_BIN_WIDTH,
@@ -350,6 +353,21 @@ class View:  # pylint: disable=too-many-instance-attributes
         WIN.blit(draw_text, (text_padding, HEIGHT - text_height - padding))
         WIN.blit(COIN, (padding, HEIGHT - coin_padding - COIN_SIZE))
 
+    def draw_info_text(self):
+        """
+        Blit instructional text to the corner of the screen
+        """
+        info_text = "Type ? for controls"
+        draw_text = INFO_FONT.render(info_text, 1, FONT_COLOR)
+        text_height = draw_text.get_height()
+        text_width = draw_text.get_width()
+        text_padding = 20
+        padding = 13
+        WIN.blit(
+            draw_text,
+            (WIDTH - text_width - text_padding, HEIGHT - text_height - padding),
+        )
+
     def draw_shipping_bin(self):
         """
         Draw the shipping bin at the shipping bin position
@@ -481,6 +499,7 @@ class View:  # pylint: disable=too-many-instance-attributes
         self.draw_inventory_items()
         self.draw_equipped_square()
         self.draw_wallet()
+        self.draw_info_text()
         # draw crop when sold
         if self.model.selling_crop:
             self.draw_selling_crop()
