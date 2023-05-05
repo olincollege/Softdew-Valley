@@ -8,13 +8,10 @@ the necessary number of days. The controls for the game are explained in more
 detail in the usage section. 
 
 ## Installation 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install 
-pygame and pytest. Install pygame dependencies as well to ensure pygame works as intended.
+Use our *requirements.txt* file to install the required libraries 
 
 ```bash
-pip install -U pytest 
-python3 -m pip install -U pygame --user
-sudo apt install build-essential libsdl2-dev python3-pygame-sdl2
+pip install -r requirements.txt 
 ```
 
 ## Usage 
