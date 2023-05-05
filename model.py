@@ -9,6 +9,7 @@ from equipmentclass import (
     Seed,
     ParsnipSeeds,
     CauliflowerSeeds,
+    PotatoSeeds,
     Crop,
 )
 from inventoryclass import Inventory
@@ -46,11 +47,13 @@ class Model:  # pylint: disable=too-many-instance-attributes
         self.hoe = Hoe()
         self.parsnipseeds = ParsnipSeeds()
         self.cauliflowerseeds = CauliflowerSeeds()
+        self.potatoseeds = PotatoSeeds()
         self.inventory = Inventory(
             self.watering_can,
             self.hoe,
             self.parsnipseeds,
             self.cauliflowerseeds,
+            self.potatoseeds,
         )
         self.house = House()
         self._is_till = False
@@ -247,7 +250,7 @@ class Model:  # pylint: disable=too-many-instance-attributes
     def is_till(self):
         """Returns the value of the boolean _is_till"""
         return self._is_till
-    
+
     @property
     def selling_crop(self):
         """Returns the value of the boolean _selling_crop"""

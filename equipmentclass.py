@@ -165,6 +165,22 @@ class CauliflowerSeeds(Seed):
         super().__init__("cauliflower")
 
 
+class PotatoSeeds(Seed):
+    """
+    A subclass of the Seeds class which represents potato seeds
+
+    Attributes:
+        equipped: a boolean that shows whether the item is equipped or not
+        pg_image: the pygame image that represents the image displayed for
+            an item in the inventory
+        seed_type: a string representing what kind of plant is being planted
+            by the seed
+    """
+
+    def __init__(self):
+        super().__init__("potato")
+
+
 class Crop(Equipment):
     """
     Class representing the different crops a player can hold in their inventory
@@ -204,9 +220,19 @@ class ParsnipCrop(Crop):
 
 class CauliflowerCrop(Crop):
     """
-    Class representing sellable parsnip inventory item
+    Class representing sellable cauliflower inventory item
     Has the same attributes as the parent Crop class
     """
 
     def __init__(self):
         super().__init__("cauliflower", 175)
+
+
+class PotatoCrop(Crop):
+    """
+    Class representing sellable potato inventory item
+    Has the same attributes as the parent Crop class
+    """
+
+    def __init__(self):
+        super().__init__("potato", 80)
