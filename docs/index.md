@@ -37,7 +37,7 @@ Our [Github Page](https://github.com/olincollege/Softdew-Valley): Here you can f
 
 ## Video Demo 
 
-[Our Video!](https://youtu.be/FxuAW6qw4oE)
+[Our Video!](https://youtu.be/dXMlk7HN2CU)
 
 
 ## Credits 
