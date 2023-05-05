@@ -1,7 +1,8 @@
 """
 Runs the main game loop
 """
-
+# A pygame game loop by nature requires a branch for every action
+# pylint: disable=too-many-branches
 import pygame
 import audio
 import houseclass
