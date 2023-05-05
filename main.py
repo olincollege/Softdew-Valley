@@ -41,6 +41,7 @@ def main():
     game_running = True
     audio.play_music()
     pygame.display.set_caption("Super Swag Stardew")
+    control_screen = False
     while game_running:
         clock.tick(FPS)
         for event in pygame.event.get():
@@ -49,6 +50,10 @@ def main():
             if event.type == audio.MUSIC_END:
                 audio.play_music()
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    print("you hit ?")
+                    control_screen = not control_screen
+                    print(control_screen)
                 if event.key == pygame.K_SPACE:
                     model.action()
                 for i in range(1, 9):
@@ -68,11 +73,11 @@ def main():
                 pygame.time.delay(300)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                control.click_inventory(mouse_pos)
+                control.click_iinventory(mouse_pos)
         keys_pressed = pygame.key.get_pressed()
         control.move_farmer(keys_pressed)
         model.house.enter_bed(model.farmer)
-        display.draw_window()
+        display.draw_window(control_screen)
 
     pygame.quit()
 

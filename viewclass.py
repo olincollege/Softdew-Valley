@@ -22,6 +22,8 @@ SHIPPING_BIN_WIDTH, SHIPPING_BIN_HEIGHT = (
     constants.SHIPPING_BIN_WIDTH,
     constants.SHIPPING_BIN_HEIGHT,
 )
+CONTROL_WIDTH = constants.CONTROL_WIDTH
+CONTROL_HEIGHT = constants.CONTROL_HEIGHT
 
 # Setting color values
 WHITE = (255, 255, 255)
@@ -55,6 +57,11 @@ def pygameify_image(subfolder, image_name, width_scale, height_scale):
         (width_scale, height_scale),
     ).convert_alpha()
 
+
+# CONTROL SCREEN
+CONTROL_SCREEN = pygameify_image(
+    "", "controls_screen.png", CONTROL_WIDTH, CONTROL_HEIGHT
+)
 
 # FARMER SPRITES
 FRONT_FARMER = pygameify_image(
@@ -299,10 +306,14 @@ class View:
         # draw shipping bin
         WIN.blit(bin_sprite, (BIN_START_W, BIN_START_H))
 
-    def draw_window(self):
+    def draw_window(self, control_screen):
         """
         Draws the entire pygame window every time it is called
         (ground, plants, house, farmer, inventory, and inventory text)
+
+        Args:
+            control_screen: A boolean that determines whether the control
+            screen graphic should be blitted or not
         """
         WIN.fill(WHITE)
 
@@ -379,6 +390,17 @@ class View:
             self.model.stop_watering()
             self.model.stop_tilling()
 
+        # draw control screen
+        if control_screen:
+            print("it's true")
+            WIN.blit(
+                CONTROL_SCREEN,
+                (
+                    WIDTH // 2 - CONTROL_WIDTH // 2,
+                    HEIGHT // 2 - CONTROL_HEIGHT // 2,
+                ),
+            )
+
     def day_change(self):
         """
         Fill the screen with black when a day passes
@@ -387,3 +409,14 @@ class View:
 
         pygame.display.update()
         # print("called day change")
+
+    def control_screen(self):
+        """
+        Blit the control screen when triggered
+        """
+        WIN.fill(WHITE)
+        WIN.blit(
+            CONTROL_SCREEN,
+            (WIDTH // 2 - CONTROL_WIDTH // 2, HEIGHT // 2 - CONTROL_HEIGHT / 2),
+        )
+        print("it's too fast")
