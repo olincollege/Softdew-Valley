@@ -27,7 +27,17 @@ CONTROL_WIDTH = constants.CONTROL_WIDTH
 CONTROL_HEIGHT = constants.CONTROL_HEIGHT
 
 COIN_SIZE = constants.COIN_SIZE
+STAND_WIDTH, STAND_HEIGHT = constants.STAND_WIDTH, constants.STAND_HEIGHT
+STAND_START_WIDTH = constants.STAND_START_WIDTH
+STAND_START_HEIGHT = constants.STAND_START_HEIGHT
 
+STORE_RECT_WIDTH, STORE_RECT_HEIGHT = (
+    constants.STORE_RECT_WIDTH,
+    constants.STORE_RECT_HEIGHT,
+)
+STORE_RECT_START_WIDTH = constants.STORE_RECT_START_WIDTH
+STORE_RECT_START_HEIGHT = constants.STORE_RECT_START_HEIGHT
+STORE_RECT_PADDING = constants.STORE_RECT_PADDING
 # Setting color values
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -176,6 +186,21 @@ OPEN_SHIPPING_BIN = pygameify_image(
 # COIN IMAGE
 COIN = pygameify_image("", "olin_coin.png", COIN_SIZE, COIN_SIZE)
 
+# SHOP IMAGE
+STAND = pygameify_image("", "shop.png", STAND_WIDTH, STAND_HEIGHT)
+
+PARSNIP_RECT = pygameify_image(
+    "", "parsniprectangle.png", STORE_RECT_WIDTH, STORE_RECT_HEIGHT
+)
+CAULIFLOWER_RECT = pygameify_image(
+    "", "cauliflowerrectangle.png", STORE_RECT_WIDTH, STORE_RECT_HEIGHT
+)
+POTATO_RECT = pygameify_image(
+    "", "potatorectangle.png", STORE_RECT_WIDTH, STORE_RECT_HEIGHT
+)
+
+STORE_ITEMS = [PARSNIP_RECT, CAULIFLOWER_RECT, POTATO_RECT]
+
 
 class View:
     """
@@ -195,6 +220,7 @@ class View:
         self.farmer = self.model.farmer
         self.ground = self.model.ground
         self.inventory = self.model.inventory
+        self.stand = self.model.stand
         self.farmer_image = None
         self.type_ground = None
         self.plant_image = None
@@ -248,6 +274,20 @@ class View:
             self.type_ground = TILLED_GROUND
         else:
             self.type_ground = ground_map[row][col]
+
+    def draw_stand(self):
+        WIN.blit(STAND, (STAND_START_WIDTH, STAND_START_HEIGHT))
+
+    def draw_stand_items(self):
+        for idx, item in enumerate(self.stand.stock_list):
+            # blit rectangle at idx * whatever for height
+            WIN.blit(
+                STORE_ITEMS[idx],
+                (
+                    STORE_RECT_START_WIDTH,
+                    STORE_RECT_START_HEIGHT + STORE_RECT_HEIGHT * idx,
+                ),
+            )
 
     def draw_inventory_items(self):
         """
@@ -401,6 +441,9 @@ class View:
         # draw shipping bin
         self.draw_shipping_bin()
 
+        # draw stand
+        self.draw_stand()
+
         # draw farmer
         self.draw_farmer()
 
@@ -429,7 +472,8 @@ class View:
                     HEIGHT // 2 - CONTROL_HEIGHT // 2,
                 ),
             )
-
+        if self.model.in_store:
+            self.draw_stand_items()
         pygame.display.update()
 
         if self.model.is_water or self.model.is_till or self.model.selling_crop:

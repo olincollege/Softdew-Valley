@@ -17,6 +17,7 @@ from plants import Plants
 from houseclass import House
 import constants
 from audio import play_sound
+from standclass import Stand
 
 
 class Model:  # pylint: disable=too-many-instance-attributes
@@ -46,6 +47,8 @@ class Model:  # pylint: disable=too-many-instance-attributes
         self.watering_can = WateringCan()
         self.hoe = Hoe()
         self.parsnipseeds = ParsnipSeeds()
+        for _ in range(14):
+            self.parsnipseeds.add_item()
         self.cauliflowerseeds = CauliflowerSeeds()
         self.potatoseeds = PotatoSeeds()
         self.inventory = Inventory(
@@ -56,10 +59,12 @@ class Model:  # pylint: disable=too-many-instance-attributes
             self.potatoseeds,
         )
         self.house = House()
+        self.stand = Stand()
         self._is_till = False
         self._is_water = False
         self._selling_crop = False
         self._display_crop = None
+        self._in_store = False
 
     def day_passes(self):
         """
@@ -127,7 +132,14 @@ class Model:  # pylint: disable=too-many-instance-attributes
         if isinstance(equipped_item, Hoe):
             self.till_ground()
         if isinstance(equipped_item, Seed):
-            self.plant_seed(equipped_item.seed_type)
+            plant_success = self.plant_seed(equipped_item.seed_type)
+            if plant_success:
+                equipped_item.decrease_item(1)
+                if equipped_item.num_item <= 1:
+                    slot = self.inventory.get_equipped_item_slot()
+                    self.inventory.remove_item(slot)
+                else:
+                    equipped_item.decrease_item(1)
         if isinstance(equipped_item, Crop):
             self.sell_crop(equipped_item)
 
@@ -169,6 +181,9 @@ class Model:  # pylint: disable=too-many-instance-attributes
 
         Args:
             species: a string representing the type of crop seed being planted
+
+        Returns:
+            Returns True if a seed was planted, and False if not
         """
         if self.action_on_map():
             action_pos = self.get_action_position()
@@ -181,6 +196,8 @@ class Model:  # pylint: disable=too-many-instance-attributes
                 print("Woo! You planted a seed <3")
                 play_sound("planting", 1)
                 self.ground.plant_crop(action_pos[0], action_pos[1], plant)
+                return True
+        return False
 
     def harvest_crop(self):
         """
@@ -204,7 +221,7 @@ class Model:  # pylint: disable=too-many-instance-attributes
                 found_item = False
                 for idx, item in enumerate(self.inventory.inventory):
                     if type(item) is type(square.crop):
-                        self.inventory.get_item(idx).add_crop()
+                        self.inventory.get_item(idx).add_item()
                         found_item = True
                 if not found_item:
                     slot = self.inventory.first_empty_slot()
@@ -228,6 +245,53 @@ class Model:  # pylint: disable=too-many-instance-attributes
                 play_sound("watering", 2)
                 square.plant_water()
                 self._is_water = True
+
+    def enter_store(self):
+        """
+        If the farmer character is close enough to the stand, stop moving the
+        the farmer and mark the store as entered
+        """
+        if (
+            self.farmer.position[0] in constants.STAND_INTERACTION_SQUARES_X
+            and self.farmer.position[1] in constants.STAND_INTERACTION_SQUARES_Y
+        ):
+            print("At the store")
+            self._in_store = True
+            self.farmer.vel = 0
+
+    def leave_store(self):
+        """
+        Make it so the farmer can move and mark the store as left
+        """
+        print("Left the store")
+        self._in_store = False
+        self.farmer.vel = 5
+
+    def buy_item(self, item):
+        """
+        If the player is in the store menu, given an item, buy that item
+        Decrease farmer's wallet by item's price
+        Add item to inventory by either adding it to a slot or increasing the
+        num_item of the same class
+
+        Args:
+            item: and instance of StandItem that represents the item being
+            bought
+        """
+        if self._in_store:
+            if item is not None:
+                item_added = False
+                buy_success = self.farmer.spend_funds(item.price)
+                if buy_success:
+                    inven_item = item.inventory_item
+                    for all_items in self.inventory.inventory:
+                        if type(all_items) is type(inven_item):
+                            all_items.add_item()
+                            item_added = True
+                    if not item_added:
+                        slot = self.inventory.first_empty_slot()
+                        print(slot)
+                        self.inventory.add_item(slot, inven_item)
 
     # These are for display purposes, it tells the view class to pause while
     # the action is occurring
@@ -260,5 +324,10 @@ class Model:  # pylint: disable=too-many-instance-attributes
 
     @property
     def display_crop(self):
-        """Return that crop that should be displayed"""
+        """Return the crop that should be displayed"""
         return self._display_crop
+
+    @property
+    def in_store(self):
+        """Return the value of a boolen _in_store"""
+        return self._in_store

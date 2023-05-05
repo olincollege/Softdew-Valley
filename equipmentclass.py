@@ -60,6 +60,12 @@ class Equipment:
         """
         self._num_item -= num
 
+    def add_item(self):
+        """
+        Adds one item to num_item
+        """
+        self._num_item += 1
+
     @property
     def equipped(self):
         """
@@ -131,6 +137,7 @@ class Seed(Equipment):
         super().__init__()
         self.seed_type = seed_type
         self.update_image("seeds", f"{seed_type}_seeds.png")
+        self._num_item = 1
 
 
 class ParsnipSeeds(Seed):
@@ -200,12 +207,6 @@ class Crop(Equipment):
         self.update_image("crops", f"{crop_type}.png")
         self.price = price
         self._num_item = 1
-
-    def add_crop(self):
-        """
-        Adds one crop to num_item
-        """
-        self._num_item += 1
 
 
 class ParsnipCrop(Crop):

@@ -61,7 +61,7 @@ parsnip_crop = ParsnipCrop()
 caul_crop = CauliflowerCrop()
 one_crop = ParsnipCrop()
 two_crops = ParsnipCrop()
-two_crops.add_crop()
+two_crops.add_item()
 
 get_action_position_cases = [
     # returns correct action square when farmer is facing down
@@ -135,6 +135,13 @@ sell_crop_position_cases = [
     (2, 2, 35),
     # When farmer is not in correct position, wallet doesn't update
     (5, 5, 0),
+]
+
+enter_store_cases = [
+    # Able to access store
+    ([10, 10], False),
+    # Not able to access store
+    ([6, 1], True),
 ]
 
 
@@ -257,7 +264,7 @@ def test_harvest_crop(position, bool_val):
     # if harvested, ground square should be a string
     assert isinstance(square, str) == bool_val
     # if harvested slot four in inventory should be a crop instance
-    assert isinstance(test_inventory.inventory[4], Crop) == bool_val
+    assert isinstance(test_inventory.inventory[5], Crop) == bool_val
 
 
 @pytest.mark.parametrize("crop,wallet_val", sell_crop_wallet_cases)
@@ -313,3 +320,23 @@ def test_sell_crop_position(posx, posy, wallet_val):
     test_model.sell_crop(parsnip_crop)
     assert test_farmer.wallet == wallet_val
     test_farmer.wallet = 0  # reset val
+
+
+@pytest.mark.parametrize("farmer_pos,in_store", enter_store_cases)
+def test_enter_store(farmer_pos, in_store):
+    """
+    This function checks whether the farmer can enter the store at a certain position
+
+    Args:
+        farmer_pos: a tuple of two ints representing the x, y square position
+        of the farmer
+        in_store: a boolean that is True if the farmer can enter the store
+    """
+    test_farmer.set_position(farmer_pos[0], farmer_pos[1])
+    test_model.enter_store()
+    assert test_model.in_store == in_store
+
+
+def test_buy_item(item):
+    test_model.farmer.add_funds(1000)  # starting money
+    test_model.buy_item(item)

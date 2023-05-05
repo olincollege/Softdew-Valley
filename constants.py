@@ -22,3 +22,28 @@ CONTROL_WIDTH, CONTROL_HEIGHT = 768, 435
 
 # Setting the size of coin image
 COIN_SIZE = 30
+
+STAND_START_WIDTH = GROUND_SIZE * 5
+STAND_START_HEIGHT = 10
+STAND_WIDTH, STAND_HEIGHT = 150, 150
+STAND_INTERACTION_SQUARES_X = [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+]  # cols you can interact with stand
+STAND_INTERACTION_SQUARES_Y = [
+    0,
+    1,
+    2,
+    3,
+    4,
+]  # rows you can interact with stand
+
+# Store retangles
+STORE_RECT_WIDTH, STORE_RECT_HEIGHT = 800, 100
+STORE_RECT_START_WIDTH = (WIDTH - STORE_RECT_WIDTH) // 2
+STORE_RECT_START_HEIGHT = 20
+STORE_RECT_PADDING = 50

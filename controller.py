@@ -4,8 +4,6 @@ Contains the controller class and all related methods for user interaction
 import pygame
 import constants
 
-VEL = 5  # farmer movement speed
-
 
 class Controller:
     """
@@ -48,44 +46,49 @@ class Controller:
         if keys[pygame.K_a]:  # pylint: disable=no-member
             # LEFT
             if self.farmer.farmer_rect.y > constants.GROUND_SIZE:
-                if self.farmer.farmer_rect.x - VEL > 0:
-                    self.farmer.farmer_rect.x -= VEL
+                if self.farmer.farmer_rect.x - self.farmer.vel > 0:
+                    self.farmer.farmer_rect.x -= self.farmer.vel
                     self.farmer.set_direction("left")
             else:
                 if (
-                    self.farmer.farmer_rect.x - VEL
+                    self.farmer.farmer_rect.x - self.farmer.vel
                     > constants.SHIPPING_BIN_WIDTH
                 ):
-                    self.farmer.farmer_rect.x -= VEL
+                    self.farmer.farmer_rect.x -= self.farmer.vel
                     self.farmer.set_direction("left")
         if (
             keys[pygame.K_d]  # pylint: disable=no-member
             and self.farmer.farmer_rect.x
-            - VEL
+            - self.farmer.vel
             + self.farmer.farmer_rect.width
             + 10
             < constants.WIDTH
         ):  # RIGHT
-            self.farmer.farmer_rect.x += VEL
+            self.farmer.farmer_rect.x += self.farmer.vel
             self.farmer.set_direction("right")
         if keys[pygame.K_w]:  # pylint: disable=no-member
             # UP
             if self.farmer.farmer_rect.x > constants.SHIPPING_BIN_WIDTH:
-                if self.farmer.farmer_rect.y - VEL > 0:
-                    self.farmer.farmer_rect.y -= VEL
+                if self.farmer.farmer_rect.y - self.farmer.vel > 0:
+                    self.farmer.farmer_rect.y -= self.farmer.vel
                     self.farmer.set_direction("up")
             else:
-                if self.farmer.farmer_rect.y - VEL > constants.GROUND_SIZE:
-                    self.farmer.farmer_rect.y -= VEL
+                if (
+                    self.farmer.farmer_rect.y - self.farmer.vel
+                    > constants.GROUND_SIZE
+                ):
+                    self.farmer.farmer_rect.y -= self.farmer.vel
                     self.farmer.set_direction("up")
 
         if (
             keys[pygame.K_s]  # pylint: disable=no-member
-            and self.farmer.farmer_rect.y + VEL + self.farmer.farmer_rect.height
+            and self.farmer.farmer_rect.y
+            + self.farmer.vel
+            + self.farmer.farmer_rect.height
             < constants.HEIGHT
             # and house.collide_wall(self.farmer.farmer_rect.y + VEL) != "bottom"
         ):  # DOWN
-            self.farmer.farmer_rect.y += VEL
+            self.farmer.farmer_rect.y += self.farmer.vel
             self.farmer.set_direction("down")
         self.update_position()
 
@@ -132,7 +135,7 @@ class Controller:
         if (
             mouse_pos[0] > constants.INVENTORY_START_WIDTH
             and mouse_pos[0]
-            < constants.INVENTORY_START_WIDTH + 7 * constants.GROUND_SIZE
+            < constants.INVENTORY_START_WIDTH + 8 * constants.GROUND_SIZE
         ):
             if (
                 mouse_pos[1] > constants.INVENTORY_START_HEIGHT
@@ -140,6 +143,27 @@ class Controller:
                 < constants.INVENTORY_START_HEIGHT + constants.GROUND_SIZE
             ):
                 self.select_inventory(mouse_pos)
+
+    def click_store(self, mouse_pos, stand):
+        # for item in stock
+        # if idx * whatever for height and width are within range
+        # returns the item, which buy_item in model can use
+        for idx, item in enumerate(stand.stock_list):
+            if (
+                constants.STORE_RECT_START_WIDTH
+                < mouse_pos[0]
+                < constants.STORE_RECT_WIDTH + constants.STORE_RECT_START_WIDTH
+            ):
+                start_height = (
+                    constants.STORE_RECT_START_HEIGHT
+                    + constants.STORE_RECT_HEIGHT * idx
+                )
+                if (
+                    start_height
+                    < mouse_pos[1]
+                    < start_height + constants.STORE_RECT_HEIGHT
+                ):
+                    return item
 
     def perform_action(self):
         """

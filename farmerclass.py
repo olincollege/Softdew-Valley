@@ -7,7 +7,6 @@ import constants
 # Sizing values come from viewclass file
 FARMER_WIDTH = constants.FARMER_WIDTH
 FARMER_HEIGHT = constants.FARMER_HEIGHT
-VEL = 5
 WIDTH, HEIGHT = constants.WIDTH, constants.HEIGHT
 SQUARE_SIZE = constants.GROUND_SIZE
 FARMER_WIDTH, FARMER_HEIGHT = (
@@ -21,8 +20,13 @@ class Farmer:
     Class representing the farmer playable character
 
     Attributes:
+        start_square_x: an int representing the x square the farmer starts on
+        start_square_y: an int representing the y square the farmer starts on
+        farmer_rect: a pygame rectangle that represents the farmer
         direction: a String representing which direction the farmer is facing
         position: A tuple representing the map position of the farmer (row, col)
+        wallet: An int representing how much money the farmer has
+        vel: An int representing the speed of the farmer
     """
 
     def __init__(self):
@@ -38,6 +42,7 @@ class Farmer:
         # position is the (x, y) or (row, col) position of the farmer on the map
         self._position = (self.start_square_x, self.start_square_y)
         self.wallet = 0
+        self.vel = 5
 
     def set_position(self, x_val, y_val):
         """
@@ -98,7 +103,17 @@ class Farmer:
 
     def spend_funds(self, amount):
         """
-        Subtract amount funds from the wallet attribute
-        Return True if that transaction is successful, return False if the
-        farmer does not have enough money and do not subtract funds
+        Subtract amount funds to the wallet attribute
+
+        Args:
+            amount: an int representing the amount of money subtracted from the
+            wallet
+
+        Returns:
+            Returns True if the wallet has enough money to subtract from, false
+            otherwise
         """
+        if self.wallet - amount >= 0:
+            self.wallet -= amount
+            return True
+        return False

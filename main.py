@@ -72,6 +72,11 @@ def main():
                             for j in range(model.ground.num_cols):
                                 if isinstance(model.ground.land[i][j], Plants):
                                     model.ground.land[i][j].water = True
+                if event.key == pygame.K_e:
+                    if model.in_store:
+                        model.leave_store()
+                    else:
+                        model.enter_store()
             if event.type == houseclass.ENTER_HOUSE:
                 pass
             if event.type == houseclass.ENTER_BED:
@@ -81,6 +86,8 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 control.click_inventory(mouse_pos)
+                store_item = control.click_store(mouse_pos, model.stand)
+                model.buy_item(store_item)
         keys_pressed = pygame.key.get_pressed()
         control.move_farmer(keys_pressed)
         model.house.enter_bed(model.farmer)
