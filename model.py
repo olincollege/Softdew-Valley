@@ -55,6 +55,7 @@ class Model:  # pylint: disable=too-many-instance-attributes
         self.house = House()
         self._is_till = False
         self._is_water = False
+        self._selling_crop = False
 
     def day_passes(self):
         """
@@ -144,6 +145,7 @@ class Model:  # pylint: disable=too-many-instance-attributes
             else:
                 crop.decrease_item(1)
             self.farmer.add_funds(crop.price)
+            self._selling_crop = True
 
     def till_ground(self):
         """
@@ -232,6 +234,10 @@ class Model:  # pylint: disable=too-many-instance-attributes
         """Sets _is_till to False"""
         self._is_till = False
 
+    def stop_selling(self):
+        """Sets _selling_crop to False"""
+        self._selling_crop = False
+
     @property
     def is_water(self):
         """Returns the value of the boolean _is_water"""
@@ -241,3 +247,8 @@ class Model:  # pylint: disable=too-many-instance-attributes
     def is_till(self):
         """Returns the value of the boolean _is_till"""
         return self._is_till
+    
+    @property
+    def selling_crop(self):
+        """Returns the value of the boolean _selling_crop"""
+        return self._selling_crop

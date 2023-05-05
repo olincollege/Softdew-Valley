@@ -22,6 +22,8 @@ SHIPPING_BIN_WIDTH, SHIPPING_BIN_HEIGHT = (
     constants.SHIPPING_BIN_WIDTH,
     constants.SHIPPING_BIN_HEIGHT,
 )
+CONTROL_WIDTH = constants.CONTROL_WIDTH
+CONTROL_HEIGHT = constants.CONTROL_HEIGHT
 
 # Setting color values
 WHITE = (255, 255, 255)
@@ -55,6 +57,11 @@ def pygameify_image(subfolder, image_name, width_scale, height_scale):
         (width_scale, height_scale),
     ).convert_alpha()
 
+
+# CONTROL SCREEN
+CONTROL_SCREEN = pygameify_image(
+    "", "controls_screen.png", CONTROL_WIDTH, CONTROL_HEIGHT
+)
 
 # FARMER SPRITES
 FRONT_FARMER = pygameify_image(
@@ -299,14 +306,13 @@ class View:
         # draw shipping bin
         WIN.blit(bin_sprite, (BIN_START_W, BIN_START_H))
 
-    def draw_window(self):
-        """
-        Draws the entire pygame window every time it is called
-        (ground, plants, house, farmer, inventory, and inventory text)
-        """
-        WIN.fill(WHITE)
+    def draw_selling_crop(self):
+        crop = self.inventory.get_equipped_item()
+        WIN.blit(crop.pg_image, (BIN_START_W, BIN_START_H))
+        pygame.time.delay(250)
+        self.model.stop_selling()
 
-        # draw ground and plants
+    def draw_ground_plants(self):
         rows = self.ground.num_rows
         cols = self.ground.num_cols
         for j in range(cols):
@@ -331,13 +337,8 @@ class View:
                         self.plant_image,
                         ((i) * GROUND_SIZE, (j) * GROUND_SIZE),
                     )
-        # draw house
-        WIN.blit(HOUSE_SPRITE, (WIDTH - HOUSE_SIZE, 0))
 
-        # draw shipping bin
-        self.draw_shipping_bin()
-
-        # draw farmer
+    def draw_farmer(self):
         self.farmer_direction()
         if self.farmer_image in (WATER_LEFT_FARMER, TILL_LEFT_FARMER):
             WIN.blit(
@@ -361,6 +362,33 @@ class View:
                 (self.farmer.farmer_rect.x, self.farmer.farmer_rect.y),
             )
 
+    def draw_window(self, control_screen):
+        """
+        Draws the entire pygame window every time it is called
+        (ground, plants, house, farmer, inventory, and inventory text)
+
+        Args:
+            control_screen: A boolean that determines whether the control
+            screen graphic should be blitted or not
+        """
+        WIN.fill(WHITE)
+
+        # draw ground and plants
+        self.draw_ground_plants()
+
+        # draw house
+        WIN.blit(HOUSE_SPRITE, (WIDTH - HOUSE_SIZE, 0))
+
+        # draw shipping bin
+        self.draw_shipping_bin()
+
+        # draw crop when sold
+        if self.model.selling_crop:
+            self.draw_selling_crop()
+
+        # draw farmer
+        self.draw_farmer()
+
         # draw inventory
         for i in range(len(self.inventory.inventory)):
             WIN.blit(
@@ -373,7 +401,19 @@ class View:
         self.draw_inventory_items()
         self.draw_equipped_square()
         self.draw_wallet()
+
+        # draw control screen
+        if control_screen:
+            print("it's true")
+            WIN.blit(
+                CONTROL_SCREEN,
+                (
+                    WIDTH // 2 - CONTROL_WIDTH // 2,
+                    HEIGHT // 2 - CONTROL_HEIGHT // 2,
+                ),
+            )
         pygame.display.update()
+
         if self.model.is_water or self.model.is_till:
             pygame.time.delay(250)
             self.model.stop_watering()

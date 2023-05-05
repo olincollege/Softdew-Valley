@@ -16,3 +16,6 @@ INVENTORY_START_HEIGHT = HEIGHT - GROUND_SIZE * 2
 
 # Setting shipping bin starting positions
 BIN_START_W, BIN_START_H = 20, 10
+
+# Setting the size of control screen
+CONTROL_WIDTH, CONTROL_HEIGHT = 768, 435
