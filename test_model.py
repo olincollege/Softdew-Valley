@@ -7,15 +7,19 @@ import pygame
 
 # Needs these two lines to not return a pygame error about display modes
 # Need to be above import statements because that is where error is occurring
-pygame.init()
+pygame.init()  # pylint: disable=no-member
 pygame.display.set_mode((800, 600))
 from model import Model  # pylint: disable=wrong-import-position
 from plants import Plants  # pylint: disable=wrong-import-position
-from equipmentclass import (
+from equipmentclass import (  # pylint: disable=wrong-import-position
     Crop,
     ParsnipCrop,
     CauliflowerCrop,
-)  # pylint: disable=wrong-import-position
+)
+from standclass import (  # pylint: disable=wrong-import-position
+    SellingParsnipSeeds,
+    SellingCauliflowerSeeds,
+)
 
 test_model = Model()
 test_ground = test_model.ground
@@ -67,11 +71,11 @@ get_action_position_cases = [
     # returns correct action square when farmer is facing down
     ([4, 5], "down", (4, 6)),
     # returns correct action square when farmer is facing right
-    ([6, 7], "right", (6, 8)),
+    ([6, 7], "right", (7, 7)),
     # returns correct action square when farmer is facing up
-    ([5, 7], "up", (5, 5)),
+    ([5, 7], "up", (5, 6)),
     # returns correct action square when farmer is facing left
-    ([2, 5], "left", (2, 4)),
+    ([2, 5], "left", (1, 5)),
 ]
 
 till_ground_cases = [
@@ -144,6 +148,14 @@ enter_store_cases = [
     ([6, 1], True),
 ]
 
+buy_item_wallet_cases = [
+    # Enough money to buy a parsnip
+    (SellingParsnipSeeds(), 20),
+    # Don't have enough money to buy a cauliflower
+    # Wallet shouldn't change
+    (SellingCauliflowerSeeds(), 40),
+]
+
 
 @pytest.mark.parametrize(
     "farmer_pos,farmer_dir,action_pos", get_action_position_cases
@@ -162,7 +174,7 @@ def test_get_action_position(farmer_pos, farmer_dir, action_pos):
     """
     test_farmer.set_position(farmer_pos[0], farmer_pos[1])
     test_farmer.set_direction(farmer_dir)
-    return test_model.get_action_position() == action_pos
+    assert test_model.get_action_position() == action_pos
 
 
 @pytest.mark.parametrize("position,bool_val", till_ground_cases)
@@ -264,7 +276,7 @@ def test_harvest_crop(position, bool_val):
     # if harvested, ground square should be a string
     assert isinstance(square, str) == bool_val
     # if harvested slot four in inventory should be a crop instance
-    assert isinstance(test_inventory.inventory[5], Crop) == bool_val
+    assert isinstance(test_inventory.inventory[4], Crop) == bool_val
 
 
 @pytest.mark.parametrize("crop,wallet_val", sell_crop_wallet_cases)
@@ -281,7 +293,8 @@ def test_sell_crop_wallet(crop, wallet_val):
     crop.equip()
     test_model.sell_crop(crop)
     assert test_farmer.wallet == wallet_val
-    test_farmer.wallet = 0  # reset val
+    # reset val
+    test_farmer.wallet = 0
 
 
 @pytest.mark.parametrize("crop,bool_val,num_items", sell_crop_inventory_cases)
@@ -301,7 +314,8 @@ def test_sell_crop_inventory(crop, bool_val, num_items):
     assert (test_inventory.get_item(4) == " ") == bool_val
     if not bool_val:
         assert crop.num_item == num_items
-    test_farmer.wallet = 0  # reset val
+    # reset val
+    test_farmer.wallet = 0
 
 
 @pytest.mark.parametrize("posx,posy,wallet_val", sell_crop_position_cases)
@@ -319,7 +333,8 @@ def test_sell_crop_position(posx, posy, wallet_val):
     parsnip_crop.equip()
     test_model.sell_crop(parsnip_crop)
     assert test_farmer.wallet == wallet_val
-    test_farmer.wallet = 0  # reset val
+    # reset val
+    test_farmer.wallet = 0
 
 
 @pytest.mark.parametrize("farmer_pos,in_store", enter_store_cases)
@@ -337,6 +352,31 @@ def test_enter_store(farmer_pos, in_store):
     assert test_model.in_store == in_store
 
 
-def test_buy_item(item):
-    test_model.farmer.add_funds(1000)  # starting money
+@pytest.mark.parametrize("item,funds", buy_item_wallet_cases)
+def test_buy_item_wallet(item, funds):
+    """
+    Check that when buying an item that farmer wallet updates correctly
+
+    Args:
+        item: An instance of the StandItem Class that represents the item being bough
+        funds: An int representing what the farmer wallet should
+    """
+    test_model._in_store = True  # pylint: disable=protected-access
+    # starting money
+    test_model.farmer.wallet = 40
     test_model.buy_item(item)
+    assert test_model.farmer.wallet == funds  # subtracts from wallet
+
+
+def test_buy_item_inventory():
+    """
+    Checks that the inventory updates correctly when an item is bought
+    """
+    second_test_model = Model()
+    second_test_inventory = second_test_model.inventory
+    second_test_model._in_store = True  # pylint: disable=protected-access
+    par_seeds = SellingParsnipSeeds()
+    second_test_model.farmer.add_funds(100)
+    second_test_model.buy_item(par_seeds)
+    print(second_test_model.farmer.wallet)
+    assert second_test_inventory.get_item(2).num_item == 16

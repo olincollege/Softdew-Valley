@@ -6,7 +6,7 @@ import pygame
 
 # Needs these two lines to not return a pygame error about display modes
 # Need to be above import statements because that is where error is occurring
-pygame.init()  # pylint: disable=wrong-import-position
+pygame.init()  # pylint: disable=wrong-import-position,no-member
 pygame.display.set_mode((800, 600))  # pylint: disable=wrong-import-position
 from inventoryclass import Inventory
 from equipmentclass import (
@@ -15,7 +15,6 @@ from equipmentclass import (
     ParsnipSeeds,
     CauliflowerSeeds,
     ParsnipCrop,
-    PotatoSeeds,
 )
 from farmerclass import Farmer
 from groundclass import Ground
@@ -26,9 +25,8 @@ test_watering_can = WateringCan()
 test_hoe = Hoe()
 test_par_seeds = ParsnipSeeds()
 test_caul_seeds = CauliflowerSeeds()
-test_pot_seeds = PotatoSeeds()
 test_inventory = Inventory(
-    test_watering_can, test_hoe, test_par_seeds, test_caul_seeds, test_pot_seeds
+    test_watering_can, test_hoe, test_par_seeds, test_caul_seeds
 )
 
 equip_item_cases = [
@@ -76,7 +74,7 @@ add_item_cases = [
 
 first_empty_slot_cases = [
     # no additional items
-    (0, 5, True),
+    (0, 4, True),
     (0, 0, False),
     # several additional items
     (2, 6, True),
@@ -177,8 +175,7 @@ def test_first_empty_slot(iterations, slot, bool_val):
     hoe = Hoe()
     par_seeds = ParsnipSeeds()
     caul_seeds = CauliflowerSeeds()
-    pot_seeds = PotatoSeeds()
-    inventory = Inventory(watering_can, hoe, par_seeds, caul_seeds, pot_seeds)
+    inventory = Inventory(watering_can, hoe, par_seeds, caul_seeds)
     for i in range(iterations):
         inventory.add_item(i + 4, ParsnipCrop())
     if slot is not None:
@@ -195,8 +192,7 @@ def test_remove_item():
     hoe = Hoe()
     par_seeds = ParsnipSeeds()
     caul_seeds = CauliflowerSeeds()
-    pot_seeds = PotatoSeeds()
-    inventory = Inventory(watering_can, hoe, par_seeds, caul_seeds, pot_seeds)
+    inventory = Inventory(watering_can, hoe, par_seeds, caul_seeds)
     inventory.remove_item(0)
     assert inventory.inventory[0] == " "
     inventory.remove_item(1)

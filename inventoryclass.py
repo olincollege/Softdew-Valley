@@ -16,9 +16,7 @@ class Inventory:
 
     empty_slot = " "
 
-    def __init__(
-        self, watering_can, hoe, parsnipseeds, cauliflowerseeds, potatoseeds
-    ):
+    def __init__(self, watering_can, hoe, parsnipseeds, cauliflowerseeds):
         """
         Initializes _inventory attribute so that it starts as a list of empty
         strings to represent the initial state of the inventory being empty
@@ -29,7 +27,6 @@ class Inventory:
         self._inventory[1] = hoe
         self._inventory[2] = parsnipseeds
         self._inventory[3] = cauliflowerseeds
-        self._inventory[4] = potatoseeds
 
     def equip_item(self, slot):
         """

@@ -18,7 +18,7 @@ class Controller:
 
     def __init__(self, farmer, inventory):
         """
-        Initialize farmer and inventory.
+        Initialize farmer and inventory that the controller uses
         """
         self.farmer = farmer
         self.inventory = inventory
@@ -48,10 +48,13 @@ class Controller:
         """
         if keys[pygame.K_a]:  # pylint: disable=no-member
             # LEFT
+            # Checks that the farmer is not above the shipping bin
             if self.farmer.farmer_rect.y > constants.GROUND_SIZE:
+                # Checks that the farmer is not leaving the window
                 if self.farmer.farmer_rect.x - self.farmer.vel > 0:
                     self.farmer.farmer_rect.x -= self.farmer.vel
                     self.farmer.set_direction("left")
+            # If the farmer is above the shipping bin, they cannot go past it
             else:
                 if (
                     self.farmer.farmer_rect.x - self.farmer.vel
@@ -59,6 +62,7 @@ class Controller:
                 ):
                     self.farmer.farmer_rect.x -= self.farmer.vel
                     self.farmer.set_direction("left")
+        # Checks that the farmer is not leaving the window
         if (
             keys[pygame.K_d]  # pylint: disable=no-member
             and self.farmer.farmer_rect.x
@@ -71,10 +75,14 @@ class Controller:
             self.farmer.set_direction("right")
         if keys[pygame.K_w]:  # pylint: disable=no-member
             # UP
+            # Checks that the farmer is not to the left of the shipping bin
             if self.farmer.farmer_rect.x > constants.SHIPPING_BIN_WIDTH:
+                # Checks that the farmer is not leaving the window
                 if self.farmer.farmer_rect.y - self.farmer.vel > 0:
                     self.farmer.farmer_rect.y -= self.farmer.vel
                     self.farmer.set_direction("up")
+            # If the farmer is to the left of the shipping bin, checks that
+            # they are not going above the shipping bin
             else:
                 if (
                     self.farmer.farmer_rect.y - self.farmer.vel
@@ -82,7 +90,7 @@ class Controller:
                 ):
                     self.farmer.farmer_rect.y -= self.farmer.vel
                     self.farmer.set_direction("up")
-
+        # Checks that the farmer is not leaving the window
         if (
             keys[pygame.K_s]  # pylint: disable=no-member
             and self.farmer.farmer_rect.y
@@ -111,9 +119,13 @@ class Controller:
         current_item = self.inventory.get_equipped_item()
         if current_item is not None:
             current_item.unequip()
-        slot = num
+        slot = num  # from keyboard input
+        # If no keyboard input, there must be mouse input
         if mouse_pos is not None:
             mouse_posx = mouse_pos[0]
+            # Finds where the mouse clicked and checks if an inventory square
+            # is there
+            # If there is we update slot to be that inventory slot
             for i in range(8):
                 if mouse_posx > constants.INVENTORY_START_WIDTH + (
                     i * constants.GROUND_SIZE
@@ -148,10 +160,21 @@ class Controller:
                 self.select_inventory(mouse_pos)
 
     def click_store(self, mouse_pos, stand):
-        # for item in stock
-        # if idx * whatever for height and width are within range
-        # returns the item, which buy_item in model can use
+        """
+        Given a mouse input, click on an item in the store to buy it
+
+        Args:
+            mouse_pos: A tuple that is the  (x, y) position in pixels of the
+            mouse cursor on the window
+            stand: an instance of the stand you are shopping at
+
+        Returns:
+            Returns the item being bought, or returns None if no item is
+            selected
+        """
+        # Loop through each item in the stock list
         for idx, item in enumerate(stand.stock_list):
+            # checks to see if clicked within width of rectangle
             if (
                 constants.STORE_RECT_START_WIDTH
                 < mouse_pos[0]
@@ -161,12 +184,15 @@ class Controller:
                     constants.STORE_RECT_START_HEIGHT
                     + constants.STORE_RECT_HEIGHT * idx
                 )
+                # checks to see if clicked within height of rectangle
                 if (
                     start_height
                     < mouse_pos[1]
                     < start_height + constants.STORE_RECT_HEIGHT
                 ):
                     return item
+        # If no item is selected, return None
+        return None
 
     def perform_action(self):
         """

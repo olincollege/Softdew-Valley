@@ -31,7 +31,8 @@ class Farmer:
 
     def __init__(self):
         """
-        Initialize start_square_x, start_square_y, farmer_rect, _direction, _position, and initialize wallet to be 0.
+        Initialize start_square_x, start_square_y, farmer_rect, _direction,]
+        _position, and initialize wallet to be 0.
         """
         self.start_square_x = 16
         self.start_square_y = 8
@@ -94,7 +95,6 @@ class Farmer:
         """
         return self._position
 
-    # DELETE BEFORE SUBMISSION IF NOT USED
     def add_funds(self, amount):
         """
         Add amount funds to the wallet attribute

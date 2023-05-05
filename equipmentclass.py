@@ -133,6 +133,7 @@ class Seed(Equipment):
             an item in the inventory
         seed_type: a string representing what kind of plant is being planted
             by the seed
+        num_item: An int representing how many seeds the user has
     """
 
     def __init__(self, seed_type):
@@ -153,6 +154,7 @@ class ParsnipSeeds(Seed):
             an item in the inventory
         seed_type: a string representing what kind of plant is being planted
             by the seed
+        num_item: An int representing how many seeds the user has
     """
 
     def __init__(self):
@@ -172,6 +174,7 @@ class CauliflowerSeeds(Seed):
             an item in the inventory
         seed_type: a string representing what kind of plant is being planted
             by the seed
+        num_item: An int representing how many seeds the user has
     """
 
     def __init__(self):
@@ -191,6 +194,7 @@ class PotatoSeeds(Seed):
             an item in the inventory
         seed_type: a string representing what kind of plant is being planted
             by the seed
+        num_item: An int representing how many seeds the user has
     """
 
     def __init__(self):

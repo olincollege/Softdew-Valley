@@ -9,7 +9,6 @@ from equipmentclass import (
     Seed,
     ParsnipSeeds,
     CauliflowerSeeds,
-    PotatoSeeds,
     Crop,
 )
 from inventoryclass import Inventory
@@ -35,15 +34,23 @@ class Model:  # pylint: disable=too-many-instance-attributes
         cauliflowerseeds: instance of CauliflowerSeeds class
         inventory: instance of the Inventory class
         house: instance of the House class
+        stand: instance of the Stand class
         is_till: a boolean that represents if the player character is currently
         tilling ground
         is_water: a boolean that represents if the player character is currently
         watering ground
+        selling_crop: a boolean that represents if the player character is
+        currently selling a crop
+        display_crop: an instance of the Crop class that represents the crop
+        being sold
+        in_store: a boolean that represents whether the store menu is open
     """
 
     def __init__(self):
         """
-        Initialize farmer, ground, watering_can, hoe, parsnipseeds, cauliflowerseeds, potatoseeds, inventory, and house. Also initialize _is_till, _is_water, _is_selling_crop to False and _display_crop to None
+        Initialize farmer, ground, watering_can, hoe, parsnipseeds,
+        cauliflowerseeds, potatoseeds, inventory, and house. Also initialize
+        _is_till, _is_water, _is_selling_crop to False and _display_crop to None
         """
         self.farmer = Farmer()
         self.ground = Ground()
@@ -53,13 +60,11 @@ class Model:  # pylint: disable=too-many-instance-attributes
         for _ in range(14):
             self.parsnipseeds.add_item()
         self.cauliflowerseeds = CauliflowerSeeds()
-        self.potatoseeds = PotatoSeeds()
         self.inventory = Inventory(
             self.watering_can,
             self.hoe,
             self.parsnipseeds,
             self.cauliflowerseeds,
-            self.potatoseeds,
         )
         self.house = House()
         self.stand = Stand()
@@ -75,11 +80,14 @@ class Model:  # pylint: disable=too-many-instance-attributes
         """
         rows = self.ground.num_rows
         cols = self.ground.num_cols
+        # iterate through ground class and grow all plant instances
         for j in range(cols):
             for i in range(rows):
                 if isinstance(self.ground.land[i][j], Plants):
                     self.ground.land[i][j].grow()
+        # unwater all plants
         self.ground.unwater_squares()
+        # redraw farmer in front of house
         self.farmer.respawn_farmer()
         self.farmer.set_direction("down")
 
@@ -136,8 +144,10 @@ class Model:  # pylint: disable=too-many-instance-attributes
             self.till_ground()
         if isinstance(equipped_item, Seed):
             plant_success = self.plant_seed(equipped_item.seed_type)
+            # if a plant is successfully planted decrease the seed count
             if plant_success:
                 equipped_item.decrease_item(1)
+                # if there are no seeds left remove them from inventory
                 if equipped_item.num_item <= 1:
                     slot = self.inventory.get_equipped_item_slot()
                     self.inventory.remove_item(slot)
@@ -158,11 +168,14 @@ class Model:  # pylint: disable=too-many-instance-attributes
             self.farmer.position[0] <= constants.SHIPPING_BIN_SQUARES
             and self.farmer.position[1] <= constants.SHIPPING_BIN_SQUARES
         ):
+            # for display purposes
             self._selling_crop = True
             self._display_crop = crop
+            # If there are none of a crop left, remove it from inventory
             if crop.num_item <= 1:
                 slot = self.inventory.get_equipped_item_slot()
                 self.inventory.remove_item(slot)
+            # else subtract one from the number of crops
             else:
                 crop.decrease_item(1)
             self.farmer.add_funds(crop.price)
@@ -190,6 +203,8 @@ class Model:  # pylint: disable=too-many-instance-attributes
         """
         if self.action_on_map():
             action_pos = self.get_action_position()
+            # If the ground is watered or tilled and there is not an existing
+            # plant, plant a seed
             square = self.ground.get_square(action_pos[0], action_pos[1])
             if (
                 self.ground.is_watered(square) or self.ground.is_tilled(square)
@@ -199,8 +214,8 @@ class Model:  # pylint: disable=too-many-instance-attributes
                 print("Woo! You planted a seed <3")
                 play_sound("planting", 1)
                 self.ground.plant_crop(action_pos[0], action_pos[1], plant)
-                return True
-        return False
+                return True  # return true for successful planting
+        return False  # return false for unsuccessful planting
 
     def harvest_crop(self):
         """
@@ -217,15 +232,16 @@ class Model:  # pylint: disable=too-many-instance-attributes
         action_pos = self.get_action_position()
         square = self.ground.get_square(action_pos[0], action_pos[1])
         if isinstance(square, Plants):
+            # Check plant can be harvested
             if square.harvestable:
                 self.ground.harvest(action_pos[0], action_pos[1])
-
-                # check if it is already in the inventory
+                # check if crop is already in the inventory
                 found_item = False
                 for idx, item in enumerate(self.inventory.inventory):
                     if type(item) is type(square.crop):
                         self.inventory.get_item(idx).add_item()
-                        found_item = True
+                        found_item = True  # item in inventory
+                # if not inventory add new item
                 if not found_item:
                     slot = self.inventory.first_empty_slot()
                     self.inventory.add_item(slot, square.crop)
@@ -239,11 +255,12 @@ class Model:  # pylint: disable=too-many-instance-attributes
         if self.action_on_map():
             action_pos = self.get_action_position()
             square = self.ground.get_square(action_pos[0], action_pos[1])
+            # Water ground
             if self.ground.is_tilled(square):
                 self.ground.water_square(action_pos[0], action_pos[1])
                 play_sound("watering", 2)
                 self._is_water = True
-
+            # Water plant
             if isinstance(square, Plants):
                 play_sound("watering", 2)
                 square.plant_water()
@@ -278,19 +295,25 @@ class Model:  # pylint: disable=too-many-instance-attributes
         num_item of the same class
 
         Args:
-            item: and instance of StandItem that represents the item being
-            bought
+            item: an instance of StandItem that represents the item being
+                bought
         """
+        # Check that the store menu is open
         if self._in_store:
+            # Check that clicking at store has returned an item
             if item is not None:
                 item_added = False
                 buy_success = self.farmer.spend_funds(item.price)
+                # Make sure purchase succeeded
                 if buy_success:
                     inven_item = item.inventory_item
-                    for all_items in self.inventory.inventory:
-                        if type(all_items) is type(inven_item):
-                            all_items.add_item()
+                    # Check if item already exists in inventory
+                    # Add to num_item if it does
+                    for existing_item in self.inventory.inventory:
+                        if type(existing_item) is type(inven_item):
+                            existing_item.add_item()
                             item_added = True
+                    # Else add new item to inventory
                     if not item_added:
                         slot = self.inventory.first_empty_slot()
                         print(slot)

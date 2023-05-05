@@ -5,6 +5,7 @@ Runs the main game loop
 # pylint: disable=no-member
 # A pygame game loop by nature requires a branch for every action
 # pylint: disable=too-many-branches
+# pylint: disable=too-many-nested-blocks
 import pygame
 import audio
 import houseclass
@@ -29,7 +30,7 @@ def main():
         - number keys
         - mouse clicks for inventory slots
         - the harvesting key (h)
-        - day passing key (p)
+        - entering the store
 
     Passes keys pressed to farmer movement in control
     Quits the game and calls draw_window in View class
@@ -50,47 +51,48 @@ def main():
                 game_running = False
             if event.type == audio.MUSIC_END:
                 audio.play_music()
+            # Take keyboard inptus
             if event.type == pygame.KEYDOWN:
+                # If question mark is hit display or hide controls menu
                 if (
                     pygame.key.get_pressed()[pygame.K_SLASH]
                     and pygame.key.get_mods() & pygame.KMOD_SHIFT
                 ):
                     control_screen = not control_screen
+                # if space is hit perform item action
                 if event.key == pygame.K_SPACE:
                     model.action()
+                # if number key is hit, equip that inventory item
                 for i in range(1, 9):
                     if event.key == getattr(pygame, f"K_{i}"):
                         control.select_inventory(num=i - 1)
+                # if h key is hit, perform harvest action
                 if event.key == pygame.K_h:
                     model.harvest_crop()
-                # should be triggered by house interaction event
-                # brought back for testing purposes (DELETE LATER)
-                if event.key == pygame.K_p:
-                    for i in range(20):
-                        model.day_passes()
-                        for i in range(model.ground.num_rows):
-                            for j in range(model.ground.num_cols):
-                                if isinstance(model.ground.land[i][j], Plants):
-                                    model.ground.land[i][j].water = True
+                # if e is hit, enter or exit the store
                 if event.key == pygame.K_e:
                     if model.in_store:
                         model.leave_store()
                     else:
                         model.enter_store()
-            if event.type == houseclass.ENTER_HOUSE:
-                pass
+            # If user interacts with bed, make a day pass
             if event.type == houseclass.ENTER_BED:
                 model.day_passes()
                 display.day_change()
                 pygame.time.delay(300)
+            # Handles mouse clicking
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
+                # check if the inventory has been clicked
                 control.click_inventory(mouse_pos)
+                # check if the store menu has been clicked
                 store_item = control.click_store(mouse_pos, model.stand)
                 model.buy_item(store_item)
         keys_pressed = pygame.key.get_pressed()
+        # move the farmer
         control.move_farmer(keys_pressed)
         model.house.enter_bed(model.farmer)
+        # draw window
         display.draw_window(control_screen)
 
     pygame.quit()

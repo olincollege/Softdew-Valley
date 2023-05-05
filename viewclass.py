@@ -202,7 +202,7 @@ POTATO_RECT = pygameify_image(
 STORE_ITEMS = [PARSNIP_RECT, CAULIFLOWER_RECT, POTATO_RECT]
 
 
-class View:
+class View:  # pylint: disable=too-many-instance-attributes
     """
     Class that handles displaying the game
 
@@ -276,10 +276,16 @@ class View:
             self.type_ground = ground_map[row][col]
 
     def draw_stand(self):
+        """
+        Draw stand sprite at stand position
+        """
         WIN.blit(STAND, (STAND_START_WIDTH, STAND_START_HEIGHT))
 
     def draw_stand_items(self):
-        for idx, item in enumerate(self.stand.stock_list):
+        """
+        Draw rectangles for each item in the shop
+        """
+        for idx, _ in enumerate(self.stand.stock_list):
             # blit rectangle at idx * whatever for height
             WIN.blit(
                 STORE_ITEMS[idx],
@@ -337,7 +343,6 @@ class View:
         """
         wallet_text = str(self.farmer.wallet)
         draw_text = WALLET_FONT.render(wallet_text, 1, FONT_COLOR)
-        text_width = draw_text.get_width()
         text_height = draw_text.get_height()
         coin_padding = 10
         text_padding = 50
@@ -346,6 +351,11 @@ class View:
         WIN.blit(COIN, (padding, HEIGHT - coin_padding - COIN_SIZE))
 
     def draw_shipping_bin(self):
+        """
+        Draw the shipping bin at the shipping bin position
+        If the farmer is close enough to the shipping bin, make the shipping
+        bin open
+        """
         if (
             self.farmer.position[0] <= constants.SHIPPING_BIN_SQUARES
             and self.farmer.position[1] <= constants.SHIPPING_BIN_SQUARES
@@ -358,6 +368,10 @@ class View:
         WIN.blit(bin_sprite, (BIN_START_W, BIN_START_H))
 
     def draw_selling_crop(self):
+        """
+        Draw an image of the crop being sold over the shipping bin when it
+        is being sold
+        """
         crop = self.model.display_crop
         padding = 20
         if crop is not None:
@@ -373,6 +387,9 @@ class View:
             self.model.stop_selling()
 
     def draw_ground_plants(self):
+        """
+        Draw the ground and the plants in the window
+        """
         rows = self.ground.num_rows
         cols = self.ground.num_cols
         for j in range(cols):
@@ -398,6 +415,11 @@ class View:
                     )
 
     def draw_farmer(self):
+        """
+        Draw the farmer
+        The farmer sprite changes depending on the direction the farmer is
+        facing and the action they are performing
+        """
         self.farmer_direction()
         if self.farmer_image in (WATER_LEFT_FARMER, TILL_LEFT_FARMER):
             WIN.blit(
