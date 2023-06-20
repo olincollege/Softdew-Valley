@@ -20,7 +20,8 @@ We love Stardew Valley and wanted to learn more about software structures, code 
 - Music made by Stardew Valley’s creator, ConcernedApe, plays on shuffle in the background the entire time. 
 - The farmer character "sleeps" and a day passes when the farmer collides with the bed. The house art is a combination of the Riverland Farmhouse pixel art from the original game as well as original pixel art by Amanda Chang, including the Olin O, the campus map, and text on the TV screen.
 - The farmer can interact with the shipping bin (which opens when they are close enough to interact with), to sell crops that they harvest.
-- The farmer can interact with the store by pressing E when near it to buy more seeds.You can see what the store looks like below!
+- Our custom-made controls screen will pop up when the player hits "?" describing the keyboard controls to the game. This same screen closes when "?" is hit again.
+- The farmer can interact with the store by pressing E when near it to buy more seeds. You can see what the store looks like below!
 ![Store Photo](Softdew_valley_store_photo.PNG)
 
 ## Installation instructions
@@ -43,11 +44,11 @@ Our [Github Page](https://github.com/olincollege/Softdew-Valley): Here you can f
 
 ## Credits 
 The people that worked on this project were Alex George, Amanda Chang, and 
-Meagan Lipsman. Our credits go to ConcernedApe(Eric Barone), the creator of Stardew Valley, and [VHV.RS](https://www.vhv.rs/viewpic/hoJTmbJ_stardew-valley-player-sprite-png-download-stardew-valley/) for our player sprite images.
+Meagan Lipsman. Our art credits go to ConcernedApe(Eric Barone), the creator of Stardew Valley, [VHV.RS](https://www.vhv.rs/viewpic/hoJTmbJ_stardew-valley-player-sprite-png-download-stardew-valley/) for our player sprite images, and Amanda Chang for controls screen and Olin-themed art.
 
 ## Meet Our Team!
 ![Team Photo](Team_Photo.JPG)
-Amanda(right), Alex(middle), Meagan(Left)
+Amanda(left), Alex(middle), Meagan(right)
 
 Us doing Stardew Valley "research": 
 ![Research](Research.JPG)
