@@ -5,7 +5,7 @@ import pygame
 import constants
 from audio import play_sound
 
-# Sizing values come from viewclass file
+# Sizing values come from viewclass files
 FARMER_WIDTH = constants.FARMER_WIDTH
 FARMER_HEIGHT = constants.FARMER_HEIGHT
 WIDTH, HEIGHT = constants.WIDTH, constants.HEIGHT
@@ -46,7 +46,7 @@ class Farmer:
         self._direction = "down"  # random direction to start
         # position is the (x, y) or (row, col) position of the farmer on the map
         self._position = (self.start_square_x, self.start_square_y)
-        self.wallet = 0
+        self.wallet = 100
         self.vel = 5
 
     def set_position(self, x_val, y_val):
